@@ -1,0 +1,261 @@
+# Next.js Best Practices
+
+Based on Next.js 16 App Router and modern React patterns.
+
+## Reference Links
+- [Cursor Documentation](https://cursor.com/docs) - Keep updated with latest Cursor features
+- [Next.js Documentation](https://nextjs.org/docs) - Official Next.js documentation
+- [React Documentation](https://react.dev) - Official React documentation
+- [Vercel Labs React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices) - React best practices reference
+
+## App Router Structure
+
+### File-based Routing
+- `app/page.tsx` → `/` route
+- `app/about/page.tsx` → `/about` route
+- `app/blog/[slug]/page.tsx` → `/blog/:slug` dynamic route
+- Use `layout.tsx` for shared layouts
+- Use `loading.tsx` for loading states
+- Use `error.tsx` for error boundaries
+
+### Server Components (Default)
+- Components are Server Components by default
+- Can directly access server-side resources (databases, APIs)
+- No client-side JavaScript bundle
+- Can use async/await for data fetching
+
+```typescript
+// Server Component (default)
+export default async function Page() {
+  const data = await fetch('...')
+  return <div>{data}</div>
+}
+```
+
+### Client Components
+- Add `'use client'` directive at the top
+- Required for: useState, useEffect, event handlers, browser APIs
+- Required for: Framer Motion, third-party interactive libraries
+
+```typescript
+'use client'
+
+import { useState } from 'react'
+
+export default function InteractiveComponent() {
+  const [count, setCount] = useState(0)
+  return <button onClick={() => setCount(count + 1)}>{count}</button>
+}
+```
+
+## Component Structure
+
+### Functional Components Only
+- Always use functional components with TypeScript
+- Prefer default exports for page components: `export default function Page() {}`
+- Prefer named exports for reusable components: `export function Component() {}`
+- Keep components focused and single-purpose (SRP - Single Responsibility Principle)
+- Components should be under 200 lines when possible
+
+### Props Interface
+```typescript
+interface ComponentProps {
+  title: string
+  description?: string
+  className?: string
+  children?: React.ReactNode
+}
+
+export default function Component({ title, description, className, children }: ComponentProps) {
+  // implementation
+}
+```
+
+### Component Composition
+- Prefer composition over inheritance
+- Use children prop for flexible component APIs
+- Create compound components for complex UI patterns
+
+## File Naming
+- Use PascalCase for component files: `Hero.tsx`, `Header.tsx`
+- Use camelCase for utility files: `utils.ts`, `constants.ts`
+- Use kebab-case for assets: `hero-image.jpg`
+
+## Imports Organization
+Order imports in this sequence:
+1. React and React-related imports
+2. Third-party libraries
+3. Internal modules (components, hooks, utils)
+4. Types and interfaces
+5. Assets and styles
+
+```typescript
+'use client'
+
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+
+import { Button } from '@/components/ui/Button'
+import { cn } from '@/lib/utils'
+import { ARCHETYPES } from '@/lib/constants'
+
+import type { User } from '@/types/user'
+
+import './styles.css'
+```
+
+- Use path aliases (`@/`) for all imports from root
+- Never use relative paths like `../../../components`
+- Always use absolute imports: `@/components/Button`
+
+## TypeScript Best Practices
+
+### Type Safety
+- Always define prop types using interfaces (preferred) or types
+- Use strict mode TypeScript settings
+- Never use `any` - use proper types, `unknown`, or `never`
+- Use type guards for runtime type checking
+- Prefer type unions over enums for string literals
+
+### Component Props
+```typescript
+interface ButtonProps {
+  variant?: 'primary' | 'secondary'
+  size?: 'sm' | 'md' | 'lg'
+  disabled?: boolean
+  onClick?: () => void
+  children: React.ReactNode
+}
+```
+
+## React Hooks
+
+### useState
+- Initialize with proper types: `const [count, setCount] = useState<number>(0)`
+- Use functional updates when new state depends on previous: `setCount(prev => prev + 1)`
+- Extract complex state logic into custom hooks
+
+### useEffect
+- Always specify dependencies array
+- Clean up subscriptions and event listeners in return function
+- Use `useEffect` for side effects only, not for computed values
+- Prefer `useMemo` or `useCallback` for expensive computations
+
+```typescript
+useEffect(() => {
+  const subscription = subscribe()
+  return () => subscription.unsubscribe()
+}, [dependencies])
+```
+
+### Custom Hooks
+- Prefix with `use`: `useMediaQuery`, `useLocalStorage`
+- Return object or tuple for multiple values
+- Keep hooks focused on single responsibility
+- Extract reusable logic into custom hooks
+
+## Performance Optimization
+
+### Memoization
+- Use `React.memo` for expensive components that re-render frequently
+- Use `useMemo` for expensive computations: `const result = useMemo(() => compute(), [deps])`
+- Use `useCallback` for stable function references: `const handler = useCallback(() => {}, [deps])`
+- Don't over-optimize - profile first, then optimize
+
+### Code Splitting
+- Next.js automatically code-splits by route
+- Use `next/dynamic` for component-level code splitting
+- Lazy load heavy components: `const Component = dynamic(() => import('./Component'))`
+
+### Image Optimization
+- Always use `next/image` instead of `<img>` tag
+- Provides automatic optimization, lazy loading, and responsive images
+- Use `priority` prop for above-the-fold images
+
+```typescript
+import Image from 'next/image'
+
+<Image
+  src="/hero.jpg"
+  alt="Hero image"
+  width={1200}
+  height={630}
+  priority
+/>
+```
+
+## Next.js Specific Features
+
+### Metadata API
+- Define metadata in `layout.tsx` or `page.tsx`
+- Use `Metadata` type for type safety
+- Supports static and dynamic metadata
+
+```typescript
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Oaureal | Sincroniza tu biología',
+  description: 'Entrenamiento cerebral con sonidos binaurales',
+}
+```
+
+### Environment Variables
+- Prefix with `NEXT_PUBLIC_` for client-side access: `NEXT_PUBLIC_API_URL`
+- Access via: `process.env.NEXT_PUBLIC_API_URL`
+- Server-side variables don't need prefix
+- Type environment variables in `next-env.d.ts`
+
+### Data Fetching
+- Use Server Components for data fetching when possible
+- Use `fetch` with automatic caching and revalidation
+- Use `async/await` in Server Components
+
+```typescript
+export default async function Page() {
+  const data = await fetch('https://api.example.com/data', {
+    next: { revalidate: 3600 } // Revalidate every hour
+  })
+  const json = await data.json()
+  return <div>{json.title}</div>
+}
+```
+
+## Error Handling
+
+### Error Boundaries
+- Use `error.tsx` files for route-level error boundaries
+- Display user-friendly error messages
+- Log errors to monitoring service in production
+
+### Async Operations
+- Handle loading and error states explicitly
+- Use try-catch for async/await
+- Provide fallback UI for error states
+
+## Accessibility
+
+- Use semantic HTML elements (`nav`, `header`, `main`, `section`)
+- Provide proper ARIA labels: `aria-label`, `aria-labelledby`
+- Ensure keyboard navigation works for all interactive elements
+- Maintain proper heading hierarchy (h1 → h2 → h3)
+- Use `sr-only` class for screen-reader-only content
+- Ensure color contrast meets WCAG standards
+
+## Vercel Deployment
+
+### Build Configuration
+- Next.js is automatically detected by Vercel
+- Build command: `next build` (default)
+- Output directory: `.next` (default)
+- Install command: `npm install` (default)
+
+### Environment Variables
+- Set in Vercel Dashboard → Project Settings → Environment Variables
+- Use same variable names as `.env.local`
+- Automatically available in production builds
+
+### Analytics
+- Use `@vercel/analytics` package
+- Import and add `<Analytics />` to root layout
+- Automatically tracks page views and performance

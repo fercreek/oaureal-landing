@@ -1,0 +1,101 @@
+# General Development Best Practices
+
+## Reference Links
+- [Cursor Documentation](https://cursor.com/docs) - Keep updated with latest Cursor features
+- [MDN Web Docs](https://developer.mozilla.org) - Web standards and best practices
+- [WCAG Guidelines](https://www.w3.org/WAI/WCAG21/quickref/) - Web accessibility guidelines
+
+## Code Quality
+
+### Clean Code Principles
+- Write self-documenting code with clear variable and function names
+- Keep functions small and focused (single responsibility)
+- Avoid deep nesting (max 3-4 levels)
+- Extract magic numbers and strings to constants
+- Comment "why", not "what" - code should be self-explanatory
+
+### Code Formatting
+- Use consistent formatting (Prettier recommended)
+- Maximum line length: 100-120 characters
+- Use meaningful variable names: `isLoading` not `flag`
+- Use descriptive function names: `handleSubmit` not `onClick`
+
+## Git & Version Control
+
+### Commit Messages
+- Use conventional commits: `feat:`, `fix:`, `refactor:`, `docs:`
+- Write clear, concise commit messages
+- One logical change per commit
+- Example: `feat: add hero section with animations`
+
+### Branch Strategy
+- Use feature branches: `feature/hero-section`, `fix/header-styling`
+- Keep branches small and focused
+- Regularly sync with main branch
+
+## Documentation
+
+### Code Comments
+- Document complex logic and algorithms
+- Explain "why" not "what"
+- Use JSDoc for public APIs and functions
+
+### README
+- Keep README up to date with setup instructions
+- Document environment variables
+- Include examples of common workflows
+
+## Performance
+
+### Bundle Size
+- Monitor bundle size regularly
+- Use dynamic imports for large dependencies
+- Tree-shake unused code
+- Optimize images and assets with Next.js Image component
+
+### Runtime Performance
+- Profile before optimizing
+- Use React DevTools Profiler
+- Optimize expensive operations
+- Lazy load non-critical components with Next.js dynamic imports
+
+## Security
+
+### Best Practices
+- Never commit secrets or API keys
+- Use environment variables for sensitive data
+- Validate and sanitize user inputs
+- Use HTTPS in production
+- Keep dependencies up to date
+
+## Accessibility
+
+### WCAG Guidelines
+- Maintain proper heading hierarchy
+- Ensure keyboard navigation works
+- Provide alt text for images
+- Ensure color contrast ratios meet standards
+- Use ARIA labels when needed
+- Test with screen readers
+
+## Browser Compatibility
+
+### Support
+- Test in modern browsers (Chrome, Firefox, Safari, Edge)
+- Use progressive enhancement
+- Provide fallbacks for newer features
+- Test on mobile devices
+
+## Testing
+
+### Testing Strategy
+- Write tests for business logic
+- Test user interactions and flows
+- Use integration tests for critical paths
+- Maintain test coverage above 80%
+
+### Test Structure
+- Use descriptive test names: `should render hero with title`
+- Arrange-Act-Assert pattern
+- Test edge cases and error states
+- Keep tests maintainable and readable

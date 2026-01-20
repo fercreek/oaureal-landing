@@ -1,0 +1,187 @@
+# Project Structure Best Practices
+
+## Reference Links
+- [Cursor Documentation](https://cursor.com/docs) - Keep updated with latest Cursor features
+- [Next.js Documentation](https://nextjs.org/docs) - Official Next.js documentation
+- [Vercel Labs React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices) - Project structure patterns
+
+## Directory Organization
+
+```
+app/                    # Next.js App Router
+  layout.tsx            # Root layout with metadata
+  page.tsx              # Home page
+  globals.css           # Global styles
+components/
+  ui/                   # Atomic, reusable components (Preloader, Button, Card)
+  features/             # Complex interactive components (AudioVisualizer, Quiz)
+  sections/             # Page sections (Hero, About, Evidence, Pricing, FAQ)
+lib/                    # Utilities, helpers, constants, types
+  utils.ts              # Helper functions (cn, formatters)
+  constants.ts          # Application constants and configuration
+public/                 # Static assets (images, fonts, icons)
+```
+
+## Component Hierarchy
+
+### `components/ui/`
+- Generic, reusable components with NO business logic
+- Completely reusable across projects
+- Examples: `Preloader.tsx`, `Button.tsx`, `Card.tsx`, `Input.tsx`
+- Should accept generic props, not domain-specific data
+
+### `components/features/`
+- Complex interactive components with business logic
+- Self-contained features that can be used across pages
+- Examples: `AudioVisualizer.tsx`, `Quiz.tsx`
+- Can use `components/ui/` internally
+
+### `components/sections/`
+- Page-specific sections with business logic
+- Each section represents a major part of the landing page
+- Examples: `Hero.tsx`, `About.tsx`, `Evidence.tsx`, `Pricing.tsx`, `FAQ.tsx`
+- Can use `components/ui/` and `components/features/` internally
+
+### `lib/`
+- Pure utility functions and helpers
+- Constants, configuration, API clients
+- No React dependencies (unless specifically needed)
+- Examples: `utils.ts`, `constants.ts`, `api.ts`, `formatters.ts`
+
+## File Organization
+
+### One Component Per File
+- Each component gets its own file
+- File name matches component name: `Hero.tsx` → `export default function Hero() {}`
+
+### Co-location
+- Co-locate related files when they're tightly coupled:
+  ```
+  components/
+    Button/
+      Button.tsx
+      Button.test.tsx
+      Button.module.css (if needed)
+      index.ts
+  ```
+
+### Index Files
+- Use index files for cleaner imports when needed
+- Allows: `import { Button } from '@/components/ui/Button'`
+
+### File Naming Conventions
+- Components: PascalCase - `Hero.tsx`, `QuizSection.tsx`
+- Utilities: camelCase - `utils.ts`, `formatDate.ts`
+- Constants: camelCase - `constants.ts`, `routes.ts`
+
+## Import Paths
+
+### Path Aliases
+- Always use `@/` alias for imports from root
+- Configured in `tsconfig.json`
+- Never use relative paths: `../../../components` ❌
+
+### Import Examples
+```typescript
+// ✅ Good
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/Button'
+import { Hero } from '@/components/sections/Hero'
+import { ARCHETYPES } from '@/lib/constants'
+
+// ❌ Bad
+import { cn } from '../../lib/utils'
+import { Button } from '../ui/Button'
+```
+
+### Import Grouping
+Group imports in this order:
+1. React and React-related
+2. Third-party libraries
+3. Internal components (ui → features → sections)
+4. Internal utilities (lib)
+5. Types (with `type` keyword)
+6. Styles and assets
+
+## Next.js App Router Structure
+
+### `app/` Directory
+- `layout.tsx`: Root layout with metadata and global providers
+- `page.tsx`: Page components (home page, etc.)
+- `globals.css`: Global styles and Tailwind imports
+- Route folders: Create folders for routes (e.g., `app/about/page.tsx`)
+
+### Client vs Server Components
+- Default: Server Components (no `'use client'`)
+- Use `'use client'` only when needed:
+  - Interactive components (useState, useEffect, event handlers)
+  - Browser APIs (localStorage, window)
+  - Third-party libraries that require client-side
+  - Framer Motion animations
+
+### Metadata
+- Define metadata in `layout.tsx` or `page.tsx` using `Metadata` type
+- Use `generateMetadata` function for dynamic metadata
+
+## State Management
+
+### Local State
+- Use `useState` for component-local state
+- Keep state as close to where it's used as possible
+
+### Shared State
+- Use React Context API for shared state that needs to be accessed by multiple components
+- Create context providers: `ThemeProvider.tsx`, `AuthProvider.tsx`
+- Avoid prop drilling - lift state or use context when needed
+
+### Server State
+- Use Server Components for data fetching when possible
+- Use libraries like React Query or SWR for client-side server state
+- Keep server state separate from UI state
+
+### State Location Rules
+- If state is used by ONE component → Local state
+- If state is used by SIBLINGS → Lift to common parent
+- If state is used GLOBALLY → Context or state management library
+- If state is SERVER-DERIVED → Server Component or React Query/SWR
+
+## Constants & Configuration
+
+### Constants File
+- Store application constants in `lib/constants.ts`
+- Group related constants together
+- Use descriptive names in UPPER_SNAKE_CASE for true constants
+
+```typescript
+export const COLORS = {
+  bg: '#000000',
+  primary: '#011797',
+  // ...
+}
+
+export const ARCHETYPES = {
+  A: { title: "...", wave: "Delta" },
+  // ...
+}
+```
+
+### Configuration
+- Environment variables: `.env.local` (with `NEXT_PUBLIC_` prefix for client-side)
+- App configuration: `lib/config.ts`
+- Type environment variables in `next-env.d.ts`
+
+## Reusability Guidelines
+
+### When to Create a Component
+1. Used in 2+ places → Extract to component
+2. Has clear, reusable interface → Extract to `components/ui/`
+3. Page-specific but complex → Extract to `components/sections/`
+4. Complex interactive feature → Extract to `components/features/`
+5. Small utility function → Extract to `lib/`
+
+### Component Props Design
+- Keep props minimal and focused
+- Use composition (children) when appropriate
+- Provide sensible defaults
+- Use TypeScript for prop validation
+- Document complex props with JSDoc comments

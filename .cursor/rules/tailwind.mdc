@@ -1,0 +1,87 @@
+# Tailwind CSS Best Practices
+
+## Reference Links
+- [Cursor Documentation](https://cursor.com/docs) - Keep updated with latest Cursor features
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Official Tailwind CSS documentation
+- [Tailwind CSS v4 Docs](https://tailwindcss.com/docs/v4-beta) - Latest Tailwind v4 features
+
+## Utility Classes
+- Use Tailwind utility classes instead of custom CSS when possible
+- Group utilities logically: layout → spacing → typography → colors → effects
+- Use responsive prefixes: `md:`, `lg:`, `xl:` for mobile-first design
+
+## Custom Colors
+- Define custom colors in `app/globals.css` using CSS variables
+- Map CSS variables to Tailwind theme in `@theme inline` block
+- Use semantic color names matching Oaureal brand:
+  - `bg` / `text-bg`: `#000000` (black background)
+  - `primary`: `#011797` (deep blue)
+  - `secondary`: `#54008c` (purple)
+  - `accent`: `#a5f0fa` (cyan/teal accent)
+  - `surface`: `#121212` (dark surface)
+
+## Class Organization
+- Sort classes by: layout → spacing → typography → colors → effects
+- Use `cn()` utility from `@/lib/utils` for conditional classes
+- Avoid arbitrary values `[custom-value]` when a utility class exists
+- Group related utilities together for readability
+
+```typescript
+// ✅ Good
+<div className="flex items-center gap-4 p-6 bg-black text-white rounded-xl">
+  <span className="text-[#a5f0fa] font-bold">Oaureal</span>
+</div>
+
+// ❌ Bad
+<div className="bg-black text-white flex items-center gap-4 p-6 rounded-xl">
+```
+
+## Component Patterns
+- Extract repeated patterns into reusable components in `components/ui/`
+- Use Tailwind's component classes for consistent styling
+- Leverage Tailwind's spacing scale: `p-4`, `gap-6`, `mb-8`
+- Use consistent border radius: `rounded-xl`, `rounded-2xl`, `rounded-3xl`
+
+## Performance
+- Avoid over-nesting utility classes
+- Use Tailwind's purge/content configuration automatically via v4
+- Prefer Tailwind utilities over inline styles
+- Use `@apply` sparingly, only for repeated patterns
+
+## Dark Mode
+- Oaureal uses dark theme by default
+- All components should work with dark background (`bg-black`, `bg-[#050505]`)
+- Use high contrast text colors for readability
+- Test color combinations for accessibility
+
+## Oaureal-Specific Patterns
+
+### Color Usage
+- Primary blue (`#011797`): Main brand color, used for gradients and accents
+- Secondary purple (`#54008c`): Secondary brand color, used in gradients
+- Accent cyan (`#a5f0fa`): Highlights, CTAs, interactive elements
+- Black backgrounds: `bg-black`, `bg-[#050505]` for depth variation
+
+### Typography
+- Use `font-serif` for headings and brand elements
+- Use `font-mono` for technical/UI elements (tracking-widest for uppercase)
+- Use `tracking-[0.3em]` for spaced-out uppercase text
+- Use `italic` for emphasis in headings
+
+### Spacing & Layout
+- Use consistent padding: `p-6`, `p-8`, `p-10` for sections
+- Use `max-w-6xl` or `max-w-4xl` for content containers
+- Use `gap-6`, `gap-8`, `gap-10` for grid/flex spacing
+- Use `py-24` for section vertical padding
+
+### Effects & Animations
+- Use `backdrop-blur-md` or `backdrop-blur-xl` for glassmorphism
+- Use `border-white/5` or `border-white/10` for subtle borders
+- Use `bg-white/5` or `bg-white/10` for subtle overlays
+- Use shadow utilities: `shadow-[0_0_20px_#a5f0fa]` for glow effects
+
+### Responsive Design
+- Mobile-first approach: base styles for mobile, then `md:`, `lg:` breakpoints
+- Hide/show elements: `hidden md:flex` for responsive navigation
+- Adjust text sizes: `text-5xl md:text-8xl` for responsive typography
+- Grid layouts: `grid-cols-1 md:grid-cols-3` for responsive grids
