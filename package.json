@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma migrate deploy && next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@prisma/client": "^6.19.2",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.91.0",
     "@tailwindcss/typography": "^0.5.19",
@@ -23,6 +25,7 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.454.0",
     "next": "16.0.7",
+    "prisma": "^6.19.2",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "remark": "^15.0.1",
@@ -34,9 +37,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.2.3",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

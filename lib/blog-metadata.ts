@@ -1,13 +1,10 @@
-import { createClient } from '@/lib/supabase/server';
+import { prisma } from '@/lib/prisma';
 
 export async function generateMetadata(slug: string) {
-  const supabase = await createClient();
-  const { data: post } = await supabase
-    .from('posts')
-    .select('title, excerpt, cover_image')
-    .eq('slug', slug)
-    .eq('published', true)
-    .single();
+  const post = await prisma.post.findFirst({
+    where: { slug, published: true },
+    select: { title: true, excerpt: true, coverImage: true },
+  });
 
   if (!post) {
     return {
@@ -22,7 +19,7 @@ export async function generateMetadata(slug: string) {
       title: post.title,
       description: post.excerpt,
       type: 'article',
-      images: post.cover_image ? [post.cover_image] : [],
+      images: post.coverImage ? [post.coverImage] : [],
     },
   };
 }

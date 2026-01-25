@@ -13,189 +13,159 @@ Landing page para Oaureal - Plataforma de entrenamiento cerebral con sonidos bin
 - **Framer Motion** (animaciones)
 - **Lucide React** (iconos)
 - **Vercel Analytics**
+- **Prisma** (ORM, migraciones y acceso a datos)
+- **Supabase** (Auth y Storage para imágenes del blog)
 
 ## Estructura del Proyecto
 
 ```
 oaureal-landing/
 ├── app/
-│   ├── layout.tsx          # Layout principal con metadata
-│   ├── page.tsx            # Página principal
-│   └── globals.css         # Estilos globales y Tailwind
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── blog/                 # Sección pública del blog
+│   │   ├── page.tsx
+│   │   └── [slug]/page.tsx
+│   ├── admin/                # Panel exclusivo para gestionar el blog
+│   │   ├── login/
+│   │   ├── (protected)/      # Dashboard y posts (requieren auth)
+│   │   │   ├── dashboard/
+│   │   │   └── posts/
+│   │   └── README.md
+│   ├── actions/              # Server Actions (crear/editar posts)
+│   │   └── posts.ts
+│   └── globals.css
 ├── components/
-│   ├── ui/                 # Componentes UI básicos
-│   │   └── Preloader.tsx
-│   ├── features/           # Componentes con lógica compleja
-│   │   ├── AudioVisualizer.tsx
-│   │   └── Quiz.tsx
-│   └── sections/           # Secciones de la landing
-│       ├── Navbar.tsx
-│       ├── Hero.tsx
-│       ├── About.tsx
-│       ├── AudioSection.tsx
-│       ├── Evidence.tsx
-│       ├── QuizSection.tsx
-│       ├── Pricing.tsx
-│       ├── FAQ.tsx
-│       ├── Investment.tsx
-│       ├── Footer.tsx
-│       └── StickyCTA.tsx
+│   ├── ui/
+│   ├── features/
+│   ├── sections/
+│   └── admin/                # Editor, PostForm, LogoutButton
 ├── lib/
-│   ├── constants.ts        # Constantes y configuración
-│   └── utils.ts            # Utilidades (cn helper)
-└── public/                 # Assets estáticos
+│   ├── prisma.ts             # Cliente Prisma (singleton)
+│   ├── auth.ts               # requireAuth para rutas protegidas
+│   ├── blog-metadata.ts      # Metadata dinámica del blog
+│   ├── tiptap-renderer.ts    # Render TipTap JSON a HTML
+│   ├── supabase/             # Cliente Supabase (Auth, Storage)
+│   ├── generated/prisma/     # Cliente generado por Prisma
+│   └── ...
+├── prisma/
+│   ├── schema.prisma
+│   └── migrations/
+└── supabase-migration.sql    # Solo Storage (bucket blog-images)
 ```
 
 ## Desarrollo Local
 
 ### Prerrequisitos
 
-- Node.js 18+ y npm instalados
+- Node.js 18+ y npm
+- PostgreSQL (local o Supabase)
 
-### Pasos para ejecutar localmente
+### Pasos
 
 ```bash
-# 1. Clonar el repositorio (si aplica)
 git clone <repository-url>
 cd oaureal-landing
-
-# 2. Instalar dependencias
 npm install
-
-# 3. Ejecutar servidor de desarrollo
-npm run dev
-
-# 4. Abrir en el navegador
-# http://localhost:3000
+cp .env.example .env.local
 ```
 
-El servidor de desarrollo se recargará automáticamente cuando hagas cambios en el código.
+Configura `.env.local` con:
+- `DATABASE_URL`: Connection string **Transaction mode** (puerto 6543, `?pgbouncer=true`) - Obténlo del botón **"Connect"** en Supabase.
+- `DIRECT_URL`: Connection string **Direct connection** (puerto 5432) - También del botón **"Connect"**.
+- `NEXT_PUBLIC_SUPABASE_URL`: URL del proyecto (ej. `https://xxxxx.supabase.co`).
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Legacy anon key (JWT) de **Project Settings** → **API Keys** → pestaña **"Legacy"**.
+
+**Formato de connection strings:**
+```
+DATABASE_URL="postgresql://postgres:[PASSWORD]@db.xxxxx.supabase.co:6543/postgres?pgbouncer=true"
+DIRECT_URL="postgresql://postgres:[PASSWORD]@db.xxxxx.supabase.co:5432/postgres"
+```
+
+⚠️ Si la contraseña tiene caracteres especiales, URL-encodéalos (`!` → `%21`, `@` → `%40`, etc.).
+
+```bash
+npx prisma migrate deploy
+npm run dev
+```
+
+Abre [http://localhost:3000](http://localhost:3000). Blog en `/blog`, admin en `/admin/login`.
+
+### Prisma
+
+- `npx prisma migrate deploy` - Aplicar migraciones (usa `DIRECT_URL` para conectarse)
+- `npx prisma migrate dev` - Crear nuevas migraciones en desarrollo
+- `npx prisma studio` - Inspeccionar datos
 
 ## Build para Producción
 
 ```bash
-# Crear build de producción
 npm run build
-
-# Ejecutar build localmente
 npm start
 ```
 
+El script `build` ejecuta `prisma migrate deploy` y luego `next build`. Asegúrate de que `DATABASE_URL` y `DIRECT_URL` estén configurados.
+
 ## Despliegue en Vercel
 
-### Opción 1: Deploy con un clic (Recomendado)
+1. Conecta el repositorio en Vercel.
+2. Configura **Environment Variables** (usa los mismos valores de `.env.local`):
+   - `DATABASE_URL` - Connection string **Transaction mode** (puerto 6543, `?pgbouncer=true`). Formato: `postgresql://postgres:[PASSWORD]@db.xxxxx.supabase.co:6543/postgres?pgbouncer=true`
+   - `DIRECT_URL` - Connection string **Direct connection** (puerto 5432). Formato: `postgresql://postgres:[PASSWORD]@db.xxxxx.supabase.co:5432/postgres`
+   - `NEXT_PUBLIC_SUPABASE_URL` - URL del proyecto (ej. `https://xxxxx.supabase.co`).
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Legacy anon key (JWT) de Supabase.
+   
+   ⚠️ Obtén los connection strings del botón **"Connect"** en el dashboard de Supabase. Si la contraseña tiene caracteres especiales, URL-encodéalos.
+3. **Build Command**: `prisma migrate deploy && next build` (ya definido en `package.json`).
+4. Deploy.
 
-1. Haz clic en el botón "Deploy with Vercel" arriba
-2. Conecta tu repositorio de GitHub/GitLab/Bitbucket
-3. Vercel detectará automáticamente Next.js y configurará el proyecto
-4. Configura las variables de entorno si es necesario
-5. Haz clic en "Deploy"
+## Configuración de Supabase y Prisma
 
-### Opción 2: Desde el Dashboard de Vercel
+### Base de datos (Prisma)
 
-1. Ve a [vercel.com](https://vercel.com) e inicia sesión
-2. Haz clic en "Add New Project"
-3. Importa tu repositorio de GitHub/GitLab/Bitbucket
-4. Vercel detectará automáticamente Next.js
-5. Configura las variables de entorno si es necesario
-6. Haz clic en "Deploy"
+- La tabla `posts` se gestiona con **Prisma Migrate** (`prisma/migrations/`).
+- Ejecuta `npx prisma migrate dev` en local o `prisma migrate deploy` en CI/Vercel.
 
-### Opción 3: Desde la CLI
+### Supabase: Auth y Storage
 
-```bash
-# Instalar Vercel CLI globalmente
-npm i -g vercel
+1. Crea un proyecto en [supabase.com](https://supabase.com).
+2. Obtén los connection strings: Haz clic en el botón **"Connect"** del dashboard y copia:
+   - **Transaction mode** (puerto 6543) → `DATABASE_URL`
+   - **Direct connection** (puerto 5432) → `DIRECT_URL`
+3. Obtén las credenciales de API: **Project Settings** → **API Keys** → pestaña **"Legacy"**:
+   - **anon (public)** key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
+4. En **SQL Editor**, ejecuta `supabase-migration.sql` para crear el bucket `blog-images` y las políticas de Storage (subida para autenticados, lectura pública).
+5. En **Authentication > Users**, crea un usuario (email + contraseña). Ese usuario es el admin del blog y accede por `/admin/login`.
 
-# Iniciar sesión en Vercel (solo la primera vez)
-vercel login
+Para más detalles, ver [DEPLOYMENT.md](DEPLOYMENT.md).
 
-# Desplegar (preview)
-vercel
+### Variables de entorno
 
-# Desplegar a producción
-vercel --prod
-```
+| Variable | Uso |
+|----------|-----|
+| `DATABASE_URL` | Prisma (runtime). Transaction Pooler para serverless. |
+| `DIRECT_URL` | Prisma (migraciones). Conexión directa a Postgres. |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Auth y Storage (cliente). |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase Auth y Storage (cliente). |
 
-### Configuración Recomendada en Vercel
+## Blog y Admin
 
-- **Framework Preset**: Next.js (detectado automáticamente)
-- **Build Command**: `next build` (por defecto)
-- **Output Directory**: `.next` (por defecto)
-- **Install Command**: `npm install` (por defecto)
+- **Blog público**: `/blog` (lista) y `/blog/[slug]` (artículo). Solo se muestran posts publicados.
+- **Admin**: Acceso exclusivo para gestionar el blog. Login en `/admin/login`, dashboard en `/admin/dashboard`, crear/editar en `/admin/posts/new` y `/admin/posts/[id]`.
+- Los permisos (quién puede crear/editar posts) se validan en **Server Actions** (`app/actions/posts.ts`) usando Supabase Auth.
 
-### Variables de Entorno
+Para más detalle sobre el panel de administración, ver [app/admin/README.md](app/admin/README.md).
 
-Si necesitas variables de entorno, configúralas en:
-- Dashboard de Vercel → Project Settings → Environment Variables
+## Scripts
+
+- `npm run dev` - Servidor de desarrollo
+- `npm run build` - Migrar BD y build de producción
+- `npm start` - Servir build localmente
+- `npm run lint` - ESLint
 
 ## Características
 
-- ✅ Diseño responsive
-- ✅ Animaciones con Framer Motion
-- ✅ Optimizado para SEO
-- ✅ Analytics de Vercel integrado
-- ✅ TypeScript para type safety
-- ✅ Componentes modulares y reutilizables
-
-## Scripts Disponibles
-
-- `npm run dev` - Servidor de desarrollo
-- `npm run build` - Build de producción
-- `npm start` - Ejecutar build localmente
-- `npm run lint` - Ejecutar ESLint
-
-## Configuración de Supabase (Blog Dinámico)
-
-El proyecto incluye un sistema de blog dinámico gestionado a través de Supabase.
-
-### Pasos de Configuración
-
-1. **Crear proyecto en Supabase**
-   - Ve a [supabase.com](https://supabase.com) y crea un nuevo proyecto
-   - Anota la URL del proyecto y la clave anónima (anon key)
-
-2. **Configurar variables de entorno**
-   - Crea un archivo `.env.local` en la raíz del proyecto
-   - Agrega las siguientes variables:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=tu_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_supabase_anon_key
-   ```
-
-3. **Ejecutar migración de base de datos**
-   - Ve al SQL Editor en tu dashboard de Supabase
-   - Copia y ejecuta el contenido de `supabase-migration.sql`
-   - Esto creará la tabla `posts` y las políticas de seguridad
-
-4. **Configurar Storage para imágenes**
-   - Ve a Storage en el dashboard de Supabase
-   - Crea un bucket llamado `blog-images`
-   - Configura el bucket como público
-   - Las políticas de acceso se configuran automáticamente con la migración
-
-5. **Crear usuario administrador**
-   - Ve a Authentication > Users en Supabase
-   - Crea un nuevo usuario con email y contraseña
-   - Este usuario podrá acceder a `/admin/login` y gestionar el blog
-
-### Panel de Administración
-
-- **Login**: `/admin/login` - Inicia sesión con tu cuenta de Supabase
-- **Dashboard**: `/admin/dashboard` - Lista y gestiona todos los artículos
-- **Nuevo artículo**: `/admin/posts/new` - Crea un nuevo artículo
-- **Editar artículo**: `/admin/posts/[id]` - Edita un artículo existente
-
-### Características del Blog
-
-- Editor WYSIWYG con TipTap
-- Subida de imágenes a Supabase Storage
-- Publicación/borrador de artículos
-- SEO optimizado con metadata dinámica
-- ISR (Incremental Static Regeneration) para mejor rendimiento
-
-## Notas
-
-- El proyecto usa Tailwind CSS v4 con PostCSS
-- Todos los componentes client-side están marcados con `'use client'`
-- Los colores personalizados están definidos en `app/globals.css`
-- El blog dinámico requiere configuración de Supabase para funcionar
+- Diseño responsive, animaciones (Framer Motion), SEO
+- Blog con Prisma + TipTap, metadata dinámica, ISR
+- Admin protegido (Supabase Auth), solo el admin puede modificar el blog

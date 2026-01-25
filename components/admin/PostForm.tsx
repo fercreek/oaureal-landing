@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/client';
 import Editor from './Editor';
 import { Save, X } from 'lucide-react';
+import { createPost, updatePost } from '@/app/actions/posts';
 
 interface Post {
   id?: string;
@@ -23,9 +23,9 @@ interface PostFormProps {
 
 export default function PostForm({ post }: PostFormProps) {
   const router = useRouter();
-  const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [formData, setFormData] = useState<Post>({
     title: post?.title || '',
     slug: post?.slug || '',
@@ -45,6 +45,7 @@ export default function PostForm({ post }: PostFormProps) {
         published: post.published,
         cover_image: post.cover_image || '',
       });
+      setSlugManuallyEdited(true);
     }
   }, [post]);
 
@@ -58,11 +59,19 @@ export default function PostForm({ post }: PostFormProps) {
   };
 
   const handleTitleChange = (title: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      title,
-      slug: prev.slug || generateSlug(title),
-    }));
+    setFormData((prev) => {
+      const newSlug = slugManuallyEdited ? prev.slug : generateSlug(title);
+      return {
+        ...prev,
+        title,
+        slug: newSlug,
+      };
+    });
+  };
+
+  const handleSlugChange = (slug: string) => {
+    setSlugManuallyEdited(true);
+    setFormData((prev) => ({ ...prev, slug }));
   };
 
   const handleSubmit = async (e: React.FormEvent, publish: boolean) => {
@@ -71,38 +80,25 @@ export default function PostForm({ post }: PostFormProps) {
     setError(null);
 
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        throw new Error('No autenticado');
-      }
-
-      const postData = {
-        ...formData,
+      const payload = {
+        title: formData.title,
+        slug: formData.slug,
+        content: formData.content,
+        excerpt: formData.excerpt,
         published: publish,
-        published_at: publish ? new Date().toISOString() : null,
-        author_id: user.id,
+        cover_image: formData.cover_image || undefined,
       };
 
       if (post?.id) {
-        const { error } = await supabase
-          .from('posts')
-          .update(postData)
-          .eq('id', post.id);
-
-        if (error) throw error;
+        await updatePost(post.id, payload);
       } else {
-        const { error } = await supabase.from('posts').insert([postData]);
-
-        if (error) throw error;
+        await createPost(payload);
       }
 
       router.push('/admin/dashboard');
       router.refresh();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Error al guardar');
       setLoading(false);
     }
   };
@@ -136,9 +132,7 @@ export default function PostForm({ post }: PostFormProps) {
         <input
           type="text"
           value={formData.slug}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, slug: e.target.value }))
-          }
+          onChange={(e) => handleSlugChange(e.target.value)}
           required
           className="w-full p-4 bg-black/50 border border-white/10 rounded-xl text-white outline-none focus:border-[#a5f0fa] transition-colors font-mono text-sm"
           placeholder="url-del-articulo"

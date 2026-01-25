@@ -33,6 +33,7 @@ export default function Footer() {
           <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between gap-6 text-[10px] text-gray-600 tracking-[0.2em] uppercase">
             <span>© 2026 OAUREAL LABS. TODOS LOS DERECHOS RESERVADOS.</span>
             <div className="flex gap-4">
+              <a href="/blog" className="hover:text-white">Blog</a>
               <a href="#" className="hover:text-white">Aviso Legal</a>
               <a href="#" className="hover:text-white">Privacidad</a>
             </div>

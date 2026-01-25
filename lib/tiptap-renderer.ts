@@ -1,3 +1,12 @@
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export function renderTipTapContent(content: string): string {
   try {
     const json = typeof content === 'string' ? JSON.parse(content) : content;
@@ -32,19 +41,37 @@ function renderNode(node: any): string {
   }
 
   if (node.type === 'text') {
-    let text = node.text || '';
+    let text = escapeHtml(node.text || '');
     if (node.marks) {
       node.marks.forEach((mark: any) => {
         if (mark.type === 'bold') {
           text = `<strong>${text}</strong>`;
         } else if (mark.type === 'italic') {
           text = `<em>${text}</em>`;
+        } else if (mark.type === 'strike') {
+          text = `<s>${text}</s>`;
+        } else if (mark.type === 'code') {
+          text = `<code class="bg-white/10 px-2 py-1 rounded text-[#a5f0fa]">${text}</code>`;
         } else if (mark.type === 'link') {
-          text = `<a href="${mark.attrs?.href || '#'}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+          text = `<a href="${escapeHtml(mark.attrs?.href || '#')}" target="_blank" rel="noopener noreferrer" class="text-[#a5f0fa] underline">${text}</a>`;
         }
       });
     }
     return text;
+  }
+
+  if (node.type === 'blockquote') {
+    const content = node.content?.map((child: any) => renderNode(child)).join('') || '';
+    return `<blockquote class="border-l-4 border-[#a5f0fa] pl-6 my-4 text-gray-400">${content}</blockquote>`;
+  }
+
+  if (node.type === 'codeBlock') {
+    const content = node.content?.map((child: any) => (child.type === 'text' ? escapeHtml(child.text || '') : renderNode(child))).join('') || '';
+    return `<pre class="bg-white/5 border border-white/10 rounded-xl p-6 my-4 overflow-x-auto"><code class="text-[#a5f0fa] text-sm">${content}</code></pre>`;
+  }
+
+  if (node.type === 'horizontalRule') {
+    return '<hr class="border-white/10 my-8" />';
   }
 
   if (node.type === 'bulletList') {
