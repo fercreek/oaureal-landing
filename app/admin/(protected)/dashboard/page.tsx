@@ -1,8 +1,6 @@
 import { requireAuth } from '@/lib/auth';
 import Link from 'next/link';
 import { Plus, Edit, Eye } from 'lucide-react';
-import LogoutButton from '@/components/admin/LogoutButton';
-import ColorPicker from '@/components/ui/ColorPicker';
 import { prisma } from '@/lib/prisma';
 
 export default async function DashboardPage() {
@@ -15,23 +13,19 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-bg text-text">
-      <ColorPicker showSecondary={true} position="fixed" />
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-4xl font-title mb-2 text-primary">Panel de Administración</h1>
             <p className="text-text-muted font-body">Gestiona los artículos del blog</p>
           </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/admin/posts/new"
-              className="flex items-center gap-2 px-6 py-3 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 transition-all"
-            >
-              <Plus size={18} />
-              Nuevo Artículo
-            </Link>
-            <LogoutButton />
-          </div>
+          <Link
+            href="/admin/posts/new"
+            className="flex items-center gap-2 px-6 py-3 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 transition-all"
+          >
+            <Plus size={18} />
+            Nuevo Artículo
+          </Link>
         </div>
 
         {!posts || posts.length === 0 ? (

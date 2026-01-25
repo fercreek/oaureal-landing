@@ -2,10 +2,12 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { Play, Pause } from 'lucide-react';
+import { useColorTheme } from '@/lib/hooks/useColorTheme';
 
 export default function AudioVisualizer() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const { theme } = useColorTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -55,7 +57,7 @@ export default function AudioVisualizer() {
 
       draw() {
         if (!ctx) return;
-        ctx.fillStyle = isPlaying ? '#a5f0fa' : '#84c0c8';
+        ctx.fillStyle = isPlaying ? theme.primary : theme.primaryDark;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -75,7 +77,7 @@ export default function AudioVisualizer() {
       });
 
       if (isPlaying) {
-        ctx.strokeStyle = '#a5f0fa';
+        ctx.strokeStyle = theme.primary;
         ctx.lineWidth = 2;
         ctx.beginPath();
         for (let i = 0; i < canvas!.width; i++) {
@@ -94,7 +96,7 @@ export default function AudioVisualizer() {
       cancelAnimationFrame(animationId);
       window.removeEventListener('resize', resize);
     };
-  }, [isPlaying]);
+  }, [isPlaying, theme]);
 
   return (
     <div className="relative w-full h-48 bg-black/50 rounded-2xl overflow-hidden border border-white/10 group">

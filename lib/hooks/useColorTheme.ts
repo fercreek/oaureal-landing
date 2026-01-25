@@ -12,6 +12,12 @@ interface ColorTheme {
   secondary?: string;
   secondaryLight?: string;
   secondaryDark?: string;
+  tertiary?: string;
+  tertiaryLight?: string;
+  tertiaryDark?: string;
+  bgDeep?: string;
+  bgDeepLight?: string;
+  bgDeepDark?: string;
   updatedAt?: string;
 }
 
@@ -65,8 +71,14 @@ function applyThemeToCss(theme: ColorTheme) {
   if (theme.secondaryLight) {
     document.documentElement.style.setProperty('--color-secondary-light', theme.secondaryLight);
   }
-  if (theme.secondaryDark) {
+    if (theme.secondaryDark) {
     document.documentElement.style.setProperty('--color-secondary-dark', theme.secondaryDark);
+  }
+  if (theme.tertiary) {
+    document.documentElement.style.setProperty('--color-tertiary', theme.tertiary);
+  }
+  if (theme.bgDeep) {
+    document.documentElement.style.setProperty('--color-bg-deep', theme.bgDeep);
   }
 }
 
@@ -122,6 +134,38 @@ export function useColorTheme() {
     saveThemeToStorage(newTheme);
   }, [theme]);
 
+  const setTertiaryColor = useCallback((hex: string) => {
+    if (!isValidHex(hex)) return;
+
+    const variations = generateColorVariations(hex);
+    const newTheme: ColorTheme = {
+      ...theme,
+      tertiary: variations.base,
+      tertiaryLight: variations.light,
+      tertiaryDark: variations.dark,
+    };
+
+    setTheme(newTheme);
+    applyThemeToCss(newTheme);
+    saveThemeToStorage(newTheme);
+  }, [theme]);
+
+  const setBgDeepColor = useCallback((hex: string) => {
+    if (!isValidHex(hex)) return;
+
+    const variations = generateColorVariations(hex);
+    const newTheme: ColorTheme = {
+      ...theme,
+      bgDeep: variations.base,
+      bgDeepLight: variations.light,
+      bgDeepDark: variations.dark,
+    };
+
+    setTheme(newTheme);
+    applyThemeToCss(newTheme);
+    saveThemeToStorage(newTheme);
+  }, [theme]);
+
   const resetColors = useCallback(() => {
     const defaultTheme = {
       primary: '#a5f0fa',
@@ -140,6 +184,8 @@ export function useColorTheme() {
       document.documentElement.style.removeProperty('--color-secondary');
       document.documentElement.style.removeProperty('--color-secondary-light');
       document.documentElement.style.removeProperty('--color-secondary-dark');
+      document.documentElement.style.removeProperty('--color-tertiary');
+      document.documentElement.style.removeProperty('--color-bg-deep');
     }
   }, []);
 
@@ -153,6 +199,8 @@ export function useColorTheme() {
     isLoaded,
     setPrimaryColor,
     setSecondaryColor,
+    setTertiaryColor,
+    setBgDeepColor,
     resetColors,
     hasCustomColors: hasCustomColors(),
   };

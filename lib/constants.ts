@@ -1,7 +1,9 @@
 export const COLORS = {
   bg: '#000000',
-  primary: '#a5f0fa',
-  secondary: '#54008c',
+  primary: '#a5f0fa', // Turquesa claro
+  secondary: '#54008c', // Púrpura oscuro
+  tertiary: '#520f5e', // Púrpura medio
+  deepBlue: '#011797', // Azul intenso
   accent: '#a5f0fa',
   surface: '#121212',
 };

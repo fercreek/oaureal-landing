@@ -3,9 +3,6 @@
 
 :root {
   color-scheme: dark;
-}
-
-@theme inline {
   --color-bg: #000000;
   --color-text: #ffffff;
   --color-text-muted: #e0e0e0;
@@ -13,11 +10,34 @@
   --color-primary-light: #b7f3fb;
   --color-primary-dark: #84c0c8;
   --color-bg-secondary: #0a0a0a;
+  --color-bg-deep: #011797;
   --color-text-secondary: #a0a0a0;
+  --color-secondary: #54008c;
+  --color-tertiary: #520f5e;
+  --background: #000000;
+  --foreground: #ffffff;
   --font-family-logo: var(--font-cormorant);
   --font-family-title: var(--font-michroma);
   --font-family-subtitle: var(--font-exo);
   --font-family-body: var(--font-roboto);
+}
+
+@theme {
+  --color-bg: var(--color-bg);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-primary: var(--color-primary);
+  --color-primary-light: var(--color-primary-light);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-deep: var(--color-bg-deep);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-secondary: var(--color-secondary);
+  --color-tertiary: var(--color-tertiary);
+  --font-family-logo: var(--font-family-logo);
+  --font-family-title: var(--font-family-title);
+  --font-family-subtitle: var(--font-family-subtitle);
+  --font-family-body: var(--font-family-body);
 }
 
 .font-logo {
@@ -34,11 +54,6 @@
 
 .font-body {
   font-family: var(--font-family-body), sans-serif;
-}
-
-:root {
-  --background: #000000;
-  --foreground: #ffffff;
 }
 
 html {

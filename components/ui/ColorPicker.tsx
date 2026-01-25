@@ -16,7 +16,7 @@ export default function ColorPicker({
   compact = false,
   position = 'fixed',
 }: ColorPickerProps) {
-  const { theme, setPrimaryColor, setSecondaryColor, resetColors, hasCustomColors, isLoaded } = useColorTheme();
+  const { theme, setPrimaryColor, setSecondaryColor, setTertiaryColor, setBgDeepColor, resetColors, hasCustomColors, isLoaded } = useColorTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   if (!isLoaded) return null;
@@ -46,6 +46,8 @@ export default function ColorPicker({
                 theme={theme}
                 setPrimaryColor={setPrimaryColor}
                 setSecondaryColor={setSecondaryColor}
+                setTertiaryColor={setTertiaryColor}
+                setBgDeepColor={setBgDeepColor}
                 resetColors={resetColors}
                 hasCustomColors={hasCustomColors}
                 showSecondary={showSecondary}
@@ -78,6 +80,8 @@ export default function ColorPicker({
         theme={theme}
         setPrimaryColor={setPrimaryColor}
         setSecondaryColor={setSecondaryColor}
+        setTertiaryColor={setTertiaryColor}
+        setBgDeepColor={setBgDeepColor}
         resetColors={resetColors}
         hasCustomColors={hasCustomColors}
         showSecondary={showSecondary}
@@ -94,9 +98,13 @@ interface ColorPickerContentProps {
     secondary?: string;
     secondaryLight?: string;
     secondaryDark?: string;
+    tertiary?: string;
+    bgDeep?: string;
   };
   setPrimaryColor: (hex: string) => void;
   setSecondaryColor: (hex: string) => void;
+  setTertiaryColor: (hex: string) => void;
+  setBgDeepColor: (hex: string) => void;
   resetColors: () => void;
   hasCustomColors: boolean;
   showSecondary: boolean;
@@ -106,12 +114,49 @@ function ColorPickerContent({
   theme,
   setPrimaryColor,
   setSecondaryColor,
+  setTertiaryColor,
+  setBgDeepColor,
   resetColors,
   hasCustomColors,
   showSecondary,
 }: ColorPickerContentProps) {
+  const PRESET_COLORS = [
+    { name: 'Turquesa', value: '#a5f0fa' },
+    { name: 'Azul Intenso', value: '#011797' },
+    { name: 'Púrpura Oscuro', value: '#54008c' },
+    { name: 'Púrpura Medio', value: '#520f5e' },
+  ];
+
   return (
     <div className="space-y-6">
+      <div>
+        <label className="block text-sm font-subtitle font-bold mb-2 text-text-muted">
+          Paleta de Temas (Cambiar Color Principal)
+        </label>
+        <div className="grid grid-cols-4 gap-2 mb-4">
+          {PRESET_COLORS.map((color) => (
+            <button
+              key={color.value}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setPrimaryColor(color.value);
+              }}
+              className="group relative w-full aspect-square rounded-lg border border-white/10 hover:scale-105 transition-transform cursor-pointer"
+              style={{ backgroundColor: color.value }}
+              title={`Usar ${color.name} como color principal`}
+            >
+              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity ring-2 ring-white/50 pointer-events-none" />
+              {theme.primary.toLowerCase() === color.value.toLowerCase() && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-2 h-2 bg-white rounded-full shadow-lg" />
+                </div>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+      
       <div>
         <label className="block text-sm font-subtitle font-bold mb-2 text-text-muted">
           Color Primario
