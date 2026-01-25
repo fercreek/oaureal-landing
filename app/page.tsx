@@ -13,6 +13,7 @@ import FAQ from '@/components/sections/FAQ';
 // import Investment from '@/components/sections/Investment';
 import Footer from '@/components/sections/Footer';
 import StickyCTA from '@/components/sections/StickyCTA';
+import ColorPicker from '@/components/ui/ColorPicker';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,8 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-[#a5f0fa] selection:text-black font-sans">
+    <div className="min-h-screen bg-bg text-text font-body">
+      <ColorPicker compact={true} position="fixed" />
       <Navbar />
       <Hero />
       <About />

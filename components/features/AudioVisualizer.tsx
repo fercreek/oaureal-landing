@@ -55,7 +55,7 @@ export default function AudioVisualizer() {
 
       draw() {
         if (!ctx) return;
-        ctx.fillStyle = isPlaying ? '#00ffff' : '#00cccc';
+        ctx.fillStyle = isPlaying ? '#a5f0fa' : '#84c0c8';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -75,7 +75,7 @@ export default function AudioVisualizer() {
       });
 
       if (isPlaying) {
-        ctx.strokeStyle = '#00ffff';
+        ctx.strokeStyle = '#a5f0fa';
         ctx.lineWidth = 2;
         ctx.beginPath();
         for (let i = 0; i < canvas!.width; i++) {

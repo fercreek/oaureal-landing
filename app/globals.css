@@ -9,9 +9,9 @@
   --color-bg: #000000;
   --color-text: #ffffff;
   --color-text-muted: #e0e0e0;
-  --color-primary: #00ffff;
-  --color-primary-light: #33ffff;
-  --color-primary-dark: #00cccc;
+  --color-primary: #a5f0fa;
+  --color-primary-light: #b7f3fb;
+  --color-primary-dark: #84c0c8;
   --color-bg-secondary: #0a0a0a;
   --color-text-secondary: #a0a0a0;
   --font-family-logo: var(--font-cormorant);

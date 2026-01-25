@@ -2,6 +2,7 @@ import { requireAuth } from '@/lib/auth';
 import Link from 'next/link';
 import { Plus, Edit, Eye } from 'lucide-react';
 import LogoutButton from '@/components/admin/LogoutButton';
+import ColorPicker from '@/components/ui/ColorPicker';
 import { prisma } from '@/lib/prisma';
 
 export default async function DashboardPage() {
@@ -14,6 +15,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-bg text-text">
+      <ColorPicker showSecondary={true} position="fixed" />
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex items-center justify-between mb-8">
           <div>

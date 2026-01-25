@@ -238,6 +238,12 @@
 
 ## Troubleshooting
 
+### Error: P1001 "Can't reach database server"
+- **Proyecto Supabase pausado**: En plan gratuito, los proyectos se pausan tras inactividad. Entra al [dashboard de Supabase](https://supabase.com/dashboard), abre tu proyecto y haz clic en **"Restore project"** si aparece pausado.
+- **Red/firewall**: Comprueba que tu red permite conexiones salientes a `db.xxxxx.supabase.co` (puertos 5432 y 6543).
+- **Connection strings**: Revisa que `DIRECT_URL` usa puerto **5432** y el host `db.<project-ref>.supabase.co`. La contraseña debe estar URL-encoded si tiene caracteres especiales.
+- **Build local sin DB**: Si solo quieres comprobar que el frontend compila (sin migraciones), usa `npm run build:next`. El comando completo `npm run build` requiere que la base de datos esté accesible.
+
 ### Error: "Invalid database string"
 - Verifica que `DATABASE_URL` y `DIRECT_URL` tienen la contraseña correcta
 - Verifica que no hay espacios extra en las URLs
@@ -263,3 +269,42 @@
 - Verifica que el usuario existe en Supabase **Authentication** → **Users**
 - Verifica que usas la **Legacy anon** key (JWT) en `NEXT_PUBLIC_SUPABASE_ANON_KEY`, no la "Publishable key" (`sb_publishable_...`)
 - Verifica que `NEXT_PUBLIC_SUPABASE_URL` coincide con tu proyecto (ej. `https://bwurpiislnbvpehdpapv.supabase.co`)
+
+---
+
+## Componente de Personalización de Colores
+
+El proyecto incluye un componente `ColorPicker` (`components/ui/ColorPicker.tsx`) que permite cambiar los colores del design system de forma dinámica.
+
+### Características
+
+- **Cambio dinámico**: Permite cambiar el color primario (y opcionalmente el secundario) desde la UI
+- **Generación automática**: Genera variaciones light/dark automáticamente desde el color base
+- **Persistencia**: Los cambios se guardan en `localStorage` del navegador y persisten entre sesiones
+- **Actualización en tiempo real**: Actualiza las CSS variables (`--color-primary`, `--color-primary-light`, `--color-primary-dark`) dinámicamente, afectando todos los componentes inmediatamente
+
+### Ubicación
+
+- **Landing** (`app/page.tsx`): Botón flotante compacto en la esquina inferior derecha
+- **Admin Dashboard** (`app/admin/(protected)/dashboard/page.tsx`): Panel completo con selector de color secundario
+
+### Uso
+
+El componente está integrado por defecto. Para usarlo en otras páginas:
+
+```tsx
+import ColorPicker from '@/components/ui/ColorPicker';
+
+// Versión completa
+<ColorPicker showSecondary={true} position="fixed" />
+
+// Versión compacta (botón flotante)
+<ColorPicker compact={true} position="fixed" />
+```
+
+### Notas importantes
+
+- **Cambios temporales**: Los cambios realizados con `ColorPicker` son temporales y solo afectan al navegador del usuario (guardados en `localStorage`). No modifican el código fuente.
+- **Cambios permanentes**: Para cambios permanentes que afecten a todos los usuarios, edita `app/globals.css` directamente y actualiza las variables CSS en `@theme inline`.
+- **localStorage**: Los cambios se guardan con la clave `oaureal-color-theme`. Si el usuario limpia el `localStorage`, los colores vuelven a los valores por defecto de `globals.css`.
+- **Reset**: El componente incluye un botón "Restaurar Colores por Defecto" que elimina los valores de `localStorage` y restaura los valores originales de `globals.css`.
