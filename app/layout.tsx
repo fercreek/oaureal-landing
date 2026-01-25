@@ -1,6 +1,31 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { Michroma, Roboto, Cormorant_Garamond, Exo_2 } from "next/font/google";
 import "./globals.css";
+
+const michroma = Michroma({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-michroma",
+});
+
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  variable: "--font-roboto",
+});
+
+const cormorant = Cormorant_Garamond({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+});
+
+const exo = Exo_2({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-exo",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -62,7 +87,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="antialiased bg-black">
+      <body
+        className={`antialiased bg-bg ${michroma.variable} ${roboto.variable} ${cormorant.variable} ${exo.variable}`}
+      >
         {children}
         <Analytics />
       </body>

@@ -1,0 +1,187 @@
+# Oaureal Design System
+
+## Reference Links
+- [Cursor Documentation](https://cursor.com/docs) - Keep updated with latest Cursor features
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Official Tailwind CSS documentation
+- Design guide images: `.cursor/projects/.../assets/WhatsApp_Image_2026-01-25_at_10.04.02_AM__1_-a76fc263-37a9-4248-bb90-574c6abf96ce.png` and `WhatsApp_Image_2026-01-25_at_10.04.02_AM-a9ffd77a-08fb-4cb0-b294-31c8c448c0f4.png`
+
+## Core Principle
+
+**Client requirement:** "Negro el fondo y uno o dos colores" — "fondo negro y como un color medio neón". **Important color:** Celeste neónsito (primary color for landing).
+
+The design system is structured with a **primary color group** centralized in `app/globals.css` to facilitate constant color modifications.
+
+---
+
+## Typography
+
+### Font Roles
+
+**Logo – Palatino (alternative: Cormorant Garamond or Lora):**
+- Large, prominent. Primary color (celeste neónsito / `--color-primary`) on black background.
+- Soft glow or highlights using `--color-primary-light`; avoid long texts.
+- Load via `next/font/google` as `Cormorant Garamond` or `Lora`.
+
+**Titles – Michroma:**
+- Medium–large size, high impact. Primary color (celeste neónsito / `--color-primary`) on black background.
+- For banners, highlighted sections, H1/H2.
+- The celeste neon glow on black creates the desired "medium neon" effect.
+- Load via `next/font/google` as `Michroma`.
+
+**Subtitles – Lovelo (alternative: Exo 2 or Nunito):**
+- Medium size, visual balance. Primary color (celeste neónsito / `--color-primary`) on black background.
+- For CTAs, menus, cards; no strong glow to avoid competing with titles.
+- Load via `next/font/google` as `Exo 2` or `Nunito`.
+
+**Body – Roboto:**
+- 16–18px web size. White (#FFFFFF) or light gray (#E0E0E0) on black background.
+- No light effects; primary color accents only on keywords or links.
+- Load via `next/font/google` as `Roboto`.
+
+### Typography Hierarchy
+
+- Logo → sophistication
+- Titles → futuristic impact
+- Subtitles → balance
+- Body → readability
+
+**Rule:** Do not use all typography styles in the same block; "less is more".
+
+### Implementation
+
+Use utility classes: `font-logo`, `font-title`, `font-subtitle`, `font-body`, and sizes like `text-title-lg`, `text-title-md`, `text-subtitle`, `text-body`.
+
+---
+
+## Color Palette
+
+### Primary Group (Easy to Modify)
+
+**Primary Color (Celeste Neónsito):**
+- `--color-primary`: #00FFFF or #0FF0FC (celeste neónsito — important landing color, easy to change)
+- `--color-primary-light`: Lighter variation of celeste neon (e.g., #33FFFF) for hovers/glows
+- `--color-primary-dark`: Darker variation of celeste neon (e.g., #00CCCC) for active states
+
+**Background (Base):**
+- `--color-bg`: #000000 (pure black — client requirement)
+
+**Text (Readability on Black):**
+- `--color-text`: #FFFFFF (pure white for titles and main text)
+- `--color-text-muted`: #E0E0E0 or #B0B0B0 (light gray for secondary/body text)
+
+### Secondary Group (Optional, Only if Needed)
+
+**Secondary Color (If a Second Neon is Required):**
+- `--color-secondary`: #A020F0 or #D100F7 (purple/fuchsia neon — only if needed)
+- `--color-secondary-light`: Lighter variation
+- `--color-secondary-dark`: Darker variation
+
+**Background Variations (Only if Necessary):**
+- `--color-bg-secondary`: #0A0A0A (slightly lighter black for cards/sections, only if subtle contrast is needed)
+- `--color-text-secondary`: #A0A0A0 (medium gray for labels/placeholders)
+
+### Color Rules
+
+- The **primary group** (`--color-primary` and variations) is the important color and must be centralized in `globals.css` to facilitate constant changes.
+- Celeste neónsito is the primary landing color.
+- Keep the palette simple: black background + celeste neon primary + white/gray text.
+- Avoid intermediate colors that dilute the neon impact on black.
+
+### Tailwind Integration
+
+Map these tokens in Tailwind v4 via `@theme` to use as `bg-primary`, `text-primary`, `bg-primary-light`, `border-primary`, etc. This allows changing the entire primary color by modifying only `--color-primary` in `globals.css`.
+
+---
+
+## General Style Guidelines
+
+### Background
+- Pure black (#000000) as mandatory base. Highlights neon colors.
+
+### Primary Color (Celeste Neónsito)
+- Important landing color. Must be in the **primary group** (`--color-primary` and variations) centralized in `globals.css` to facilitate constant changes.
+- Use with moderation for maximum impact: main buttons, highlighted titles, borders/glows on interactive elements.
+- The celeste neon glow on black creates the "medium neon" effect the client seeks.
+
+### Gradients and Glow
+- Only on titles, main buttons, or key elements. The celeste neon glow on black is the desired effect. Avoid saturation.
+
+### Particles/Spirals
+- If added later, combine with Michroma (titles), not with Roboto (body).
+
+### Contrast
+- White texts (#FFFFFF) or light grays (#E0E0E0) on black ensure readability. Celeste neon on black has high contrast.
+- Review WCAG where applicable.
+
+### Flexibility
+- The primary group must be easy to modify. Changing `--color-primary` in `globals.css` should automatically update all components using `bg-primary`, `text-primary`, `border-primary`, etc.
+
+---
+
+## Web Adaptation
+
+### Design Tokens
+- Tokens in `app/globals.css` (variables `--color-*`, `--font-*`) and Tailwind `@theme`.
+- Fonts via `next/font/google`; alternatives for Palatino/Lovelo if not available (Cormorant/Lora, Exo 2/Nunito).
+- Use utility classes `font-logo`, `font-title`, `font-subtitle`, `font-body` and color utilities (`bg-primary`, `text-primary`, etc.).
+
+### Responsive Design
+- Mobile-first approach
+- Use responsive prefixes: `md:`, `lg:`, `xl:`
+- Adjust text sizes responsively: `text-5xl md:text-8xl`
+
+### Accessibility
+- Maintain proper heading hierarchy (h1 → h2 → h3)
+- Ensure keyboard navigation works
+- Provide alt text for images
+- Ensure color contrast ratios meet WCAG standards
+- Use ARIA labels when needed
+- Test with screen readers
+
+### Selection
+- Use primary color (celeste neónsito) for `::selection` background.
+
+---
+
+## Component Usage Guidelines
+
+### Buttons
+- **Primary CTA:** Solid primary color background with white text, rounded corners.
+- **Secondary/Outline:** Transparent background with primary color border and white/primary text, rounded corners.
+
+### Cards/Panels
+- Dark background (black or `--color-bg-secondary` if subtle contrast needed), rounded corners.
+- Primary color borders or glows for emphasis.
+- White titles, light gray body text.
+
+### Navigation
+- Minimalist top navigation with white text links and primary color CTA button.
+
+### Icons
+- Simple, line-art or glyph-based icons, usually white or primary color.
+- Sometimes within glowing circular or square backgrounds using primary color.
+
+---
+
+## Consistency Rules
+
+1. **Background:** Pure black (#000000 / `--color-bg`) as mandatory base throughout the application. Only use `--color-bg-secondary` (#0A0A0A) if subtle contrast is needed in cards/sections, but keep black as dominant.
+
+2. **Primary Color:** Use celeste neónsito with moderation: main buttons, highlighted titles, borders/glows on interactive elements. The "medium neon" effect comes from celeste neon contrast on black.
+
+3. **Gradients and Glow:** Only on titles (Michroma), CTA buttons, or key elements. The celeste neon glow on black is the desired effect. Avoid saturation.
+
+4. **Text:** White (#FFFFFF) for titles/main, light gray (#E0E0E0/#B0B0B0) for body. Ensures readability on black.
+
+5. **Contrast:** White/gray texts on black have high contrast. Celeste neon on black also has high contrast. Review WCAG where applicable.
+
+6. **Flexibility:** The primary group must be easy to modify. Changing `--color-primary` in `globals.css` should automatically update all components using `bg-primary`, `text-primary`, `border-primary`, etc.
+
+---
+
+## File Locations
+
+- Design tokens: `app/globals.css`
+- Font loading: `app/layout.tsx`
+- Constants (if needed): `lib/constants.ts`
+- Components: `components/sections/`, `components/features/`, `components/ui/`

@@ -4,6 +4,7 @@
 - [Cursor Documentation](https://cursor.com/docs) - Keep updated with latest Cursor features
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Official Tailwind CSS documentation
 - [Tailwind CSS v4 Docs](https://tailwindcss.com/docs/v4-beta) - Latest Tailwind v4 features
+- [Design System Rules](.cursor/rules/design-system.mdc) - Follow design-system.mdc for typography, color palette, and effects
 
 ## Utility Classes
 - Use Tailwind utility classes instead of custom CSS when possible
@@ -11,14 +12,17 @@
 - Use responsive prefixes: `md:`, `lg:`, `xl:` for mobile-first design
 
 ## Custom Colors
+- Follow [design-system.mdc](.cursor/rules/design-system.mdc) for color palette, especially the **primary group** (`--color-primary` and variations)
 - Define custom colors in `app/globals.css` using CSS variables
 - Map CSS variables to Tailwind theme in `@theme inline` block
-- Use semantic color names matching Oaureal brand:
-  - `bg` / `text-bg`: `#000000` (black background)
-  - `primary`: `#011797` (deep blue)
-  - `secondary`: `#54008c` (purple)
-  - `accent`: `#a5f0fa` (cyan/teal accent)
-  - `surface`: `#121212` (dark surface)
+- Use only design system tokens `--color-*` / Tailwind classes (`bg-primary`, `text-primary`, `border-primary`, etc.); avoid loose hex values
+- The primary group must be centralized to facilitate constant changes
+- Color tokens matching Oaureal design system:
+  - `bg` / `text-bg`: `#000000` (black background — mandatory base)
+  - `primary` / `text-primary` / `border-primary`: Celeste neónsito (`--color-primary`) — important landing color
+  - `primary-light` / `primary-dark`: Variations for hovers, glows, active states
+  - `text` / `text-muted`: White (#FFFFFF) and light gray (#E0E0E0) for readability on black
+  - `secondary` (optional): Only if a second neon color is needed
 
 ## Class Organization
 - Sort classes by: layout → spacing → typography → colors → effects
@@ -63,10 +67,14 @@
 - Black backgrounds: `bg-black`, `bg-[#050505]` for depth variation
 
 ### Typography
-- Use `font-serif` for headings and brand elements
-- Use `font-mono` for technical/UI elements (tracking-widest for uppercase)
-- Use `tracking-[0.3em]` for spaced-out uppercase text
-- Use `italic` for emphasis in headings
+- Follow [design-system.mdc](.cursor/rules/design-system.mdc) for typography roles
+- Replace generic "font-serif / font-mono" with design system roles: `font-logo`, `font-title`, `font-subtitle`, `font-body`
+- Use `font-logo` (Cormorant/Lora) for brand logo
+- Use `font-title` (Michroma) for headings, H1, H2, banners
+- Use `font-subtitle` (Exo 2/Nunito) for CTAs, labels, secondary text
+- Use `font-body` (Roboto) for paragraphs, descriptions, blog content
+- Use `tracking-[0.3em]` for spaced-out uppercase text when needed
+- Use `italic` for emphasis in headings when appropriate
 
 ### Spacing & Layout
 - Use consistent padding: `p-6`, `p-8`, `p-10` for sections
@@ -75,10 +83,12 @@
 - Use `py-24` for section vertical padding
 
 ### Effects & Animations
-- Use `backdrop-blur-md` or `backdrop-blur-xl` for glassmorphism
+- Use `backdrop-blur-md` or `backdrop-blur-xl` for glassmorphism when needed
 - Use `border-white/5` or `border-white/10` for subtle borders
 - Use `bg-white/5` or `bg-white/10` for subtle overlays
-- Use shadow utilities: `shadow-[0_0_20px_#a5f0fa]` for glow effects
+- Use shadow utilities with primary color: `shadow-[0_0_20px_var(--color-primary)]` or `shadow-primary` for glow effects
+- Gradients and glow only on titles (Michroma), CTA buttons, or key elements
+- Avoid saturation; the celeste neon glow on black is the desired effect
 
 ### Responsive Design
 - Mobile-first approach: base styles for mobile, then `md:`, `lg:` breakpoints

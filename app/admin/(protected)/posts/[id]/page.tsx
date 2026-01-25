@@ -28,16 +28,16 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-bg text-text">
       <div className="max-w-4xl mx-auto px-6 py-12">
         <Link
           href="/admin/dashboard"
-          className="inline-flex items-center gap-2 text-[#a5f0fa] hover:text-[#a5f0fa]/80 transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8"
         >
           <ArrowLeft size={18} />
-          <span className="text-sm font-bold">Volver al dashboard</span>
+          <span className="text-sm font-subtitle font-bold">Volver al dashboard</span>
         </Link>
-        <h1 className="text-4xl font-serif mb-8">Editar Artículo</h1>
+        <h1 className="text-4xl font-title mb-8 text-primary">Editar Artículo</h1>
         <PostForm post={formPost} />
       </div>
     </div>

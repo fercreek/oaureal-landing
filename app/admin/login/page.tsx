@@ -39,28 +39,28 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
+    <div className="min-h-screen bg-bg text-text flex items-center justify-center px-6">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#011797] to-[#a5f0fa] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-primary-light flex items-center justify-center">
               <Brain size={20} color="white" />
             </div>
-            <span className="text-2xl font-bold tracking-tighter uppercase italic">Oaureal</span>
+            <span className="text-2xl font-logo font-bold tracking-tighter uppercase italic text-primary">Oaureal</span>
           </div>
-          <h1 className="text-3xl font-serif mb-2">Panel de Administración</h1>
-          <p className="text-gray-400">Inicia sesión para gestionar el blog</p>
+          <h1 className="text-3xl font-title mb-2 text-primary">Panel de Administración</h1>
+          <p className="text-text-muted font-body">Inicia sesión para gestionar el blog</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
           {error && (
-            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/50 text-red-400 text-sm">
+            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/50 text-red-400 text-sm font-body">
               {error}
             </div>
           )}
 
           <div>
-            <label htmlFor="email" className="block text-sm font-bold mb-2 text-gray-300">
+            <label htmlFor="email" className="block text-sm font-subtitle font-bold mb-2 text-text-muted">
               Email
             </label>
             <input
@@ -69,13 +69,13 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full p-4 bg-black/50 border border-white/10 rounded-xl text-white outline-none focus:border-[#a5f0fa] transition-colors"
+              className="w-full p-4 bg-bg-secondary border border-white/10 rounded-xl text-text outline-none focus:border-primary transition-colors font-body"
               placeholder="tu@email.com"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-bold mb-2 text-gray-300">
+            <label htmlFor="password" className="block text-sm font-subtitle font-bold mb-2 text-text-muted">
               Contraseña
             </label>
             <input
@@ -84,7 +84,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full p-4 bg-black/50 border border-white/10 rounded-xl text-white outline-none focus:border-[#a5f0fa] transition-colors"
+              className="w-full p-4 bg-bg-secondary border border-white/10 rounded-xl text-text outline-none focus:border-primary transition-colors font-body"
               placeholder="••••••••"
             />
           </div>
@@ -92,7 +92,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-[#a5f0fa] text-black font-bold rounded-xl shadow-[0_0_20px_#a5f0fa] hover:opacity-90 disabled:opacity-50 transition-all"
+            className="w-full py-4 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 disabled:opacity-50 transition-all"
           >
             {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
           </button>

@@ -16,7 +16,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
   return (
     <motion.div 
-      className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[100] bg-bg flex flex-col items-center justify-center"
       exit={{ opacity: 0, transition: { duration: 0.8 } }}
     >
       <motion.div
@@ -28,15 +28,15 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         className="w-32 h-32 relative"
       >
-        <div className="absolute inset-0 rounded-full border-2 border-[#a5f0fa] opacity-20" />
+        <div className="absolute inset-0 rounded-full border-2 border-primary opacity-20" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <Brain size={64} color="#a5f0fa" />
+          <Brain size={64} className="text-primary" />
         </div>
       </motion.div>
       <motion.p 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="mt-8 text-[#a5f0fa] tracking-[0.3em] font-light text-sm"
+        className="mt-8 text-primary tracking-[0.3em] font-subtitle font-light text-sm"
       >
         CALIBRANDO FRECUENCIAS
       </motion.p>

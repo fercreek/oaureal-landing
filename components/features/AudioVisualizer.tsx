@@ -55,7 +55,7 @@ export default function AudioVisualizer() {
 
       draw() {
         if (!ctx) return;
-        ctx.fillStyle = isPlaying ? '#a5f0fa' : '#54008c';
+        ctx.fillStyle = isPlaying ? '#00ffff' : '#00cccc';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -75,7 +75,7 @@ export default function AudioVisualizer() {
       });
 
       if (isPlaying) {
-        ctx.strokeStyle = '#a5f0fa';
+        ctx.strokeStyle = '#00ffff';
         ctx.lineWidth = 2;
         ctx.beginPath();
         for (let i = 0; i < canvas!.width; i++) {
@@ -102,12 +102,12 @@ export default function AudioVisualizer() {
       <div className="absolute inset-0 flex items-center justify-center">
         <button 
           onClick={() => setIsPlaying(!isPlaying)}
-          className="w-16 h-16 rounded-full bg-[#a5f0fa] flex items-center justify-center shadow-[0_0_20px_#a5f0fa] transition-transform hover:scale-110 active:scale-95 z-10"
+          className="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_0_20px_var(--color-primary)] transition-transform hover:scale-110 active:scale-95 z-10"
         >
           {isPlaying ? <Pause color="black" fill="black" /> : <Play color="black" fill="black" className="ml-1" />}
         </button>
       </div>
-      <div className="absolute bottom-4 left-6 text-xs text-[#a5f0fa] opacity-60 font-mono tracking-widest">
+      <div className="absolute bottom-4 left-6 text-xs text-primary opacity-60 font-subtitle tracking-widest">
         WEB AUDIO ENGINE V.2.6
       </div>
     </div>

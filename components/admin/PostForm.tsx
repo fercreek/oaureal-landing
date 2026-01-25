@@ -112,7 +112,7 @@ export default function PostForm({ post }: PostFormProps) {
       )}
 
       <div>
-        <label className="block text-sm font-bold mb-2 text-gray-300">
+        <label className="block text-sm font-subtitle font-bold mb-2 text-text-muted">
           Título *
         </label>
         <input
@@ -120,13 +120,13 @@ export default function PostForm({ post }: PostFormProps) {
           value={formData.title}
           onChange={(e) => handleTitleChange(e.target.value)}
           required
-          className="w-full p-4 bg-black/50 border border-white/10 rounded-xl text-white outline-none focus:border-[#a5f0fa] transition-colors"
+          className="w-full p-4 bg-bg-secondary border border-white/10 rounded-xl text-text outline-none focus:border-primary transition-colors font-body"
           placeholder="Título del artículo"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2 text-gray-300">
+        <label className="block text-sm font-subtitle font-bold mb-2 text-text-muted">
           Slug *
         </label>
         <input
@@ -134,16 +134,16 @@ export default function PostForm({ post }: PostFormProps) {
           value={formData.slug}
           onChange={(e) => handleSlugChange(e.target.value)}
           required
-          className="w-full p-4 bg-black/50 border border-white/10 rounded-xl text-white outline-none focus:border-[#a5f0fa] transition-colors font-mono text-sm"
+          className="w-full p-4 bg-bg-secondary border border-white/10 rounded-xl text-text outline-none focus:border-primary transition-colors font-mono text-sm"
           placeholder="url-del-articulo"
         />
-        <p className="text-xs text-gray-500 mt-2">
+        <p className="text-xs text-text-secondary mt-2 font-body">
           URL amigable para el artículo (ej: guia-ondas-cerebrales)
         </p>
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2 text-gray-300">
+        <label className="block text-sm font-subtitle font-bold mb-2 text-text-muted">
           Extracto *
         </label>
         <textarea
@@ -153,13 +153,13 @@ export default function PostForm({ post }: PostFormProps) {
           }
           required
           rows={3}
-          className="w-full p-4 bg-black/50 border border-white/10 rounded-xl text-white outline-none focus:border-[#a5f0fa] transition-colors"
+          className="w-full p-4 bg-bg-secondary border border-white/10 rounded-xl text-text outline-none focus:border-primary transition-colors font-body"
           placeholder="Breve descripción del artículo (aparece en la lista del blog)"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2 text-gray-300">
+        <label className="block text-sm font-subtitle font-bold mb-2 text-text-muted">
           Imagen de portada (URL)
         </label>
         <input
@@ -168,13 +168,13 @@ export default function PostForm({ post }: PostFormProps) {
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, cover_image: e.target.value }))
           }
-          className="w-full p-4 bg-black/50 border border-white/10 rounded-xl text-white outline-none focus:border-[#a5f0fa] transition-colors"
+          className="w-full p-4 bg-bg-secondary border border-white/10 rounded-xl text-text outline-none focus:border-primary transition-colors font-body"
           placeholder="https://ejemplo.com/imagen.jpg"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2 text-gray-300">
+        <label className="block text-sm font-subtitle font-bold mb-2 text-text-muted">
           Contenido *
         </label>
         <Editor
@@ -190,7 +190,7 @@ export default function PostForm({ post }: PostFormProps) {
           type="button"
           onClick={(e) => handleSubmit(e, false)}
           disabled={loading}
-          className="flex items-center gap-2 px-6 py-3 border border-white/20 text-white rounded-xl hover:bg-white/10 transition-all disabled:opacity-50"
+          className="flex items-center gap-2 px-6 py-3 border border-white/20 text-text rounded-xl hover:bg-white/10 transition-all disabled:opacity-50 font-subtitle"
         >
           <Save size={18} />
           Guardar Borrador
@@ -199,7 +199,7 @@ export default function PostForm({ post }: PostFormProps) {
           type="button"
           onClick={(e) => handleSubmit(e, true)}
           disabled={loading}
-          className="flex items-center gap-2 px-6 py-3 bg-[#a5f0fa] text-black font-bold rounded-xl shadow-[0_0_20px_#a5f0fa] hover:opacity-90 transition-all disabled:opacity-50"
+          className="flex items-center gap-2 px-6 py-3 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 transition-all disabled:opacity-50"
         >
           <Save size={18} />
           Publicar

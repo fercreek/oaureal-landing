@@ -5,11 +5,11 @@ import { Brain, ShieldCheck, Moon, Target, Zap } from 'lucide-react';
 
 export default function Evidence() {
   return (
-    <section id="science" className="py-24 px-6 bg-black overflow-hidden">
+    <section id="science" className="py-24 px-6 bg-bg overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-serif mb-4 italic">Basado en evidencia científica</h2>
-          <p className="text-gray-500">Neurociencia aplicada a la salud mental</p>
+          <h2 className="text-4xl font-title mb-4 italic text-primary">Basado en evidencia científica</h2>
+          <p className="text-text-muted font-body">Neurociencia aplicada a la salud mental</p>
         </div>
         
         <div className="grid md:grid-cols-4 gap-6">
@@ -24,32 +24,32 @@ export default function Evidence() {
               whileHover={{ y: -10 }}
               className="p-8 rounded-3xl bg-white/5 border border-white/10 text-center"
             >
-              <div className="mb-4 flex justify-center text-[#a5f0fa] opacity-50">{stat.icon}</div>
-              <h3 className="text-4xl font-bold text-white mb-2">{stat.title}</h3>
-              <p className="text-xs text-gray-500 uppercase tracking-widest">{stat.sub}</p>
+              <div className="mb-4 flex justify-center text-primary opacity-50">{stat.icon}</div>
+              <h3 className="text-4xl font-bold text-text mb-2">{stat.title}</h3>
+              <p className="text-xs text-text-secondary uppercase tracking-widest font-subtitle">{stat.sub}</p>
             </motion.div>
           ))}
         </div>
 
-        <div className="mt-20 p-10 rounded-[40px] bg-gradient-to-br from-[#011797]/20 to-[#54008c]/20 border border-white/5 backdrop-blur-3xl">
+        <div className="mt-20 p-10 rounded-[40px] bg-gradient-to-br from-primary/20 to-primary-dark/20 border border-white/5 backdrop-blur-3xl">
           <div className="grid md:grid-cols-2 gap-10">
             <div>
-              <h4 className="text-2xl font-serif mb-6 text-[#a5f0fa]">Brainwave Entrainment</h4>
-              <p className="text-gray-400 leading-relaxed mb-6 italic">
+              <h4 className="text-2xl font-title mb-6 text-primary">Brainwave Entrainment</h4>
+              <p className="text-text-muted leading-relaxed mb-6 italic font-body">
                 "La investigación en neurociencia auditiva ha demostrado que los pulsos binaurales pueden inducir entrainment cerebral, sincronizando la actividad eléctrica con estímulos externos."
               </p>
               <div className="flex gap-4">
-                <div className="h-10 w-1 bg-[#a5f0fa]" />
-                <p className="text-xs text-gray-500">
+                <div className="h-10 w-1 bg-primary" />
+                <p className="text-xs text-text-secondary font-body">
                   Referencia: Lane, J. D., et al. (1998). Physiology & Behavior.
                 </p>
               </div>
             </div>
             <div className="flex flex-col justify-center gap-4">
               {['Regulación del cortisol nocturno', 'Activación sistema parasimpático', 'Atención sostenida'].map(item => (
-                <div key={item} className="p-4 bg-black/40 rounded-xl border border-white/5 flex items-center gap-3">
-                  <Zap size={16} className="text-[#a5f0fa]" />
-                  <span className="text-sm font-light text-gray-300">{item}</span>
+                <div key={item} className="p-4 bg-bg/40 rounded-xl border border-white/5 flex items-center gap-3">
+                  <Zap size={16} className="text-primary" />
+                  <span className="text-sm font-light text-text-muted font-body">{item}</span>
                 </div>
               ))}
             </div>

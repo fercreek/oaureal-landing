@@ -28,20 +28,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const contentHtml = renderTipTapContent(contentStr);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-bg text-text">
       <Navbar />
       <article className="max-w-4xl mx-auto px-6 py-24 pt-32">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-[#a5f0fa] hover:text-[#a5f0fa]/80 transition-colors mb-8 group"
+          className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8 group"
         >
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm font-bold">Volver al blog</span>
+          <span className="text-sm font-subtitle font-bold">Volver al blog</span>
         </Link>
 
         <header className="mb-12">
           {post.publishedAt && (
-            <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
+            <div className="flex items-center gap-4 text-sm text-text-secondary mb-6 font-body">
               <div className="flex items-center gap-2">
                 <Calendar size={16} />
                 <span>
@@ -55,14 +55,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </div>
           )}
 
-          <h1 className="text-4xl md:text-5xl font-serif italic mb-6 bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-title italic mb-6 text-primary">
             {post.title}
           </h1>
 
-          <p className="text-xl text-gray-400 mb-8 leading-relaxed">{post.excerpt}</p>
+          <p className="text-xl text-text-muted mb-8 leading-relaxed font-body">{post.excerpt}</p>
 
           {post.coverImage && (
-            <div className="w-full h-96 rounded-3xl bg-gradient-to-br from-[#011797]/20 to-[#54008c]/20 mb-12 overflow-hidden">
+            <div className="w-full h-96 rounded-3xl bg-gradient-to-br from-primary/20 to-primary-dark/20 mb-12 overflow-hidden">
               <img
                 src={post.coverImage}
                 alt={post.title}
@@ -74,14 +74,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         <div
           className="prose prose-invert prose-lg max-w-none
-            prose-headings:text-white prose-headings:font-serif
-            prose-p:text-gray-300 prose-p:leading-relaxed
-            prose-a:text-[#a5f0fa] prose-a:no-underline hover:prose-a:underline
-            prose-strong:text-white prose-strong:font-bold
-            prose-ul:text-gray-300 prose-ol:text-gray-300
-            prose-li:text-gray-300
-            prose-blockquote:border-[#a5f0fa] prose-blockquote:text-gray-400
-            prose-code:text-[#a5f0fa] prose-code:bg-white/10 prose-code:px-2 prose-code:py-1 prose-code:rounded
+            prose-headings:text-text prose-headings:font-title prose-headings:text-primary
+            prose-p:text-text-muted prose-p:leading-relaxed prose-p:font-body
+            prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+            prose-strong:text-text prose-strong:font-bold
+            prose-ul:text-text-muted prose-ol:text-text-muted
+            prose-li:text-text-muted prose-li:font-body
+            prose-blockquote:border-primary prose-blockquote:text-text-muted
+            prose-code:text-primary prose-code:bg-white/10 prose-code:px-2 prose-code:py-1 prose-code:rounded
             prose-pre:bg-white/5 prose-pre:border prose-pre:border-white/10
             prose-img:rounded-xl prose-img:my-8"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <footer className="mt-16 pt-8 border-t border-white/10">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#a5f0fa]/50 transition-all text-white font-bold"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all text-text font-subtitle font-bold"
           >
             <ArrowLeft size={18} />
             Ver más artículos

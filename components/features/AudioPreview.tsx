@@ -106,7 +106,7 @@ export default function AudioPreview({
       className="w-full max-w-2xl mx-auto p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl"
     >
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#011797] to-[#54008c] flex items-center justify-center">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-dark to-primary flex items-center justify-center">
           <Radio size={24} color="white" />
         </div>
         <div>
@@ -132,7 +132,7 @@ export default function AudioPreview({
           >
             <div className="text-center">
               <p className="text-xs text-gray-400 mb-2">Preview del audio</p>
-              <p className="text-[#a5f0fa] text-xs font-mono">Presiona play para simular</p>
+              <p className="text-primary text-xs font-subtitle">Presiona play para simular</p>
             </div>
           </motion.div>
         )}
@@ -204,7 +204,7 @@ export default function AudioPreview({
               key={isPlaying ? 'playing-desc' : 'paused-desc'}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-xs text-[#a5f0fa] italic"
+              className="text-xs text-primary italic font-body"
             >
               {isPlaying ? 'Simulación activa - Usa audífonos para el efecto completo' : 'Este es un preview simulado'}
             </motion.p>

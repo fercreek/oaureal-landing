@@ -20,7 +20,7 @@ export default function QuizSection({ onResult }: QuizSectionProps) {
   };
 
   return (
-    <section id="quiz" className="py-24 px-6 bg-[#050505]">
+    <section id="quiz" className="py-24 px-6 bg-bg-secondary">
       <div className="max-w-4xl mx-auto">
         {!result ? (
           <Quiz onComplete={handleComplete} />
@@ -36,19 +36,19 @@ export default function QuizSection({ onResult }: QuizSectionProps) {
             >
               <Brain size={80} color="white" />
             </div>
-            <p className="text-[#a5f0fa] tracking-[0.3em] font-bold text-sm mb-4">RESULTADO OBTENIDO</p>
-            <h2 className="text-4xl md:text-5xl font-serif mb-6 italic text-white">{ARCHETYPES[result].title}</h2>
-            <p className="text-gray-400 max-w-lg mx-auto mb-10 text-lg">
+            <p className="text-primary tracking-[0.3em] font-subtitle font-bold text-sm mb-4">RESULTADO OBTENIDO</p>
+            <h2 className="text-4xl md:text-5xl font-title mb-6 italic text-text">{ARCHETYPES[result].title}</h2>
+            <p className="text-text-muted max-w-lg mx-auto mb-10 text-lg font-body">
               {ARCHETYPES[result].description}
             </p>
             
             <div className="max-w-sm mx-auto p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl mb-12">
-              <div className="flex justify-between mb-4 text-xs font-mono tracking-widest text-[#a5f0fa]">
+              <div className="flex justify-between mb-4 text-xs font-subtitle tracking-widest text-primary">
                 <span>ESTADO: {ARCHETYPES[result].wave}</span>
                 <span>INTENSIDAD: ALTA</span>
               </div>
               <div className="h-1 w-full bg-white/10 rounded-full mb-8">
-                <div className="h-full bg-[#a5f0fa] w-3/4 rounded-full" />
+                <div className="h-full bg-primary w-3/4 rounded-full" />
               </div>
             </div>
 
@@ -59,9 +59,9 @@ export default function QuizSection({ onResult }: QuizSectionProps) {
               className="mb-12"
             >
               <div className="text-center mb-8">
-                <p className="text-[#a5f0fa] tracking-[0.3em] font-bold text-sm mb-2">AUDIO SUGERIDO</p>
-                <h3 className="text-2xl font-serif text-white mb-4">Basado en tu diagnóstico</h3>
-                <p className="text-gray-400 text-sm max-w-xl mx-auto">
+                <p className="text-primary tracking-[0.3em] font-subtitle font-bold text-sm mb-2">AUDIO SUGERIDO</p>
+                <h3 className="text-2xl font-title text-text mb-4">Basado en tu diagnóstico</h3>
+                <p className="text-text-muted text-sm max-w-xl mx-auto font-body">
                   Hemos seleccionado un protocolo de audio específico para tu estado actual. Prueba el preview a continuación.
                 </p>
               </div>
@@ -87,10 +87,10 @@ export default function QuizSection({ onResult }: QuizSectionProps) {
               transition={{ delay: 0.5 }}
               className="text-center"
             >
-              <button className="px-10 py-4 bg-[#a5f0fa] text-black font-bold rounded-xl shadow-[0_0_20px_#a5f0fa] hover:scale-105 transition-all">
+              <button className="px-10 py-4 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:scale-105 transition-all">
                 CONSEGUIR MI PLAN COMPLETO
               </button>
-              <p className="text-xs text-gray-500 mt-4">
+              <p className="text-xs text-text-secondary mt-4 font-body">
                 Accede a todos los protocolos de audio y personaliza tu entrenamiento
               </p>
             </motion.div>

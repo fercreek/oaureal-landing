@@ -50,7 +50,7 @@ export default function Editor({ content, onChange, placeholder = 'Escribe tu ar
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: 'text-[#a5f0fa] underline',
+          class: 'text-primary underline',
         },
       }),
       Placeholder.configure({
@@ -114,7 +114,7 @@ export default function Editor({ content, onChange, placeholder = 'Escribe tu ar
       disabled={disabled}
       title={title}
       className={`p-2 rounded-lg transition-colors ${
-        active ? 'bg-[#a5f0fa] text-black' : 'text-gray-400 hover:text-white hover:bg-white/10 disabled:opacity-50'
+        active ? 'bg-primary text-bg' : 'text-text-muted hover:text-text hover:bg-white/10 disabled:opacity-50'
       }`}
     >
       <Icon size={18} />
@@ -216,7 +216,7 @@ export default function Editor({ content, onChange, placeholder = 'Escribe tu ar
             if (url) editor.chain().focus().setLink({ href: url }).run();
           }}
           className={`p-2 rounded-lg transition-colors ${
-            editor.isActive('link') ? 'bg-[#a5f0fa] text-black' : 'text-gray-400 hover:text-white hover:bg-white/10'
+            editor.isActive('link') ? 'bg-primary text-bg' : 'text-text-muted hover:text-text hover:bg-white/10'
           }`}
           title="Enlace"
         >
@@ -226,7 +226,7 @@ export default function Editor({ content, onChange, placeholder = 'Escribe tu ar
           type="button"
           onClick={handleImageUpload}
           disabled={uploading}
-          className="p-2 rounded-lg transition-colors text-gray-400 hover:text-white hover:bg-white/10 disabled:opacity-50"
+          className="p-2 rounded-lg transition-colors text-text-muted hover:text-text hover:bg-white/10 disabled:opacity-50"
           title="Imagen"
         >
           <ImageIcon size={18} />

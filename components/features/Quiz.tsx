@@ -42,14 +42,14 @@ export default function Quiz({ onComplete }: QuizProps) {
         <input 
           type="email" 
           placeholder="tu@email.com"
-          className="w-full p-4 bg-black/50 border border-white/10 rounded-xl mb-4 text-white outline-none focus:border-[#a5f0fa] transition-colors"
+          className="w-full p-4 bg-bg-secondary border border-white/10 rounded-xl mb-4 text-text outline-none focus:border-primary transition-colors font-body"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <button 
           disabled={!email.includes('@')}
           onClick={() => setStarted(true)}
-          className="w-full py-4 bg-[#a5f0fa] text-black font-bold rounded-xl shadow-[0_0_20px_#a5f0fa] hover:opacity-90 disabled:opacity-30 transition-all"
+          className="w-full py-4 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 disabled:opacity-30 transition-all"
         >
           INICIA
         </button>
@@ -61,7 +61,7 @@ export default function Quiz({ onComplete }: QuizProps) {
     <div className="max-w-xl mx-auto p-8">
       <div className="w-full bg-white/10 h-1 mb-8 rounded-full overflow-hidden">
         <motion.div 
-          className="h-full bg-gradient-to-r from-[#011797] to-[#a5f0fa]"
+          className="h-full bg-gradient-to-r from-primary-dark to-primary"
           initial={{ width: 0 }}
           animate={{ width: `${((step + 1) / QUIZ_QUESTIONS.length) * 100}%` }}
         />
@@ -75,7 +75,7 @@ export default function Quiz({ onComplete }: QuizProps) {
           exit={{ opacity: 0, x: -20 }}
           className="min-h-[300px]"
         >
-          <p className="text-[#a5f0fa] text-xs tracking-widest mb-2">PREGUNTA {step + 1} DE {QUIZ_QUESTIONS.length}</p>
+          <p className="text-primary text-xs font-subtitle tracking-widest mb-2">PREGUNTA {step + 1} DE {QUIZ_QUESTIONS.length}</p>
           <h4 className="text-2xl text-white mb-8 font-serif">{QUIZ_QUESTIONS[step].q}</h4>
           
           <div className="space-y-4">
@@ -83,9 +83,9 @@ export default function Quiz({ onComplete }: QuizProps) {
               <button
                 key={opt}
                 onClick={() => handleAnswer(opt)}
-                className="w-full text-left p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-[#a5f0fa] hover:bg-white/10 transition-all text-gray-300"
+                className="w-full text-left p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-primary hover:bg-white/10 transition-all text-text-muted font-body"
               >
-                <span className="inline-block w-8 font-bold text-[#a5f0fa]">{opt})</span>
+                <span className="inline-block w-8 font-bold text-primary">{opt})</span>
                 {QUIZ_QUESTIONS[step][opt.toLowerCase() as 'a' | 'b' | 'c']}
               </button>
             ))}
@@ -95,7 +95,7 @@ export default function Quiz({ onComplete }: QuizProps) {
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-8 p-4 rounded-xl bg-[#a5f0fa]/10 border border-[#a5f0fa]/20 text-[#a5f0fa] text-xs flex items-center gap-3"
+              className="mt-8 p-4 rounded-xl bg-primary/10 border border-primary/20 text-primary text-xs flex items-center gap-3 font-body"
             >
               <Info size={16} />
               Analizando patrones de ondas... Ya casi terminamos.

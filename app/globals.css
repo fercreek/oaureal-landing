@@ -2,20 +2,43 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-bg: #000000;
-  --color-primary: #011797;
-  --color-secondary: #54008c;
-  --color-accent: #a5f0fa;
-  --color-surface: #121212;
+  --color-text: #ffffff;
+  --color-text-muted: #e0e0e0;
+  --color-primary: #00ffff;
+  --color-primary-light: #33ffff;
+  --color-primary-dark: #00cccc;
+  --color-bg-secondary: #0a0a0a;
+  --color-text-secondary: #a0a0a0;
+  --font-family-logo: var(--font-cormorant);
+  --font-family-title: var(--font-michroma);
+  --font-family-subtitle: var(--font-exo);
+  --font-family-body: var(--font-roboto);
+}
+
+.font-logo {
+  font-family: var(--font-family-logo), serif;
+}
+
+.font-title {
+  font-family: var(--font-family-title), sans-serif;
+}
+
+.font-subtitle {
+  font-family: var(--font-family-subtitle), sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-family-body), sans-serif;
 }
 
 :root {
-  color-scheme: dark;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 html {
@@ -23,14 +46,14 @@ html {
 }
 
 body {
-  background: #000000;
-  color: #ffffff;
-  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: #a5f0fa;
-  color: #000000;
+  background: var(--color-primary);
+  color: var(--color-bg);
 }
