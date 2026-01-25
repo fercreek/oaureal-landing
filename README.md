@@ -144,8 +144,58 @@ Si necesitas variables de entorno, configúralas en:
 - `npm start` - Ejecutar build localmente
 - `npm run lint` - Ejecutar ESLint
 
+## Configuración de Supabase (Blog Dinámico)
+
+El proyecto incluye un sistema de blog dinámico gestionado a través de Supabase.
+
+### Pasos de Configuración
+
+1. **Crear proyecto en Supabase**
+   - Ve a [supabase.com](https://supabase.com) y crea un nuevo proyecto
+   - Anota la URL del proyecto y la clave anónima (anon key)
+
+2. **Configurar variables de entorno**
+   - Crea un archivo `.env.local` en la raíz del proyecto
+   - Agrega las siguientes variables:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=tu_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_supabase_anon_key
+   ```
+
+3. **Ejecutar migración de base de datos**
+   - Ve al SQL Editor en tu dashboard de Supabase
+   - Copia y ejecuta el contenido de `supabase-migration.sql`
+   - Esto creará la tabla `posts` y las políticas de seguridad
+
+4. **Configurar Storage para imágenes**
+   - Ve a Storage en el dashboard de Supabase
+   - Crea un bucket llamado `blog-images`
+   - Configura el bucket como público
+   - Las políticas de acceso se configuran automáticamente con la migración
+
+5. **Crear usuario administrador**
+   - Ve a Authentication > Users en Supabase
+   - Crea un nuevo usuario con email y contraseña
+   - Este usuario podrá acceder a `/admin/login` y gestionar el blog
+
+### Panel de Administración
+
+- **Login**: `/admin/login` - Inicia sesión con tu cuenta de Supabase
+- **Dashboard**: `/admin/dashboard` - Lista y gestiona todos los artículos
+- **Nuevo artículo**: `/admin/posts/new` - Crea un nuevo artículo
+- **Editar artículo**: `/admin/posts/[id]` - Edita un artículo existente
+
+### Características del Blog
+
+- Editor WYSIWYG con TipTap
+- Subida de imágenes a Supabase Storage
+- Publicación/borrador de artículos
+- SEO optimizado con metadata dinámica
+- ISR (Incremental Static Regeneration) para mejor rendimiento
+
 ## Notas
 
 - El proyecto usa Tailwind CSS v4 con PostCSS
 - Todos los componentes client-side están marcados con `'use client'`
 - Los colores personalizados están definidos en `app/globals.css`
+- El blog dinámico requiere configuración de Supabase para funcionar
