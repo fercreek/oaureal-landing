@@ -16,7 +16,7 @@ export default function ColorPicker({
   compact = false,
   position = 'fixed',
 }: ColorPickerProps) {
-  const { theme, setPrimaryColor, setSecondaryColor, setTertiaryColor, setBgDeepColor, resetColors, hasCustomColors, isLoaded } = useColorTheme();
+  const { theme, setPrimaryColor, setSecondaryColor, resetColors, hasCustomColors, isLoaded } = useColorTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   if (!isLoaded) return null;
@@ -48,8 +48,6 @@ export default function ColorPicker({
                 theme={theme}
                 setPrimaryColor={setPrimaryColor}
                 setSecondaryColor={setSecondaryColor}
-                setTertiaryColor={setTertiaryColor}
-                setBgDeepColor={setBgDeepColor}
                 resetColors={resetColors}
                 hasCustomColors={hasCustomColors}
                 showSecondary={showSecondary}
@@ -82,8 +80,6 @@ export default function ColorPicker({
         theme={theme}
         setPrimaryColor={setPrimaryColor}
         setSecondaryColor={setSecondaryColor}
-        setTertiaryColor={setTertiaryColor}
-        setBgDeepColor={setBgDeepColor}
         resetColors={resetColors}
         hasCustomColors={hasCustomColors}
         showSecondary={showSecondary}
@@ -105,8 +101,6 @@ interface ColorPickerContentProps {
   };
   setPrimaryColor: (hex: string) => void;
   setSecondaryColor: (hex: string) => void;
-  setTertiaryColor: (hex: string) => void;
-  setBgDeepColor: (hex: string) => void;
   resetColors: () => void;
   hasCustomColors: boolean;
   showSecondary: boolean;
@@ -116,8 +110,6 @@ function ColorPickerContent({
   theme,
   setPrimaryColor,
   setSecondaryColor,
-  setTertiaryColor,
-  setBgDeepColor,
   resetColors,
   hasCustomColors,
   showSecondary,

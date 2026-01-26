@@ -97,6 +97,7 @@ export function useColorTheme() {
 
   useEffect(() => {
     const initialTheme = getInitialTheme();
+    /* eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate theme from localStorage on mount */
     setTheme(initialTheme);
     applyThemeToCss(initialTheme);
     setIsLoaded(true);

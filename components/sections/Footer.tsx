@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Brain, Youtube, Instagram, Music } from 'lucide-react';
 
 export default function Footer() {
@@ -33,7 +34,7 @@ export default function Footer() {
           <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between gap-6 text-[10px] text-text-secondary tracking-[0.2em] uppercase font-subtitle">
             <span>© 2026 OAUREAL LABS. TODOS LOS DERECHOS RESERVADOS.</span>
             <div className="flex gap-4">
-              <a href="/blog" className="hover:text-text">Blog</a>
+              <Link href="/blog" className="hover:text-text">Blog</Link>
               <a href="#" className="hover:text-text">Aviso Legal</a>
               <a href="#" className="hover:text-text">Privacidad</a>
             </div>

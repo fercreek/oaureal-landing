@@ -36,7 +36,7 @@ export default function Evidence() {
             <div>
               <h4 className="text-2xl font-title mb-6 text-primary">Brainwave Entrainment</h4>
               <p className="text-text-muted leading-relaxed mb-6 italic font-body">
-                "La investigación en neurociencia auditiva ha demostrado que los pulsos binaurales pueden inducir entrainment cerebral, sincronizando la actividad eléctrica con estímulos externos."
+                &quot;La investigación en neurociencia auditiva ha demostrado que los pulsos binaurales pueden inducir entrainment cerebral, sincronizando la actividad eléctrica con estímulos externos.&quot;
               </p>
               <div className="flex gap-4">
                 <div className="h-10 w-1 bg-primary" />

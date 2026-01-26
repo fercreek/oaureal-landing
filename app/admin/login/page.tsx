@@ -17,7 +17,7 @@ export default function LoginPage() {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) router.replace('/admin/dashboard');
     });
-  }, [router]);
+  }, [router, supabase.auth]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

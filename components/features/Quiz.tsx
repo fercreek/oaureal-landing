@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Info, CheckCircle } from 'lucide-react';
+import { Info } from 'lucide-react';
 import { QUIZ_QUESTIONS, ARCHETYPES } from '@/lib/constants';
 
 interface QuizProps {

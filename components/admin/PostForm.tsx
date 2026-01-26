@@ -3,9 +3,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Editor from './Editor';
+import dynamic from 'next/dynamic';
 import { Save, X } from 'lucide-react';
 import { createPost, updatePost } from '@/app/actions/posts';
+
+const Editor = dynamic(() => import('./Editor'), { 
+  ssr: false,
+  loading: () => <div className="h-64 w-full bg-white/5 rounded-lg animate-pulse" />
+});
 
 interface Post {
   id?: string;
@@ -37,6 +42,7 @@ export default function PostForm({ post }: PostFormProps) {
 
   useEffect(() => {
     if (post) {
+      /* eslint-disable-next-line react-hooks/set-state-in-effect -- sync form from async-loaded post */
       setFormData({
         title: post.title,
         slug: post.slug,

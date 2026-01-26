@@ -72,10 +72,11 @@ async function testPrismaConnection() {
     }
     
     return false;
-  } catch (error: any) {
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err : new Error(String(err));
     log('❌ Prisma connection failed', 'red');
     log(`Error: ${error.message}`, 'red');
-    
+
     if (error.message?.includes("Can't reach database server")) {
       log('\n💡 Tip: Your Supabase project may be paused.', 'yellow');
       log('   Please check the Supabase dashboard and restore the project if needed.', 'yellow');
@@ -108,7 +109,7 @@ async function testSupabaseConnection() {
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
     log('Testing API connection...', 'blue');
-    const { data: healthData, error: healthError } = await supabase
+    const { error: healthError } = await supabase
       .from('posts')
       .select('id')
       .limit(1);
@@ -155,7 +156,8 @@ async function testSupabaseConnection() {
     }
     
     return true;
-  } catch (error: any) {
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err : new Error(String(err));
     log('❌ Supabase connection failed', 'red');
     log(`Error: ${error.message}`, 'red');
     return false;
