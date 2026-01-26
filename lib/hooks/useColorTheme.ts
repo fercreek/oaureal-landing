@@ -22,7 +22,7 @@ interface ColorTheme {
 }
 
 const DEFAULT_THEME: ColorTheme = {
-  primary: '#a5f0fa',
+  primary: '#78e8f8',
   primaryLight: '#b7f3fb',
   primaryDark: '#84c0c8',
 };
@@ -168,7 +168,7 @@ export function useColorTheme() {
 
   const resetColors = useCallback(() => {
     const defaultTheme = {
-      primary: '#a5f0fa',
+      primary: '#78e8f8',
       primaryLight: '#b7f3fb',
       primaryDark: '#84c0c8',
     };

@@ -1,10 +1,10 @@
 export const COLORS = {
   bg: '#000000',
-  primary: '#a5f0fa', // Turquesa claro
+  primary: '#78e8f8', // Turquesa claro
   secondary: '#54008c', // Púrpura oscuro
   tertiary: '#520f5e', // Púrpura medio
   deepBlue: '#011797', // Azul intenso
-  accent: '#a5f0fa',
+  accent: '#78e8f8',
   surface: '#121212',
 };
 
@@ -103,7 +103,7 @@ export const AUDIO_PROTOCOLS = [
     description: 'Estado de calma alerta perfecto para concentración y alto rendimiento. Sincroniza tu mente para el trabajo profundo.',
     archetype: 'C' as const,
     useCase: 'concentración',
-    color: '#a5f0fa',
+    color: '#78e8f8',
     binauralFreq: 10
   }
 ] as const;

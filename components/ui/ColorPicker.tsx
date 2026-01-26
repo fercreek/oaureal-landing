@@ -21,6 +21,8 @@ export default function ColorPicker({
 
   if (!isLoaded) return null;
 
+  if (!process.env.NEXT_PUBLIC_SHOW_DEV_TOOLS) return null;
+
   if (compact) {
     return (
       <div className={`${position === 'fixed' ? 'fixed bottom-6 right-6 z-50' : 'relative'}`}>
@@ -121,7 +123,7 @@ function ColorPickerContent({
   showSecondary,
 }: ColorPickerContentProps) {
   const PRESET_COLORS = [
-    { name: 'Turquesa', value: '#a5f0fa' },
+    { name: 'Turquesa', value: '#78e8f8' },
     { name: 'Azul Intenso', value: '#011797' },
     { name: 'Púrpura Oscuro', value: '#54008c' },
     { name: 'Púrpura Medio', value: '#520f5e' },
@@ -187,7 +189,7 @@ function ColorPickerContent({
                 }
               }}
               className="w-full p-2 rounded-lg bg-bg border border-white/10 text-text font-mono text-sm outline-none focus:border-primary transition-colors"
-              placeholder="#a5f0fa"
+              placeholder="#78e8f8"
             />
             <div className="flex gap-2 mt-2">
               <div className="flex-1">
