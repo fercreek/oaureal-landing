@@ -7,11 +7,11 @@ import { generateMetadata as generatePostMetadata } from '@/lib/blog-metadata';
 import { renderTipTapContent } from '@/lib/tiptap-renderer';
 import { prisma } from '@/lib/prisma';
 
-export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  return generatePostMetadata((await params).slug);
+  const { slug } = await params;
+  return generatePostMetadata(slug);
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

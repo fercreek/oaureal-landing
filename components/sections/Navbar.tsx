@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Brain } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Navbar() {
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -23,10 +23,14 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-bg/50 border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-primary-light flex items-center justify-center">
-            <Brain size={18} color="white" />
-          </div>
-          <span className="text-xl font-logo font-bold tracking-tighter uppercase italic text-primary">Oaureal</span>
+          <Image 
+            src="/logo-white.png" 
+            alt="Oaureal Logo" 
+            width={180} 
+            height={50} 
+            className="h-12 w-auto object-contain"
+            priority
+          />
         </Link>
         <div className="hidden md:flex items-center gap-8 text-sm font-subtitle tracking-widest text-text-muted">
           <a 
