@@ -1,0 +1,49 @@
+# Performance & Best Practices (Next.js 16 / React 19)
+
+## Core Principles
+- **Server First**: Prefer Server Components for data fetching and heavy rendering.
+- **Lazy Loading**: Defer loading of heavy client components and libraries.
+- **Zero-Runtime CSS**: Use Tailwind CSS v4 (native) to avoid runtime styling overhead.
+
+## React 19 & Next.js 16 Specifics
+
+### Data Fetching
+- **No useEffect for Data**: Never use `useEffect` to fetch initial data in Client Components. Use Server Components and pass data as props.
+- **Suspense**: Use React Suspense boundaries for streaming UI while data loads.
+
+### Server Actions
+- **Validation**: Always validate inputs in Server Actions (e.g., using Zod).
+- **Feedback**: Use `useActionState` (formerly useFormState) to manage action feedback (loading, error, success) in UI.
+- **Optimistic UI**: Use `useOptimistic` for immediate UI feedback on mutations.
+
+### Component Loading (Next/Dynamic)
+- **Heavy Components**: Always lazy load rich text editors (TipTap), heavy charts, or maps.
+  ```typescript
+  const Editor = dynamic(() => import('./Editor'), { 
+    ssr: false,
+    loading: () => <Skeleton />
+  });
+  ```
+- **Client-Only Libs**: Use `ssr: false` for components relying heavily on browser APIs (`window`, `document`) on mount.
+
+## Library Optimizations
+
+### Framer Motion
+- **LazyMotion**: For pages with many animations, consider using `LazyMotion` to reduce initial bundle size.
+  ```typescript
+  import { LazyMotion, domAnimation, m } from "framer-motion"
+  
+  <LazyMotion features={domAnimation}>
+    <m.div animate={{ opacity: 1 }} />
+  </LazyMotion>
+  ```
+- **Reduce Motion**: Respect user accessibility preferences.
+
+### Images & Media
+- **Next/Image**: Mandatory for all raster images. Enforce `width` and `height` to prevent layout shift.
+- **Priority**: Use `priority` prop only for LCP (Largest Contentful Paint) images (e.g., Hero image).
+- **SVGs**: Use `lucide-react` icons. For complex SVGs, optimize them using SVGO before importing.
+
+## Bundle Analysis
+- Use `@next/bundle-analyzer` periodically to inspect JS chunk sizes.
+- Keep Client Component trees small ("leaves" of the application).

@@ -1,0 +1,27 @@
+# Project Stability & Security Standards
+
+## Reference Links
+- [Cursor Documentation](https://cursor.com/docs)
+- [Prisma Rules](.cursor/rules/prisma.mdc) – Database configuration and verification
+
+## Dependency Management
+- **Install Command**: Use `npm ci` for CI and local installs. It uses `package-lock.json` exactly and ensures reproducible builds.
+- **Version Pinning**: Do not use floating versions (`latest`, `*`, or bare `^` without a specific minor/patch) for critical deps. Prefer pinned or caret ranges with explicit versions (e.g. `^6.19.2`).
+- **Security Audits**: Run `npm run security-check` (or `npm audit`) regularly. Fix or accept known vulnerabilities before deploy.
+
+## Type Safety & Code Quality
+- **Strict TypeScript**: Use strict mode. Avoid `any`; use `unknown`, type guards, or proper interfaces. Do not use `@ts-ignore` or `@ts-expect-error` without a documented justification.
+- **CI Checks**: Before merge or deploy, `npm run validate` must pass. This runs `lint` and `type-check` (`tsc --noEmit`). Treat failures as blocking.
+
+## Configuration & Environment
+- **Fail-Fast**: Required env vars (e.g. `DATABASE_URL`, `DIRECT_URL`, Supabase keys) must be validated before the app serves traffic. Use `scripts/verify-db.ts` (or equivalent) in setup/pre-build checks. The app should fail fast if these are missing.
+- **Secrets**: Never commit `.env` or files containing secrets. Use `.env.example` for documented variable names only. Ensure `.env` is in `.gitignore`.
+
+## Error Handling
+- **Error Boundaries**: Use Next.js `error.tsx` (and route-level boundaries) for graceful UI degradation. Show user-friendly messages; avoid exposing stack traces or internal details in production.
+- **Server-Side Logging**: Prefer structured logging (or a logging service) over raw `console.log` for errors in server code. Log enough context to debug without leaking secrets.
+
+## Scripts
+- `type-check`: `tsc --noEmit` – TypeScript validation without emit.
+- `validate`: `npm run lint && npm run type-check` – Code health check before merge/deploy.
+- `security-check`: `npm audit` – Dependency vulnerability scan.

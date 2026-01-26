@@ -1,0 +1,38 @@
+# Prisma & Database Configuration Standards
+
+## Version & Stability
+- **Stable Versions**: Always use stable versions of Prisma (currently v6.x). Avoid "latest" or major version bumps (like v7.x) unless officially marked stable and fully tested.
+  - Reason: Bleeding edge versions can introduce breaking changes in configuration and schema validation (e.g., removing `url` from schema).
+
+## Schema Configuration
+- **Standard Connection**: Maintain connection URLs within the `schema.prisma` file using `env()`.
+  ```prisma
+  datasource db {
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
+  }
+  ```
+- **DirectUrl**: Always configure `directUrl` for connection pooling environments (like Supabase) to ensure migrations run correctly.
+
+## Client Instantiation
+- **Singleton Pattern**: Use a singleton pattern for `PrismaClient` to prevent multiple connection instances in development (hot reload).
+- **Simple Initialization**: Do not pass connection URLs manually in the constructor if `schema.prisma` is correctly configured.
+  ```typescript
+  // lib/prisma.ts
+  import { PrismaClient } from '@prisma/client';
+
+  const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+
+  export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+  if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+  ```
+
+## Environment Variables
+- **Required Variables**: Ensure `DATABASE_URL` and `DIRECT_URL` are defined in `.env`.
+- **Validation**: Use scripts (like `scripts/verify-db.ts`) to validate environment variables before build or deployment.
+
+## Workflow & Verification
+- **Scripts**: Include a database verification script (`verify-db.ts`) to check connection status to both Prisma and external services (Supabase).
+- **Build Process**: Run migrations before build (`prisma migrate deploy && next build`).
