@@ -3,12 +3,15 @@
 import { Zap, CheckCircle } from 'lucide-react';
 import { PRICING_PLANS } from '@/lib/constants';
 import ReviewBadge from '@/components/ui/ReviewBadge';
+import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
+import Grid from '@/components/ui/Grid';
 
 export default function Pricing() {
   return (
-    <section className="py-24 px-6 bg-bg relative">
+    <Section className="relative">
       <ReviewBadge note="Precios y planes pendientes de aprobación final" />
-      <div className="max-w-6xl mx-auto text-center mb-16">
+      <div className="text-center mb-16">
         <h2 className="text-4xl font-title mb-4 text-primary">Elige tu plan de entrenamiento</h2>
         <div className="flex items-center justify-center gap-2 text-primary">
           <Zap size={16} />
@@ -16,7 +19,7 @@ export default function Pricing() {
         </div>
       </div>
       
-      <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+      <Grid cols={{ base: 1, md: 3 }} gap="lg" animate={false}>
         {PRICING_PLANS.map((plan, i) => (
           <div key={i} className={`p-1 rounded-[32px] ${i === 1 ? 'bg-gradient-to-b from-primary to-primary-dark' : 'bg-white/10'}`}>
             <div className="bg-bg h-full rounded-[30px] p-8 flex flex-col items-center">
@@ -34,8 +37,8 @@ export default function Pricing() {
               </button>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
+          ))}
+      </Grid>
+    </Section>
   );
 }

@@ -4,14 +4,19 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { FAQ_ITEMS } from '@/lib/constants';
+import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
 
 export default function FAQ() {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
   return (
-    <section className="py-24 px-6 bg-bg-secondary">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-title mb-10 italic text-primary">Preguntas Frecuentes</h2>
+    <Section background="secondary" maxWidth="sm">
+      <SectionTitle 
+        title="Preguntas Frecuentes"
+        size="md"
+        className="mb-10"
+      />
         <div className="space-y-4">
           {FAQ_ITEMS.map((faq, i) => (
             <div key={i} className="border-b border-white/10">
@@ -37,7 +42,6 @@ export default function FAQ() {
             </div>
           ))}
         </div>
-      </div>
-    </section>
+    </Section>
   );
 }

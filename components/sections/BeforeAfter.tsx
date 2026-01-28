@@ -2,6 +2,9 @@
 
 import { motion } from 'framer-motion';
 import { AlertCircle, Battery, Brain, Moon, ArrowDown, Sparkles, Focus, Heart, Zap } from 'lucide-react';
+import Section from '@/components/ui/Section';
+import Grid from '@/components/ui/Grid';
+import { containerVariants } from '@/lib/animations';
 
 const beforeItems = [
   { text: 'Cansancio constante', icon: Battery },
@@ -18,14 +21,6 @@ const afterItems = [
 ];
 
 export default function BeforeAfter() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.9 },
     visible: { 
@@ -37,8 +32,7 @@ export default function BeforeAfter() {
   };
 
   return (
-    <section className="py-24 px-6 bg-bg overflow-hidden">
-      <div className="max-w-5xl mx-auto">
+    <Section maxWidth="md">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -60,12 +54,10 @@ export default function BeforeAfter() {
           </div>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
+        <Grid
+          cols={{ base: 2, md: 4 }}
+          gap="sm"
+          className="mb-12"
         >
           {beforeItems.map((item, index) => (
             <motion.div
@@ -90,7 +82,7 @@ export default function BeforeAfter() {
               </span>
             </motion.div>
           ))}
-        </motion.div>
+        </Grid>
 
         <motion.div
           initial={{ opacity: 0, scaleY: 0 }}
@@ -148,12 +140,9 @@ export default function BeforeAfter() {
           </motion.p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        <Grid
+          cols={{ base: 2, md: 4 }}
+          gap="sm"
         >
           {afterItems.map((item, index) => (
             <motion.div
@@ -179,8 +168,7 @@ export default function BeforeAfter() {
               </span>
             </motion.div>
           ))}
-        </motion.div>
-      </div>
-    </section>
+        </Grid>
+    </Section>
   );
 }

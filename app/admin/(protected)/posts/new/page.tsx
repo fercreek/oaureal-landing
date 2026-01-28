@@ -2,7 +2,11 @@ import PostForm from '@/components/admin/PostForm';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
-export default async function NewPostPage() {
+export default async function NewPostPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   return (
     <div className="min-h-screen bg-bg text-text">
       <div className="max-w-4xl mx-auto px-6 py-12">

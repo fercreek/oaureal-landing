@@ -3,7 +3,11 @@ import Link from 'next/link';
 import { Plus, Edit, Eye } from 'lucide-react';
 import { prisma } from '@/lib/prisma';
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const { user } = await requireAuth();
 
   const posts = await prisma.post.findMany({

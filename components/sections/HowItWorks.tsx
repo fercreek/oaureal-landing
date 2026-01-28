@@ -1,6 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
+import Card from '@/components/ui/Card';
+import Grid from '@/components/ui/Grid';
+import { itemVariants } from '@/lib/animations';
 
 const steps = [
   {
@@ -21,61 +25,32 @@ const steps = [
 ];
 
 export default function HowItWorks() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
-
   return (
-    <section className="py-24 px-6 bg-bg">
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-title text-primary italic mb-4">
-            Cómo funciona Oaureal
-          </h2>
-          <p className="text-lg text-text-muted font-body">
-            Tres pasos simples para entrenar tu mente:
-          </p>
-        </motion.div>
+    <Section maxWidth="md">
+      <SectionTitle 
+        title="Cómo funciona Oaureal"
+        subtitle="Tres pasos simples para entrenar tu mente:"
+        useSimpleAnimation
+      />
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-3 gap-6"
-        >
-          {steps.map((step) => (
-            <motion.div
-              key={step.number}
-              variants={itemVariants}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
-              className="p-8 rounded-2xl border border-primary/50 hover:border-primary hover:shadow-[0_0_20px_var(--color-primary)] transition-all"
-            >
-              <h3 className="text-2xl font-subtitle font-bold text-primary mb-4">
-                {step.number}.{step.title}
-              </h3>
-              <p className="text-text-muted font-body leading-relaxed">
-                {step.description}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
+      <Grid cols={{ base: 1, md: 3 }} gap="md">
+        {steps.map((step) => (
+          <Card
+            key={step.number}
+            variant="default"
+            glow
+            variants={itemVariants}
+            className="rounded-2xl border-primary/50 hover:border-primary hover:shadow-[0_0_20px_var(--color-primary)]"
+          >
+            <h3 className="text-2xl font-subtitle font-bold text-primary mb-4">
+              {step.number}.{step.title}
+            </h3>
+            <p className="text-text-muted font-body leading-relaxed">
+              {step.description}
+            </p>
+          </Card>
+        ))}
+      </Grid>
+    </Section>
   );
 }

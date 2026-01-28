@@ -12,7 +12,11 @@ export const metadata = {
 export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 
-export default async function BlogPage() {
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const posts = await prisma.post.findMany({
     where: { published: true },
     orderBy: { publishedAt: 'desc' },

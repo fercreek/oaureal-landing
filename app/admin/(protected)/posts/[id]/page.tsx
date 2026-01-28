@@ -5,9 +5,16 @@ import PostForm from '@/components/admin/PostForm';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
-export default async function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function EditPostPage({ 
+  params,
+  searchParams,
+}: { 
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const { user } = await requireAuth();
-  const { id } = await params;
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
 
   const post = await prisma.post.findUnique({
     where: { id },

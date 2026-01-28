@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ChevronDown, CheckSquare } from 'lucide-react';
+import Button from '@/components/ui/Button';
 
 export default function Hero() {
   return (
@@ -37,9 +38,9 @@ export default function Hero() {
             Reduce el ruido mental y crea condiciones para que tu sistema nervioso empiece a entrenarse en estados de calma, enfoque o descanso profundo mediante técnicas y audios binaurales personalizados.
           </p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-            <a href="#quiz" className="px-10 py-5 bg-primary text-bg font-subtitle font-bold rounded-full shadow-[0_0_30px_var(--color-primary)] hover:scale-105 transition-all flex items-center gap-2">
+            <Button as="a" href="#quiz" className="flex items-center gap-2">
               Haz el test gratis y descubre qué necesita tu sistema hoy <CheckSquare size={18} />
-            </a>
+            </Button>
           </div>
         </motion.div>
       </div>
