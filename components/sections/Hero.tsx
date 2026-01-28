@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ChevronDown, CheckSquare } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -30,16 +30,15 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <h1 className="text-5xl md:text-8xl font-title leading-tight mb-6 text-primary">
-            Sincroniza tu biología. <br />
-            <span className="italic">Domina tu mente.</span>
+          <h1 className="text-5xl md:text-8xl font-title leading-tight mb-6 text-primary italic">
+            Sintoniza tu ritmo interno
           </h1>
-          <p className="text-lg md:text-xl font-body text-text-muted mb-10 max-w-2xl mx-auto">
-            Entrenamiento cerebral con sonidos binaurales de precisión científica para regular tu sistema nervioso.
+          <p className="text-lg md:text-xl font-body text-text-muted mb-10 max-w-2xl mx-auto italic">
+            Reduce el ruido mental y crea condiciones para que tu sistema nervioso empiece a entrenarse en estados de calma, enfoque o descanso profundo mediante técnicas y audios binaurales personalizados.
           </p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <a href="#quiz" className="px-10 py-5 bg-primary text-bg font-subtitle font-bold rounded-full shadow-[0_0_30px_var(--color-primary)] hover:scale-105 transition-all flex items-center gap-2">
-              Haz el test gratis <ArrowRight size={18} />
+              Haz el test gratis y descubre qué necesita tu sistema hoy <CheckSquare size={18} />
             </a>
           </div>
         </motion.div>

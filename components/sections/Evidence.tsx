@@ -1,60 +1,97 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Brain, ShieldCheck, Moon, Target, Zap } from 'lucide-react';
+
+const studies = [
+  {
+    title: 'Regulación del estrés',
+    finding: 'Activación del sistema nervioso parasimpático (relajación).',
+    reference: 'Yang SY, et al. (2025). BMC Complement Med Ther. PMID: 40483455.',
+  },
+  {
+    title: 'Mejora del sueño',
+    finding: 'Aceleración del sueño profundo y reducción del tiempo para dormirse.',
+    reference: 'Fan Z, et al. (2024). Sci Rep. PMID: 39478090.',
+  },
+  {
+    title: 'Enfoque y atención',
+    finding: 'Potencian la concentración y agudizan la atención para evitar distracciones.',
+    reference: 'Colzato LS, et al. (2017). Psychol Res. PMID: 26612201.',
+  },
+];
 
 export default function Evidence() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
   return (
     <section id="science" className="py-24 px-6 bg-bg overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-title mb-4 italic text-primary">Basado en evidencia científica</h2>
-          <p className="text-text-muted font-body">Neurociencia aplicada a la salud mental</p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-title mb-6 italic text-primary">
+            Basado en evidencia científica
+          </h2>
+          <p className="text-lg text-text-muted font-body max-w-3xl mx-auto leading-relaxed">
+            Estudios muestran que los pulsos binaurales inducen sincronización cerebral, asociados a procesos de regulación del estrés, mejora del sueño y atención sostenida.
+          </p>
+        </motion.div>
         
-        <div className="grid md:grid-cols-4 gap-6">
-          {[
-            { title: "97%", sub: "Relajación inmediata", icon: <Brain /> },
-            { title: "91%", sub: "Menos ansiedad", icon: <ShieldCheck /> },
-            { title: "84%", sub: "Mente en calma", icon: <Moon /> },
-            { title: "Flow", sub: "Alto rendimiento", icon: <Target /> }
-          ].map((stat, i) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-3 gap-6"
+        >
+          {studies.map((study, index) => (
             <motion.div 
-              key={i}
-              whileHover={{ y: -10 }}
-              className="p-8 rounded-3xl bg-white/5 border border-white/10 text-center"
+              key={study.title}
+              variants={itemVariants}
+              whileHover={{ 
+                y: -10, 
+                boxShadow: '0 0 40px rgba(120, 232, 248, 0.3)',
+                transition: { duration: 0.3 } 
+              }}
+              className="p-8 rounded-3xl bg-bg-secondary border border-primary/40 relative overflow-hidden group"
+              style={{
+                boxShadow: '0 0 20px rgba(120, 232, 248, 0.1)'
+              }}
             >
-              <div className="mb-4 flex justify-center text-primary opacity-50">{stat.icon}</div>
-              <h3 className="text-4xl font-bold text-text mb-2">{stat.title}</h3>
-              <p className="text-xs text-text-secondary uppercase tracking-widest font-subtitle">{stat.sub}</p>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              <div className="relative z-10">
+                <h3 className="text-xl font-subtitle font-bold text-primary mb-6">
+                  {study.title}
+                </h3>
+                <p className="text-text font-body mb-6 leading-relaxed">
+                  <span className="text-primary font-semibold">Hallazgo:</span> {study.finding}
+                </p>
+                <div className="flex gap-3 pt-4 border-t border-primary/20">
+                  <div className="w-1 bg-primary shrink-0 rounded-full" />
+                  <p className="text-xs text-text-muted/80 font-body">
+                    Referencia: {study.reference}
+                  </p>
+                </div>
+              </div>
             </motion.div>
           ))}
-        </div>
-
-        <div className="mt-20 p-10 rounded-[40px] bg-gradient-to-br from-primary/20 to-primary-dark/20 border border-white/5 backdrop-blur-3xl">
-          <div className="grid md:grid-cols-2 gap-10">
-            <div>
-              <h4 className="text-2xl font-title mb-6 text-primary">Brainwave Entrainment</h4>
-              <p className="text-text-muted leading-relaxed mb-6 italic font-body">
-                &quot;La investigación en neurociencia auditiva ha demostrado que los pulsos binaurales pueden inducir entrainment cerebral, sincronizando la actividad eléctrica con estímulos externos.&quot;
-              </p>
-              <div className="flex gap-4">
-                <div className="h-10 w-1 bg-primary" />
-                <p className="text-xs text-text-secondary font-body">
-                  Referencia: Lane, J. D., et al. (1998). Physiology & Behavior.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center gap-4">
-              {['Regulación del cortisol nocturno', 'Activación sistema parasimpático', 'Atención sostenida'].map(item => (
-                <div key={item} className="p-4 bg-bg/40 rounded-xl border border-white/5 flex items-center gap-3">
-                  <Zap size={16} className="text-primary" />
-                  <span className="text-sm font-light text-text-muted font-body">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -5,8 +5,8 @@ import Footer from '@/components/sections/Footer';
 import { prisma } from '@/lib/prisma';
 
 export const metadata = {
-  title: 'Blog | Oaureal - Entrenamiento Cerebral',
-  description: 'Artículos educativos sobre ondas cerebrales, bienestar mental y entrenamiento cerebral con sonidos binaurales.',
+  title: 'OAUREAL LAB | Ciencia y regulación mental',
+  description: 'Oaureal Lab es el espacio donde se explica lo que en Oaureal se experimenta. Exploramos la ciencia, los procesos biológicos y los sistemas que influyen en la regulación y los estados mentales.',
 };
 
 export const dynamic = 'force-dynamic';
@@ -23,11 +23,13 @@ export default async function BlogPage() {
       <Navbar />
       <div className="max-w-6xl mx-auto px-6 py-24 pt-32">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-title italic mb-4 text-primary">
-            Blog Oaureal
+          <h1 className="text-5xl md:text-6xl font-lab italic mb-6 text-primary">
+            OAUREAL LAB
           </h1>
-          <p className="text-lg text-text-muted max-w-2xl mx-auto font-body">
-            Descubre la ciencia detrás del entrenamiento cerebral, las ondas cerebrales y el bienestar mental.
+          <p className="text-lg text-text max-w-3xl mx-auto font-body leading-relaxed">
+            Oaureal Lab es el espacio donde se explica lo que en Oaureal se experimenta.
+            <br />
+            Aquí exploramos la ciencia, los procesos biológicos y los sistemas —sonoros, fisiológicos y naturales— que influyen en la regulación y los estados mentales.
           </p>
         </div>
 

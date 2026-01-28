@@ -30,16 +30,99 @@ export const ARCHETYPES = {
 } as const;
 
 export const QUIZ_QUESTIONS = [
-  { q: "¿Cuál es tu necesidad emocional más urgente en este momento?", a: "Recuperar energía y descansar profundamente", b: "Calmar mi mente y reducir la ansiedad", c: "Enfocarme y aumentar mi productividad" },
-  { q: "¿Cómo describirías tu estado emocional actual?", a: "Agotado, necesito desconectar completamente", b: "Ansioso, mi mente no para de pensar", c: "Disperso, me cuesta concentrarme" },
-  { q: "¿Qué te impide sentirte en equilibrio emocional?", a: "Falta de sueño reparador", b: "Preocupaciones constantes y rumiación", c: "Sobrecarga mental y falta de claridad" },
-  { q: "¿Cuándo sientes que tu bienestar emocional está más comprometido?", a: "Por las noches, no puedo descansar bien", b: "Todo el día, siento ansiedad constante", c: "Durante el trabajo, me distraigo fácilmente" },
-  { q: "¿Qué emoción predomina cuando piensas en tu día a día?", a: "Cansancio y necesidad de pausa", b: "Preocupación y tensión", c: "Frustración por no rendir como quiero" },
-  { q: "¿Qué necesitas para sentirte mejor emocionalmente?", a: "Sueño profundo y restauración completa", b: "Calma mental y reducción de ansiedad", c: "Claridad mental y enfoque sostenido" },
-  { q: "¿Cómo afecta tu estado emocional a tu vida diaria?", a: "Me siento sin energía para hacer nada", b: "La ansiedad me paraliza en muchas situaciones", c: "No logro completar tareas por falta de concentración" },
-  { q: "¿Qué te gustaría lograr con el entrenamiento emocional?", a: "Dormir profundamente y despertar renovado", b: "Encontrar paz mental y reducir el ruido interno", c: "Alcanzar estados de flow y alto rendimiento" },
-  { q: "¿Cuál es tu mayor desafío emocional en este momento?", a: "Recuperar mi energía y capacidad de descanso", b: "Manejar la ansiedad y los pensamientos intrusivos", c: "Mantener la concentración y evitar distracciones" },
-  { q: "¿Qué resultado emocional sería más valioso para ti ahora?", a: "Sueño reparador de 8 horas consecutivas", b: "Paz mental y reducción significativa de ansiedad", c: "Estado de flow y productividad sostenida" }
+  { 
+    q: "¿Cuál es tu prioridad número uno hoy?", 
+    a: "Lograr un descanso profundo y despertar con energía.", 
+    b: "Calmar la mente, los miedos y la rumiación constante.", 
+    c: "Terminar mis pendientes sin distraerme tanto." 
+  },
+  { 
+    q: "¿Cómo te sientes físicamente los primeros 30 minutos al despertar?", 
+    a: "Agotado, como si no hubiera dormido.", 
+    b: "Ansioso o con el pecho apretado por lo que viene en el día.", 
+    c: "Bien, pero me cuesta arrancar con la tarea más importante." 
+  },
+  { 
+    q: "¿Qué sucede cuando intentas concentrarte en una sola tarea?", 
+    a: "Me quedo dormido o me falta energía física.", 
+    b: "Mi mente salta a preocupaciones o problemas personales.", 
+    c: "Me distraigo con el celular o salto de un proyecto a otro." 
+  },
+  { 
+    q: "En situaciones de conflicto o estrés, ¿cuál es tu tendencia?", 
+    a: "Me siento demasiado cansado para lidiar con ello.", 
+    b: "Me preocupo en exceso por lo que otros piensen o por perder el control.", 
+    c: "Me frustro porque el conflicto me quita tiempo para ser productivo." 
+  },
+  { 
+    q: "¿Cómo es tu diálogo interno la mayor parte del tiempo?", 
+    a: '"Necesito un descanso, no puedo más".', 
+    b: '"Algo malo puede pasar" o "¿Por qué dije eso?".', 
+    c: '"Tengo mucho que hacer y no sé por dónde empezar".' 
+  },
+  { 
+    q: "¿Qué hábito te domina cuando estás bajo presión?", 
+    a: "Trasnochar viendo pantallas para 'desconectarme'.", 
+    b: "Comer por ansiedad o buscar validación externa.", 
+    c: "Procrastinar y dejar las cosas para el último momento." 
+  },
+  { 
+    q: "¿A qué hora sientes que tu sistema nervioso está más alterado?", 
+    a: "En la madrugada (despierto y no puedo volver a dormir).", 
+    b: "Todo el día, es una tensión constante.", 
+    c: "En las tardes, cuando veo que el tiempo no me alcanzó." 
+  },
+  { 
+    q: "Si pudieras eliminar un 'miedo', ¿cuál sería?", 
+    a: "Miedo a que mi salud colapse por falta de descanso.", 
+    b: "Miedo a ser rechazado, juzgado o no ser suficiente.", 
+    c: "Miedo a fracasar o a ser visto como alguien mediocre/incapaz." 
+  },
+  { 
+    q: "¿Qué te impide apagar la mente por la noche?", 
+    a: "Mi cuerpo está acelerado aunque mi mente esté agotada.", 
+    b: "Repaso conversaciones del día o miedos sobre el futuro.", 
+    c: "Planeo todo lo que 'tengo' que hacer mañana." 
+  },
+  { 
+    q: "¿Qué resultado te haría sentir que este proceso valió la pena?", 
+    a: "Dormir 7-8 horas seguidas y despertar ligero.", 
+    b: "Sentir paz mental y seguridad emocional ante los problemas.", 
+    c: "Estar en estado de 'flujo' y ser altamente efectivo." 
+  }
+];
+
+export const QUIZ_MOTIVATION_CARDS = [
+  {
+    afterQuestion: 1,
+    title: "No hay respuestas correctas o incorrectas.",
+    text: "Este test no te evalúa: traduce señales de tu sistema nervioso."
+  },
+  {
+    afterQuestion: 2,
+    title: "¿Qué son los binaurales?",
+    text: "Son estímulos sonoros que ayudan a tu cerebro a recordar estados como descanso, calma o enfoque. No fuerzan nada: le dan una referencia para autorregularse."
+  },
+  {
+    afterQuestion: 4,
+    title: "Señal de alta fidelidad",
+    text: "Para que el cerebro se sincronice, la señal debe ser estable. Las plataformas digitales comprimen el audio y alteran esa precisión. Por eso nuestros protocolos se descargan directamente en tu celular, en formato de alta fidelidad y sin compresión."
+  },
+  {
+    afterQuestion: 5,
+    title: "Entrenamiento personalizado",
+    text: "Cada persona necesita entrenar estados distintos. No todos los sistemas nerviosos se desregulan igual. Por eso no trabajamos con audios genéricos, sino con combinaciones personalizadas."
+  },
+  {
+    afterQuestion: 7,
+    title: "Ya casi terminamos.",
+    text: "Estás a punto de ver lo que tu propio sistema te viene pidiendo desde hace tiempo…"
+  },
+  {
+    afterQuestion: 8,
+    title: "Cambios que suelen aparecer con el entrenamiento:",
+    text: "Más silencio interno. Más descanso real. Más claridad para el día a día."
+  }
 ];
 
 export const FAQ_ITEMS = [

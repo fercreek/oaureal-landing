@@ -6,7 +6,10 @@ import Navbar from '@/components/sections/Navbar';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import AudioSection from '@/components/sections/AudioSection';
+import BeforeAfter from '@/components/sections/BeforeAfter';
+import HowItWorks from '@/components/sections/HowItWorks';
 import Evidence from '@/components/sections/Evidence';
+import Testimonials from '@/components/sections/Testimonials';
 import QuizSection from '@/components/sections/QuizSection';
 import Pricing from '@/components/sections/Pricing';
 import FAQ from '@/components/sections/FAQ';
@@ -30,8 +33,11 @@ export default function Home() {
       <Hero />
       <About />
       <AudioSection />
+      <BeforeAfter />
+      <HowItWorks />
       <Evidence />
       <QuizSection onResult={(result) => setQuizResult(result)} />
+      <Testimonials />
       <Pricing />
       <FAQ />
       {/* <Investment /> */}

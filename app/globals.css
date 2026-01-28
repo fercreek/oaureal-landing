@@ -56,6 +56,10 @@
   font-family: var(--font-family-body), sans-serif;
 }
 
+.font-lab {
+  font-family: var(--font-libre-baskerville), 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+}
+
 html {
   scroll-behavior: smooth;
 }

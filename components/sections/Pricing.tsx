@@ -2,10 +2,12 @@
 
 import { Zap, CheckCircle } from 'lucide-react';
 import { PRICING_PLANS } from '@/lib/constants';
+import ReviewBadge from '@/components/ui/ReviewBadge';
 
 export default function Pricing() {
   return (
-    <section className="py-24 px-6 bg-bg">
+    <section className="py-24 px-6 bg-bg relative">
+      <ReviewBadge note="Precios y planes pendientes de aprobación final" />
       <div className="max-w-6xl mx-auto text-center mb-16">
         <h2 className="text-4xl font-title mb-4 text-primary">Elige tu plan de entrenamiento</h2>
         <div className="flex items-center justify-center gap-2 text-primary">

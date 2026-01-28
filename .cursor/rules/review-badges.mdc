@@ -1,0 +1,50 @@
+---
+description: Convención para marcar secciones pendientes de aprobación
+globs: ["**/*.tsx", "**/*.ts"]
+alwaysApply: true
+---
+
+# Review Badges - Marcadores de Revisión Pendiente
+
+## Propósito
+
+El componente `ReviewBadge` se usa para marcar secciones o componentes que **no han sido aprobados** por el cliente o que requieren revisión antes del lanzamiento final.
+
+## Uso
+
+```tsx
+import ReviewBadge from '@/components/ui/ReviewBadge';
+
+// En cualquier sección que necesite revisión:
+<section className="relative">
+  <ReviewBadge note="Descripción de lo que falta aprobar" />
+  {/* ... resto del contenido */}
+</section>
+```
+
+## Características
+
+- **Solo visible en desarrollo**: El badge NO aparece en producción (`process.env.NODE_ENV === 'production'`)
+- **Tooltip informativo**: Al hacer hover muestra la nota de revisión
+- **Visual distintivo**: Badge amarillo con "?" pulsante
+
+## Secciones actualmente marcadas para revisión
+
+- `Pricing.tsx` - Precios y planes pendientes de aprobación final
+
+## IMPORTANTE: Antes del lanzamiento
+
+**Antes de considerar el proyecto 100% terminado, se debe:**
+
+1. Revisar todas las secciones que tengan `<ReviewBadge />`
+2. Obtener aprobación del cliente para cada una
+3. Eliminar los imports y componentes `ReviewBadge` de las secciones aprobadas
+4. Verificar que no quede ningún `ReviewBadge` en el código
+
+### Comando para buscar badges pendientes:
+
+```bash
+grep -r "ReviewBadge" --include="*.tsx" components/ app/
+```
+
+Si el comando retorna resultados, hay secciones pendientes de aprobación.
