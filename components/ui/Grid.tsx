@@ -4,7 +4,7 @@ import { motion, HTMLMotionProps } from 'framer-motion';
 import { ReactNode } from 'react';
 import { containerVariants } from '@/lib/animations';
 
-interface GridProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
+interface GridProps {
   cols?: {
     base?: number;
     md?: number;
@@ -12,7 +12,9 @@ interface GridProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
   };
   gap?: 'sm' | 'md' | 'lg';
   children: ReactNode;
+  className?: string;
   animate?: boolean;
+  id?: string;
 }
 
 const gapMap = {
@@ -40,9 +42,9 @@ export default function Grid({
   cols = { base: 1, md: 3 },
   gap = 'md',
   children,
-  animate = true,
   className = '',
-  ...motionProps
+  animate = true,
+  id,
 }: GridProps) {
   const baseCols = cols.base ? colsClassMap[cols.base.toString()] : '';
   const mdCols = cols.md ? colsClassMap[`md-${cols.md}`] : '';
@@ -53,12 +55,12 @@ export default function Grid({
   if (animate) {
     return (
       <motion.div
+        id={id}
         className={`${colsClass} ${className}`}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-50px" }}
-        {...motionProps}
       >
         {children}
       </motion.div>
@@ -66,7 +68,7 @@ export default function Grid({
   }
 
   return (
-    <div className={`${colsClass} ${className}`} {...motionProps}>
+    <div id={id} className={`${colsClass} ${className}`}>
       {children}
     </div>
   );

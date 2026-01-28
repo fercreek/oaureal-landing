@@ -3,15 +3,26 @@
 import { motion, HTMLMotionProps } from 'framer-motion';
 import { ReactNode } from 'react';
 
-interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
+type ButtonPropsBase = {
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   glow?: boolean;
   fullWidth?: boolean;
   children: ReactNode;
-  as?: 'button' | 'a';
-  href?: string;
-}
+  className?: string;
+};
+
+type ButtonAsButton = ButtonPropsBase & Omit<HTMLMotionProps<'button'>, 'children' | 'className'> & {
+  as?: 'button';
+  href?: never;
+};
+
+type ButtonAsAnchor = ButtonPropsBase & Omit<HTMLMotionProps<'a'>, 'children' | 'className'> & {
+  as: 'a';
+  href: string;
+};
+
+type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
 const sizeMap = {
   sm: 'px-6 py-3 text-sm',
@@ -25,36 +36,50 @@ const variantStyles = {
   ghost: 'text-primary hover:text-primary-light',
 };
 
-export default function Button({
-  variant = 'primary',
-  size = 'lg',
-  glow = true,
-  fullWidth = false,
-  children,
-  className = '',
-  as = 'button',
-  href,
-  ...motionProps
-}: ButtonProps) {
+export default function Button(props: ButtonProps) {
+  const {
+    variant = 'primary',
+    size = 'lg',
+    glow = true,
+    fullWidth = false,
+    children,
+    className = '',
+    as = 'button',
+    ...motionProps
+  } = props;
+
   const baseClasses = `${sizeMap[size]} ${variantStyles[variant]} transition-all ${fullWidth ? 'w-full' : ''} ${className}`;
   
   const glowStyle = glow && variant === 'primary' 
     ? { boxShadow: '0 0 30px var(--color-primary)' }
     : {};
 
-  const Component = as === 'a' ? motion.a : motion.button;
-  const props = as === 'a' ? { href } : {};
+  const hoverProps = variant === 'primary' ? { scale: 1.05 } : {};
+
+  if (as === 'a' && 'href' in props) {
+    return (
+      <motion.a
+        href={props.href}
+        className={baseClasses}
+        style={glowStyle}
+        whileHover={hoverProps}
+        whileTap={{ scale: 0.98 }}
+        {...(motionProps as HTMLMotionProps<'a'>)}
+      >
+        {children}
+      </motion.a>
+    );
+  }
 
   return (
-    <Component
+    <motion.button
       className={baseClasses}
       style={glowStyle}
-      whileHover={variant === 'primary' ? { scale: 1.05 } : {}}
+      whileHover={hoverProps}
       whileTap={{ scale: 0.98 }}
-      {...props}
-      {...motionProps}
+      {...(motionProps as HTMLMotionProps<'button'>)}
     >
       {children}
-    </Component>
+    </motion.button>
   );
 }

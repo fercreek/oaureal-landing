@@ -27,7 +27,7 @@ export default function BeforeAfter() {
       opacity: 1, 
       y: 0, 
       scale: 1,
-      transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] } 
+      transition: { duration: 0.5 } 
     }
   };
 
