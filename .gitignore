@@ -36,3 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 /lib/generated/prisma
+
+# Large audio files (keep small demo files)
+/public/audio/*.backup
+/public/audio/*.tmp
