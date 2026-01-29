@@ -64,7 +64,7 @@ export default function Testimonials() {
               hover={false}
               className="max-w-3xl mx-auto text-center shadow-[0_0_40px_var(--color-primary)]"
             >
-              <h3 className="text-xl font-subtitle font-bold text-primary mb-4">
+              <h3 className="text-xl font-title font-bold text-primary mb-4">
                 {t.name}, {t.age} años – {t.role}
               </h3>
               <p className="text-text font-body italic leading-relaxed">

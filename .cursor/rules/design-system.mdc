@@ -17,39 +17,32 @@ The design system is structured with a **primary color group** centralized in `a
 
 ### Font Roles
 
-**Logo – Palatino (alternative: Cormorant Garamond or Lora):**
-- Large, prominent. Primary color (celeste neónsito / `--color-primary`) on black background.
-- Soft glow or highlights using `--color-primary-light`; avoid long texts.
-- Load via `next/font/google` as `Cormorant Garamond` or `Lora`.
+**font-title (Palatino / Libre Baskerville):**
+- Títulos de contenido: h1, h2, h3, h4 de secciones, cards y artículos.
+- Load via `next/font/google` as `Libre_Baskerville`; do not use Michroma.
+- Primary color (celeste neónsito / `--color-primary`) for headings on black background.
 
-**Titles – Michroma:**
-- Medium–large size, high impact. Primary color (celeste neónsito / `--color-primary`) on black background.
-- For banners, highlighted sections, H1/H2.
-- The celeste neon glow on black creates the desired "medium neon" effect.
-- Load via `next/font/google` as `Michroma`.
+**font-subtitle (Exo 2):**
+- Solo UI: botones, labels de formularios, navegación, badges, small caps.
+- Do not use for card or block titles; those use `font-title`.
+- Load via `next/font/google` as `Exo_2`.
 
-**Subtitles – Lovelo (alternative: Exo 2 or Nunito):**
-- Medium size, visual balance. Primary color (celeste neónsito / `--color-primary`) on black background.
-- For CTAs, menus, cards; no strong glow to avoid competing with titles.
-- Load via `next/font/google` as `Exo 2` or `Nunito`.
-
-**Body – Roboto:**
-- 16–18px web size. White (#FFFFFF) or light gray (#E0E0E0) on black background.
-- No light effects; primary color accents only on keywords or links.
+**font-body (Roboto):**
+- Párrafos, listas, inputs, copy largo.
+- White (#FFFFFF) or light gray (#E0E0E0) on black background.
 - Load via `next/font/google` as `Roboto`.
 
-### Typography Hierarchy
+**font-logo (Cormorant Garamond):**
+- Solo el logo/marca "Oaureal" (Admin, login).
+- Load via `next/font/google` as `Cormorant_Garamond`.
 
-- Logo → sophistication
-- Titles → futuristic impact
-- Subtitles → balance
-- Body → readability
+### Typography Rule
 
-**Rule:** Do not use all typography styles in the same block; "less is more".
+- Every content heading (h1–h4) uses `font-title`. Buttons, labels, nav, and captions use `font-subtitle`. There is no `font-lab`; the blog uses `font-title` for its main title.
 
 ### Implementation
 
-Use utility classes: `font-logo`, `font-title`, `font-subtitle`, `font-body`, and sizes like `text-title-lg`, `text-title-md`, `text-subtitle`, `text-body`.
+Use utility classes: `font-logo`, `font-title`, `font-subtitle`, `font-body`. Do not use `font-lab`.
 
 ---
 
@@ -107,7 +100,7 @@ Map these tokens in Tailwind v4 via `@theme` to use as `bg-primary`, `text-prima
 - Only on titles, main buttons, or key elements. The celeste neon glow on black is the desired effect. Avoid saturation.
 
 ### Particles/Spirals
-- If added later, combine with Michroma (titles), not with Roboto (body).
+- If added later, combine with font-title (Palatino), not with font-body (Roboto).
 
 ### Contrast
 - White texts (#FFFFFF) or light grays (#E0E0E0) on black ensure readability. Celeste neon on black has high contrast.
@@ -122,7 +115,7 @@ Map these tokens in Tailwind v4 via `@theme` to use as `bg-primary`, `text-prima
 
 ### Design Tokens
 - Tokens in `app/globals.css` (variables `--color-*`, `--font-*`) and Tailwind `@theme`.
-- Fonts via `next/font/google`; alternatives for Palatino/Lovelo if not available (Cormorant/Lora, Exo 2/Nunito).
+- Fonts via `next/font/google`: Libre_Baskerville (titles), Exo_2 (UI), Roboto (body), Cormorant_Garamond (logo).
 - Use utility classes `font-logo`, `font-title`, `font-subtitle`, `font-body` and color utilities (`bg-primary`, `text-primary`, etc.).
 
 ### Responsive Design
@@ -169,7 +162,7 @@ Map these tokens in Tailwind v4 via `@theme` to use as `bg-primary`, `text-prima
 
 2. **Primary Color:** Use celeste neónsito with moderation: main buttons, highlighted titles, borders/glows on interactive elements. The "medium neon" effect comes from celeste neon contrast on black.
 
-3. **Gradients and Glow:** Only on titles (Michroma), CTA buttons, or key elements. The celeste neon glow on black is the desired effect. Avoid saturation.
+3. **Gradients and Glow:** Only on titles (font-title), CTA buttons, or key elements. The celeste neon glow on black is the desired effect. Avoid saturation.
 
 4. **Text:** White (#FFFFFF) for titles/main, light gray (#E0E0E0/#B0B0B0) for body. Ensures readability on black.
 

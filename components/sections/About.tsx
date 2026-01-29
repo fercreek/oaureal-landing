@@ -63,7 +63,7 @@ export default function About() {
               boxShadow: '0 0 40px var(--color-primary)'
             }}
           >
-            <h3 className="text-lg font-subtitle font-bold text-center mb-8 uppercase tracking-wide text-primary">
+            <h3 className="text-lg font-title font-bold text-center mb-8 uppercase tracking-wide text-primary">
               {card.title}
             </h3>
             <div className="space-y-6 flex-1 flex flex-col justify-center">

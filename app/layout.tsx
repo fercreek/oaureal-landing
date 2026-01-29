@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { Michroma, Roboto, Cormorant_Garamond, Exo_2, Libre_Baskerville } from "next/font/google";
+import { Roboto, Cormorant_Garamond, Exo_2, Libre_Baskerville } from "next/font/google";
 import "./globals.css";
-
-const michroma = Michroma({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-michroma",
-});
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -99,7 +93,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`antialiased bg-bg ${michroma.variable} ${roboto.variable} ${cormorant.variable} ${exo.variable} ${libreBaskerville.variable}`}
+        className={`antialiased bg-bg ${roboto.variable} ${cormorant.variable} ${exo.variable} ${libreBaskerville.variable}`}
       >
         {children}
         <Analytics />

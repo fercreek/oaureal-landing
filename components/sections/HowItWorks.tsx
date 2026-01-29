@@ -61,7 +61,7 @@ export default function HowItWorks() {
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/30 flex items-center justify-center mb-6">
                     <Icon className="w-7 h-7 text-primary" strokeWidth={2} />
                   </div>
-                  <h3 className="text-xl font-subtitle font-bold text-text mb-1">
+                  <h3 className="text-xl font-title font-bold text-text mb-1">
                     {step.title}
                   </h3>
                   <p className="text-sm text-primary font-subtitle font-semibold mb-4">

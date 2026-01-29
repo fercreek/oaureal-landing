@@ -27,7 +27,7 @@ export default async function BlogPage({
       <Navbar />
       <div className="max-w-6xl mx-auto px-6 py-24 pt-32">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-lab italic mb-6 text-primary">
+          <h1 className="text-5xl md:text-6xl font-title italic mb-6 text-primary">
             OAUREAL LAB
           </h1>
           <p className="text-lg text-text max-w-3xl mx-auto font-body leading-relaxed">
