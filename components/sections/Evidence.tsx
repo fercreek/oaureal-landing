@@ -31,6 +31,7 @@ export default function Evidence() {
         title="Basado en evidencia científica"
         subtitle="Estudios muestran que los pulsos binaurales inducen sincronización cerebral, asociados a procesos de regulación del estrés, mejora del sueño y atención sostenida."
         useSimpleAnimation
+        palatino
       />
       
       <Grid cols={{ base: 1, md: 3 }} gap="md">

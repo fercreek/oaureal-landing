@@ -11,6 +11,8 @@ interface SectionTitleProps {
   size?: 'md' | 'lg';
   className?: string;
   useSimpleAnimation?: boolean;
+  /** Palatino font and no italic for the title */
+  palatino?: boolean;
 }
 
 export default function SectionTitle({
@@ -20,12 +22,17 @@ export default function SectionTitle({
   centered = true,
   size = 'md',
   className = '',
-  useSimpleAnimation = false
+  useSimpleAnimation = false,
+  palatino = false
 }: SectionTitleProps) {
   const sizeClass = size === 'lg' 
     ? 'text-5xl md:text-6xl' 
     : 'text-4xl md:text-5xl';
   
+  const titleClass = palatino
+    ? `${sizeClass} font-palatino text-primary ${subtitle ? 'mb-6' : ''}`
+    : `${sizeClass} font-title text-primary italic ${subtitle ? 'mb-6' : ''}`;
+
   const animationProps = useSimpleAnimation 
     ? sectionTitleAnimationSimple 
     : sectionTitleAnimation;
@@ -35,7 +42,7 @@ export default function SectionTitle({
       {...animationProps}
       className={`${centered ? 'text-center' : ''} mb-16 ${className}`}
     >
-      <h2 className={`${sizeClass} font-title text-primary italic ${subtitle ? 'mb-6' : ''}`}>
+      <h2 className={titleClass}>
         {title}
       </h2>
       {showDivider && (

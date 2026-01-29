@@ -46,6 +46,7 @@ export default function Testimonials() {
       <SectionTitle
         title="Lo que dicen quienes experimentan OAUREAL"
         useSimpleAnimation
+        palatino
       />
 
       <div className="relative min-h-[220px] flex items-center justify-center">

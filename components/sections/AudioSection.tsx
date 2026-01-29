@@ -34,7 +34,7 @@ export default function AudioSection() {
   return (
     <section className="py-24 px-6 bg-bg-secondary">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-3xl font-title mb-4 italic text-primary">Escucha algunas frecuencias OAUREAL</h2>
+        <h2 className="text-3xl font-palatino mb-4 text-primary">Escucha algunas frecuencias OAUREAL</h2>
         <AudioVisualizer
           externalPlaying={playing !== null}
           trackName={playing}

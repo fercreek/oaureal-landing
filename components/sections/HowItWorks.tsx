@@ -34,6 +34,7 @@ export default function HowItWorks() {
         title="Cómo funciona Oaureal"
         subtitle="Un proceso simple y transparente de inicio a fin"
         useSimpleAnimation
+        palatino
       />
 
       <div className="flex flex-col gap-12 max-w-md mx-auto">

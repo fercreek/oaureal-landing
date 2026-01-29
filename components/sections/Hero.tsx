@@ -28,10 +28,10 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <h1 className="text-5xl md:text-8xl font-title leading-tight mb-6 text-primary italic">
+          <h1 className="text-5xl md:text-8xl font-palatino leading-tight mb-6 text-white">
             Sintoniza tu ritmo interno
           </h1>
-          <p className="text-lg md:text-xl font-body text-text-muted mb-10 max-w-2xl mx-auto italic">
+          <p className="text-lg md:text-xl font-palatino text-text-muted mb-10 max-w-2xl mx-auto">
             Reduce el ruido mental y crea condiciones para que tu sistema nervioso empiece a entrenarse en estados de calma, enfoque o descanso profundo mediante técnicas y audios binaurales personalizados.
           </p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">

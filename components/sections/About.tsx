@@ -40,6 +40,7 @@ export default function About() {
       <SectionTitle 
         title="QUÉ ES OAUREAL" 
         showDivider 
+        palatino 
       />
       
       <Grid 

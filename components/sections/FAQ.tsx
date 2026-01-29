@@ -16,6 +16,7 @@ export default function FAQ() {
         title="Preguntas Frecuentes"
         size="md"
         className="mb-10"
+        palatino
       />
         <div className="space-y-4">
           {FAQ_ITEMS.map((faq, i) => (
