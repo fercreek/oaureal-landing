@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
@@ -5,16 +6,17 @@ import PostForm from '@/components/admin/PostForm';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
-export default async function EditPostPage({ 
+export default function EditPostPage({ 
   params,
-  searchParams,
 }: { 
   params: Promise<{ id: string }>;
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const { id } = use(params);
+  return <EditPostContent id={id} />;
+}
+
+async function EditPostContent({ id }: { id: string }) {
   const { user } = await requireAuth();
-  const resolvedParams = await params;
-  const { id } = resolvedParams;
 
   const post = await prisma.post.findUnique({
     where: { id },

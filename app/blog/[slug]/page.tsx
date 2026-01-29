@@ -1,5 +1,7 @@
+import { use } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, ArrowLeft } from 'lucide-react';
 import Navbar from '@/components/sections/Navbar';
 import Footer from '@/components/sections/Footer';
@@ -11,25 +13,23 @@ export const revalidate = 60;
 
 export async function generateMetadata({ 
   params,
-  searchParams,
 }: { 
   params: Promise<{ slug: string }>;
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
+  const { slug } = await params;
   return generatePostMetadata(slug);
 }
 
-export default async function BlogPostPage({ 
+export default function BlogPostPage({ 
   params,
-  searchParams,
 }: { 
   params: Promise<{ slug: string }>;
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
+  const { slug } = use(params);
+  return <BlogPostContent slug={slug} />;
+}
+
+async function BlogPostContent({ slug }: { slug: string }) {
   const post = await prisma.post.findFirst({
     where: { slug, published: true },
   });
@@ -76,11 +76,12 @@ export default async function BlogPostPage({
           <p className="text-xl text-text-muted mb-8 leading-relaxed font-body">{post.excerpt}</p>
 
           {post.coverImage && (
-            <div className="w-full h-96 rounded-3xl bg-gradient-to-br from-primary/20 to-primary-dark/20 mb-12 overflow-hidden">
-              <img
+            <div className="relative w-full h-96 rounded-3xl bg-linear-to-br from-primary/20 to-primary-dark/20 mb-12 overflow-hidden">
+              <Image
                 src={post.coverImage}
                 alt={post.title}
-                className="w-full h-full object-cover opacity-60"
+                fill
+                className="object-cover opacity-60"
               />
             </div>
           )}
@@ -88,7 +89,7 @@ export default async function BlogPostPage({
 
         <div
           className="prose prose-invert prose-lg max-w-none
-            prose-headings:text-text prose-headings:font-title prose-headings:text-primary
+            prose-headings:font-title prose-headings:text-primary
             prose-p:text-text-muted prose-p:leading-relaxed prose-p:font-body
             prose-a:text-primary prose-a:no-underline hover:prose-a:underline
             prose-strong:text-text prose-strong:font-bold

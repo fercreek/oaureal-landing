@@ -10,7 +10,7 @@ const steps = [
   {
     number: '01',
     title: 'Realiza el Test Oaureal',
-    duration: '~5 min gratis',
+    duration: '3 min',
     description: 'Breve evaluación de tu estado actual y necesidades de regulación.',
     icon: MessageCircle,
   },
@@ -58,9 +58,7 @@ export default function HowItWorks() {
                   </span>
                 </div>
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/30 flex items-center justify-center mb-6">
-                    <Icon className="w-7 h-7 text-primary" strokeWidth={2} />
-                  </div>
+                  <Icon className="w-8 h-8 text-primary mb-6" strokeWidth={2} />
                   <h3 className="text-xl font-title font-bold text-text mb-1">
                     {step.title}
                   </h3>

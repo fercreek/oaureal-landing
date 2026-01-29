@@ -8,15 +8,18 @@ export default function Hero() {
   return (
     <header className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <video
-          src="/video/portada.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-bg z-10" />
+        <div className="absolute inset-0 w-full h-full scale-[1.35] md:scale-[1.25] origin-center">
+          <video
+            src="/video/portada.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover object-center min-h-full min-w-full"
+          />
+        </div>
+        <div className="absolute inset-0 bg-black/60 z-5" />
+        <div className="absolute right-0 bottom-0 w-full h-full bg-linear-to-b from-transparent to-bg z-10" />
       </div>
 
       <div className="relative z-20 text-center px-6 max-w-4xl">
