@@ -23,7 +23,7 @@ import {
   Redo2,
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface EditorProps {
   content: string;
@@ -31,9 +31,23 @@ interface EditorProps {
   placeholder?: string;
 }
 
+function parseContent(content: string): object | undefined {
+  const trimmed = content?.trim();
+  if (!trimmed || !trimmed.startsWith('{')) return undefined;
+  try {
+    const parsed = JSON.parse(trimmed) as { type?: string };
+    if (typeof parsed !== 'object' || parsed === null) return undefined;
+    if (parsed.type !== 'doc') return undefined;
+    return parsed as object;
+  } catch {
+    return undefined;
+  }
+}
+
 export default function Editor({ content, onChange, placeholder = 'Escribe tu artículo aquí...' }: EditorProps) {
   const [uploading, setUploading] = useState(false);
   const supabase = createClient();
+  const initialContent = parseContent(content);
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -57,7 +71,7 @@ export default function Editor({ content, onChange, placeholder = 'Escribe tu ar
         placeholder,
       }),
     ],
-    content,
+    content: initialContent,
     editorProps: {
       attributes: {
         class: 'prose prose-invert prose-lg max-w-none min-h-[400px] p-6 focus:outline-none',
@@ -67,6 +81,17 @@ export default function Editor({ content, onChange, placeholder = 'Escribe tu ar
       onChange(JSON.stringify(editor.getJSON()));
     },
   });
+
+  const contentSyncedRef = useRef(false);
+  useEffect(() => {
+    if (!editor) return;
+    const parsed = parseContent(content);
+    if (!parsed) return;
+    if (!contentSyncedRef.current) {
+      editor.commands.setContent(parsed);
+      contentSyncedRef.current = true;
+    }
+  }, [editor, content]);
 
   const handleImageUpload = async () => {
     const input = document.createElement('input');
