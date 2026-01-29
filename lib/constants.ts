@@ -126,9 +126,42 @@ export const QUIZ_MOTIVATION_CARDS = [
 ];
 
 export const FAQ_ITEMS = [
-  { q: "¿Esto cura alguna condición médica?", a: "No. Oaureal es bienestar y entrenamiento mental complementario." },
-  { q: "¿En cuánto tiempo notaré resultados?", a: "Alivio inmediato. Cambios reales estructurales en 6 semanas de uso constante." },
-  { q: "¿Necesito audífonos?", a: "Sí, los audífonos son esenciales para el efecto binaural (separación de frecuencias)." }
+  {
+    q: "¿Esto cura o trata alguna condición médica?",
+    a: "No. Las frecuencias Oaureal no son un tratamiento médico ni terapéutico. Están diseñadas como un apoyo para favorecer estados de calma, enfoque o descanso. Si estás en un proceso médico o terapéutico, pueden acompañarlo, pero no lo sustituyen.",
+  },
+  {
+    q: "¿En cuánto tiempo notaré resultados?",
+    a: "Cada mente responde de forma distinta. Algunas personas perciben cambios desde las primeras escuchas, mientras que en otras el efecto es más gradual. Oaureal funciona como entrenamiento: la constancia, el volumen bajo y un entorno tranquilo son clave.",
+  },
+  {
+    q: "No sentí nada al escucharlos, ¿funcionan?",
+    a: "Sí, es completamente normal. No todas las personas experimentan sensaciones inmediatas. En muchos casos, los cambios se manifiestan de forma sutil en el día a día, más que durante la escucha. El uso constante y consciente es lo que permite que el efecto se consolide.",
+  },
+  {
+    q: "¿Pueden hacerme daño?",
+    a: "No deberían causar molestias si se usan correctamente: con audífonos y volumen bajo. Si en algún momento sientes incomodidad, basta con pausar y descansar. Todos los audios están diseñados para ser suaves y seguros.",
+  },
+  {
+    q: "¿Esto sustituye terapia o medicación?",
+    a: "No. Oaureal no reemplaza terapia psicológica, psiquiátrica ni tratamientos médicos. Es una herramienta complementaria de bienestar y regulación del sistema nervioso.",
+  },
+  {
+    q: "¿Puedo usarlos si tengo ansiedad, estrés o problemas de sueño?",
+    a: "Muchas personas los utilizan como apoyo para calmar la mente, reducir el estrés o mejorar el descanso. No sustituyen un tratamiento médico, son una herramienta de acompañamiento.",
+  },
+  {
+    q: "¿Esto estabiliza el sistema nervioso?",
+    a: "No de forma inmediata ni clínica. Oaureal ofrece condiciones favorables para que el sistema nervioso aprenda a salir de la sobrecarga mediante repetición y uso consciente.",
+  },
+  {
+    q: "¿Cuánto tiempo debo escucharlos?",
+    a: "Puedes utilizarlos todos los días. Se recomienda un mínimo de 10 a 20 minutos por sesión, con audífonos y volumen bajo. Las frecuencias de sueño se usan por la noche; las de enfoque, durante el día.",
+  },
+  {
+    q: "¿Cómo funcionan las frecuencias Oaureal?",
+    a: "Utilizan patrones sonoros diseñados para ayudar a la mente a entrar en estados de calma, descanso o enfoque. No es magia ni medicina. Es un entrenamiento suave y no invasivo para el sistema nervioso.",
+  },
 ];
 
 export const PRICING_PLANS = [

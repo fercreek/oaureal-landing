@@ -98,7 +98,7 @@ export default function Footer() {
             <span>© 2026 OAUREAL LABS. TODOS LOS DERECHOS RESERVADOS.</span>
             <div className="flex gap-4">
               <Link href="/blog" className="hover:text-text">Blog</Link>
-              <a href="#" className="hover:text-text">Aviso Legal</a>
+              <Link href="/aviso-legal" className="hover:text-text">Aviso Legal</Link>
               <a href="#" className="hover:text-text">Privacidad</a>
             </div>
           </div>

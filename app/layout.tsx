@@ -27,13 +27,16 @@ const libreBaskerville = Libre_Baskerville({
   variable: "--font-libre-baskerville",
 });
 
+const siteTitle = "Oaureal – Sonidos para dormir, calma y enfoque mental";
+const siteDescription =
+  "Frecuencias binaurales personalizadas para reducir estrés, mejorar la concentración y dormir mejor. Entrena tu cerebro para la calma y claridad.";
+
 export const metadata: Metadata = {
   title: {
-    default: "Oaureal | Sincroniza tu biología. Domina tu mente.",
+    default: siteTitle,
     template: "%s | Oaureal",
   },
-  description:
-    "Entrenamiento cerebral con sonidos binaurales de precisión científica para regular tu sistema nervioso. Descubre tu protocolo personalizado.",
+  description: siteDescription,
   keywords: [
     "entrenamiento cerebral",
     "sonidos binaurales",
@@ -62,9 +65,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_MX",
     url: "https://oaureal.com",
-    title: "Oaureal | Sincroniza tu biología. Domina tu mente.",
-    description:
-      "Entrenamiento cerebral con sonidos binaurales de precisión científica para regular tu sistema nervioso.",
+    title: siteTitle,
+    description: siteDescription,
     siteName: "Oaureal",
     images: [
       {
@@ -77,9 +79,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oaureal | Sincroniza tu biología. Domina tu mente.",
-    description:
-      "Entrenamiento cerebral con sonidos binaurales de precisión científica para regular tu sistema nervioso.",
+    title: siteTitle,
+    description: siteDescription,
     images: ["/og-image.png"],
   },
   robots: {
@@ -108,8 +109,7 @@ const jsonLd = {
       "@id": "https://oaureal.com/#website",
       url: "https://oaureal.com",
       name: "Oaureal",
-      description:
-        "Entrenamiento cerebral con sonidos binaurales de precisión científica para regular tu sistema nervioso. Descubre tu protocolo personalizado.",
+      description: siteDescription,
       inLanguage: "es-MX",
       publisher: {
         "@id": "https://oaureal.com/#organization",
