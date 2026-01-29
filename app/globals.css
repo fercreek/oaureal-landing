@@ -17,7 +17,7 @@
   --background: #000000;
   --foreground: #ffffff;
   --font-family-logo: var(--font-cormorant);
-  --font-family-title: var(--font-michroma);
+  --font-family-title: var(--font-libre-baskerville), 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
   --font-family-subtitle: var(--font-exo);
   --font-family-body: var(--font-roboto);
 }
@@ -45,7 +45,7 @@
 }
 
 .font-title {
-  font-family: var(--font-family-title), sans-serif;
+  font-family: var(--font-family-title);
 }
 
 .font-subtitle {
@@ -67,7 +67,7 @@ html {
 body {
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-family-body), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

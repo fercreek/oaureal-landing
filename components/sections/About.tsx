@@ -15,8 +15,7 @@ export default function About() {
         "No es música para distraerte.",
         "No es meditación pasiva.",
         "Es un entrenamiento sonoro que ayuda a tu cerebro a entrar en estados funcionales como calma, enfoque o descanso profundo."
-      ],
-      highlighted: false
+      ]
     },
     {
       title: "QUÉ SON LOS BINAURALES",
@@ -24,8 +23,7 @@ export default function About() {
         "Dos tonos ligeramente distintos en cada oído.",
         "El cerebro genera una tercera frecuencia (frecuencia binaural) que ayuda a sincronizar tus ondas cerebrales.",
         "Esto potencia tu atención, regulación emocional y descanso."
-      ],
-      highlighted: true
+      ]
     },
     {
       title: "POR QUÉ OAUREAL ES DIFERENTE",
@@ -33,8 +31,7 @@ export default function About() {
         "Audios en WAV, sin compresión, señal limpia y precisa.",
         "Entrenamiento consciente, no consumo pasivo.",
         "Diferencia clara: YouTube/Spotify = música; Oaureal = entrenamiento cerebral real."
-      ],
-      highlighted: false
+      ]
     }
   ];
 
@@ -53,26 +50,20 @@ export default function About() {
         {cards.map((card, index) => (
           <Card
             key={index}
-            variant={card.highlighted ? 'highlighted' : 'default'}
-            glow={card.highlighted}
+            variant="highlighted"
+            glow
             variants={cardVariants}
             className="h-full"
             whileHover={{ 
               y: -10, 
-              boxShadow: card.highlighted 
-                ? '0 0 60px var(--color-primary)' 
-                : '0 0 30px var(--color-primary)',
+              boxShadow: '0 0 60px var(--color-primary)',
               transition: { duration: 0.3 } 
             }}
             style={{
-              boxShadow: card.highlighted 
-                ? '0 0 40px var(--color-primary)' 
-                : '0 0 20px rgba(120, 232, 248, 0.1), inset 0 1px 0 0 rgba(255,255,255,0.05)'
+              boxShadow: '0 0 40px var(--color-primary)'
             }}
           >
-            <h3 className={`text-lg font-subtitle font-bold text-center mb-8 uppercase tracking-wide ${
-              card.highlighted ? 'text-primary' : 'text-text'
-            }`}>
+            <h3 className="text-lg font-subtitle font-bold text-center mb-8 uppercase tracking-wide text-primary">
               {card.title}
             </h3>
             <div className="space-y-6 flex-1 flex flex-col justify-center">
