@@ -9,7 +9,7 @@ import Grid from '@/components/ui/Grid';
 
 export default function Pricing() {
   return (
-    <Section className="relative">
+    <Section className="relative hidden">
       <ReviewBadge note="Precios y planes pendientes de aprobación final" />
       <div className="text-center mb-16">
         <h2 className="text-4xl font-title mb-4 text-primary">Elige tu plan de entrenamiento</h2>

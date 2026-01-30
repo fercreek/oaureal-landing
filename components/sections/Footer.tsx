@@ -76,7 +76,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-text-muted text-sm mb-10 leading-relaxed max-w-sm font-body">
-              Sincroniza tu biología. Domina tu mente. Entrenamiento sonoro diseñado por expertos para la regulación del sistema nervioso.
+              Reduce el ruido mental y crea condiciones para que tu sistema nervioso empiece a entrenarse en estados de calma, enfoque o descanso profundo mediante técnicas y audios binaurales personalizados.
             </p>
             <div className="flex flex-wrap gap-3">
               {socialLinks.map((social) => (
