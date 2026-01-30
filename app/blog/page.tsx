@@ -27,13 +27,11 @@ export default async function BlogPage({
       <Navbar />
       <div className="max-w-6xl mx-auto px-6 py-24 pt-32">
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-title italic mb-6 text-primary">
+          <h1 className="text-5xl md:text-8xl font-palatino leading-tight mb-6 text-primary">
             OAUREAL LAB
           </h1>
-          <p className="text-lg text-text max-w-3xl mx-auto font-body leading-relaxed">
-            Oaureal Lab es el espacio donde se explica lo que en Oaureal se experimenta.
-            <br />
-            Aquí exploramos la ciencia, los procesos biológicos y los sistemas —sonoros, fisiológicos y naturales— que influyen en la regulación y los estados mentales.
+          <p className="text-lg md:text-xl font-palatino text-text-muted mb-10 max-w-2xl mx-auto">
+            Oaureal Lab es el espacio donde se explica lo que en Oaureal se experimenta. Aquí exploramos la ciencia, los procesos biológicos y los sistemas —sonoros, fisiológicos y naturales— que influyen en la regulación y los estados mentales.
           </p>
         </div>
 
