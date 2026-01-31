@@ -1,19 +1,18 @@
 import { requireAuth } from '@/lib/auth';
 import Link from 'next/link';
-import { Plus, Edit, Eye } from 'lucide-react';
+import { Plus, Edit, Eye, Users } from 'lucide-react';
 import { prisma } from '@/lib/prisma';
 
-export default async function DashboardPage({
-  searchParams,
-}: {
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+export default async function DashboardPage() {
   const { user } = await requireAuth();
 
-  const posts = await prisma.post.findMany({
-    where: { authorId: user.id },
-    orderBy: { createdAt: 'desc' },
-  });
+  const [posts, leadsCount] = await Promise.all([
+    prisma.post.findMany({
+      where: { authorId: user.id },
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.quizSubmission.count(),
+  ]);
 
   return (
     <div className="min-h-screen bg-bg text-text">
@@ -23,13 +22,22 @@ export default async function DashboardPage({
             <h1 className="text-4xl font-title mb-2 text-primary">Panel de Administración</h1>
             <p className="text-text-muted font-body">Gestiona los artículos del blog</p>
           </div>
-          <Link
-            href="/admin/posts/new"
-            className="flex items-center gap-2 px-6 py-3 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 transition-all"
-          >
-            <Plus size={18} />
-            Nuevo Artículo
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/admin/leads"
+              className="flex items-center gap-2 px-5 py-3 border border-white/20 text-text hover:bg-white/5 rounded-xl font-subtitle font-bold transition-all"
+            >
+              <Users size={18} />
+              Leads {leadsCount > 0 && `(${leadsCount})`}
+            </Link>
+            <Link
+              href="/admin/posts/new"
+              className="flex items-center gap-2 px-6 py-3 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 transition-all"
+            >
+              <Plus size={18} />
+              Nuevo Artículo
+            </Link>
+          </div>
         </div>
 
         {!posts || posts.length === 0 ? (

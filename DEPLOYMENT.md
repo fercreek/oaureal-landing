@@ -132,7 +132,7 @@
    npx prisma migrate deploy
    ```
 
-   Esto creará la tabla `posts` en Supabase.
+   Esto creará las tablas necesarias (`posts`, `QuizSubmission`, etc.) en Supabase.
    
    ✅ **Si todo está bien**, verás algo como:
    ```

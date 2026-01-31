@@ -23,3 +23,13 @@ model Post {
 
   @@map("posts")
 }
+
+model QuizSubmission {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String
+  answers   Json
+  archetype String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("quiz_submissions")
+}

@@ -3,51 +3,60 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
-import { QUIZ_QUESTIONS, QUIZ_MOTIVATION_CARDS, ARCHETYPES } from '@/lib/constants';
+import { QUIZ_QUESTIONS, QUIZ_MOTIVATION_CARDS } from '@/lib/constants';
+import { submitQuiz } from '@/app/actions/quiz';
+
+export type QuizCompletePayload = { archetype: string; indicadores: Record<string, { value: number; status: string; trend: string }> };
 
 interface QuizProps {
-  onComplete: (result: keyof typeof ARCHETYPES) => void;
+  onComplete: (payload: QuizCompletePayload) => void;
 }
 
 export default function Quiz({ onComplete }: QuizProps) {
   const [step, setStep] = useState(0);
-  const [responses, setResponses] = useState<string[]>([]);
+  const [responses, setResponses] = useState<Record<string, string>>({});
   const [email, setEmail] = useState('');
   const [started, setStarted] = useState(false);
   const [showMotivation, setShowMotivation] = useState(false);
   const [currentMotivation, setCurrentMotivation] = useState<typeof QUIZ_MOTIVATION_CARDS[0] | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleAnswer = (val: string) => {
-    const newResponses = [...responses, val];
+  const handleAnswer = async (val: string) => {
+    const questionId = `p${step + 1}`;
+    const newResponses = { ...responses, [questionId]: val };
     setResponses(newResponses);
-    
-    const motivationCard = QUIZ_MOTIVATION_CARDS.find(card => card.afterQuestion === step + 1);
-    
+    setSubmitError(null);
+
+    const motivationCard = QUIZ_MOTIVATION_CARDS.find((card) => card.afterQuestion === step + 1);
+
     if (motivationCard) {
       setCurrentMotivation(motivationCard);
       setShowMotivation(true);
+    } else if (step < QUIZ_QUESTIONS.length - 1) {
+      setStep(step + 1);
     } else {
-      proceedToNextQuestion(newResponses);
+      setSubmitting(true);
+      const result = await submitQuiz(email.trim(), newResponses);
+      setSubmitting(false);
+      if (result.ok) {
+        onComplete({ archetype: result.archetype, indicadores: result.indicadores });
+      } else {
+        setSubmitError(result.error);
+      }
     }
   };
 
-  const proceedToNextQuestion = (newResponses: string[]) => {
+  const proceedToNextQuestion = () => {
     if (step < QUIZ_QUESTIONS.length - 1) {
       setStep(step + 1);
-    } else {
-      const counts = newResponses.reduce((acc, curr) => {
-        acc[curr] = (acc[curr] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>);
-      const winner = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b) as keyof typeof ARCHETYPES;
-      onComplete(winner);
     }
   };
 
   const handleContinueFromMotivation = () => {
     setShowMotivation(false);
     setCurrentMotivation(null);
-    proceedToNextQuestion(responses);
+    proceedToNextQuestion();
   };
 
   if (!started) {
@@ -146,14 +155,18 @@ export default function Quiz({ onComplete }: QuizProps) {
             {QUIZ_QUESTIONS[step].q}
           </h4>
           
+          {submitError && (
+            <p className="text-red-400 text-sm mb-4 font-body">{submitError}</p>
+          )}
           <div className="space-y-3">
             {['A', 'B', 'C'].map((opt) => (
               <motion.button
                 key={opt}
-                whileHover={{ scale: 1.02, x: 5 }}
-                whileTap={{ scale: 0.98 }}
+                disabled={submitting}
+                whileHover={submitting ? undefined : { scale: 1.02, x: 5 }}
+                whileTap={submitting ? undefined : { scale: 0.98 }}
                 onClick={() => handleAnswer(opt)}
-                className="w-full text-left p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-primary hover:bg-primary/10 transition-all text-text-muted font-body group"
+                className="w-full text-left p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-primary hover:bg-primary/10 transition-all text-text-muted font-body group disabled:opacity-60"
               >
                 <span className="inline-block w-10 font-bold text-primary group-hover:text-primary-light">
                   {opt})
