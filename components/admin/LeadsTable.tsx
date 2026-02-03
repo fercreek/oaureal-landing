@@ -1,9 +1,11 @@
 'use client';
 
 import { Fragment, useState } from 'react';
-import { ChevronDown, ChevronRight, Mail } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ChevronDown, ChevronRight, Mail, Trash2 } from 'lucide-react';
 import { QUIZ_QUESTIONS } from '@/lib/constants';
 import { ARCHETYPES_FULL, type ArchetypeId } from '@/lib/quiz-logic';
+import { deleteQuizSubmission } from '@/app/actions/quiz';
 
 type Lead = {
   id: string;
@@ -14,7 +16,18 @@ type Lead = {
 };
 
 export default function LeadsTable({ leads }: { leads: Lead[] }) {
+  const router = useRouter();
   const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  const handleDelete = async (id: string, email: string) => {
+    if (!confirm(`¿Borrar el lead ${email}? Esta acción no se puede deshacer.`)) return;
+    try {
+      await deleteQuizSubmission(id);
+      router.refresh();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Error al borrar');
+    }
+  };
 
   const answersRecord = (answers: unknown): Record<string, string> => {
     if (answers && typeof answers === 'object' && !Array.isArray(answers)) {
@@ -47,6 +60,7 @@ export default function LeadsTable({ leads }: { leads: Lead[] }) {
               <th className="text-left py-4 px-6 font-subtitle text-primary text-xs tracking-widest uppercase">
                 Fecha
               </th>
+              <th className="text-right py-4 px-6 font-subtitle text-primary text-xs tracking-widest uppercase w-12" />
             </tr>
           </thead>
           <tbody>
@@ -90,10 +104,20 @@ export default function LeadsTable({ leads }: { leads: Lead[] }) {
                         minute: '2-digit',
                       })}
                     </td>
+                    <td className="py-3 px-6 text-right">
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(lead.id, lead.email)}
+                        className="p-2 rounded-lg text-text-muted hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                        title="Borrar lead"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </td>
                   </tr>
                   {isExpanded && (
                     <tr className="bg-bg border-b border-white/10">
-                      <td colSpan={4} className="py-4 px-6">
+                      <td colSpan={5} className="py-4 px-6">
                         <div className="pl-6 border-l-2 border-primary/30">
                           <p className="font-subtitle text-primary text-xs tracking-widest mb-3 uppercase">
                             Respuestas por pregunta

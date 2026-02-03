@@ -1,10 +1,21 @@
 import { prisma } from '@/lib/prisma';
+import { normalizeSlug } from '@/lib/utils';
 
-export async function generateMetadata(slug: string) {
+export async function findPublishedPostBySlug(slug: string) {
   const post = await prisma.post.findFirst({
     where: { slug, published: true },
-    select: { title: true, excerpt: true, coverImage: true },
   });
+  if (post) return post;
+  const normalized = normalizeSlug(slug);
+  const posts = await prisma.post.findMany({
+    where: { published: true },
+    take: 500,
+  });
+  return posts.find((p) => normalizeSlug(p.slug) === normalized) ?? null;
+}
+
+export async function generateMetadata(slug: string) {
+  const post = await findPublishedPostBySlug(slug);
 
   if (!post) {
     return {

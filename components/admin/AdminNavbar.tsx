@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Home, Users } from 'lucide-react';
+import { Home, Users, FileText } from 'lucide-react';
 import LogoutButton from './LogoutButton';
 
 interface AdminNavbarProps {
@@ -24,6 +24,13 @@ export default function AdminNavbar({ showLogout = true }: AdminNavbarProps) {
           <span className="text-xl font-logo font-bold tracking-tighter uppercase italic text-primary">Oaureal Admin</span>
         </Link>
         <div className="flex items-center gap-4">
+          <Link
+            href="/admin/dashboard"
+            className="flex items-center gap-2 px-4 py-2 text-text-muted hover:text-primary transition-colors font-subtitle text-sm"
+          >
+            <FileText size={18} />
+            Blog
+          </Link>
           <Link
             href="/admin/leads"
             className="flex items-center gap-2 px-4 py-2 text-text-muted hover:text-primary transition-colors font-subtitle text-sm"
