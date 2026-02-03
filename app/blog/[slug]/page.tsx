@@ -7,6 +7,7 @@ import Navbar from '@/components/sections/Navbar';
 import Footer from '@/components/sections/Footer';
 import { generateMetadata as generatePostMetadata, findPublishedPostBySlug } from '@/lib/blog-metadata';
 import { renderTipTapContent } from '@/lib/tiptap-renderer';
+import { normalizeSlug } from '@/lib/utils';
 
 export const revalidate = 60;
 
@@ -55,8 +56,36 @@ async function BlogPostContent({ slug }: { slug: string }) {
   }
   const contentHtml = renderTipTapContent(contentStr);
 
+  const BASE_URL = 'https://oaureal.com';
+  const canonicalSlug = normalizeSlug(post.slug);
+  const canonicalUrl = `${BASE_URL}/blog/${canonicalSlug}`;
+  const imageUrl = post.coverImage?.startsWith('http') ? post.coverImage : post.coverImage ? `${BASE_URL}${post.coverImage.startsWith('/') ? '' : '/'}${post.coverImage}` : `${BASE_URL}/logo-white.png`;
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.publishedAt?.toISOString(),
+    dateModified: post.updatedAt.toISOString(),
+    author: {
+      '@type': 'Organization',
+      name: 'Oaureal Labs',
+      url: BASE_URL,
+    },
+    image: imageUrl,
+    url: canonicalUrl,
+    publisher: {
+      '@id': `${BASE_URL}/#organization`,
+    },
+  };
+
   return (
     <div className="min-h-screen bg-bg text-text">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <Navbar />
       <article className="max-w-4xl mx-auto px-6 py-24 pt-32">
         <Link

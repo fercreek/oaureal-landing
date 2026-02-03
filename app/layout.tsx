@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     siteName: "Oaureal",
     images: [
       {
-        url: "/og-image.png",
+        url: "/logo-white.png",
         width: 1200,
         height: 630,
         alt: "Oaureal – Entrenamiento cerebral con binaurales",
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/og-image.png"],
+    images: ["/logo-white.png"],
   },
   robots: {
     index: true,
