@@ -5,9 +5,8 @@ import Image from 'next/image';
 import { Calendar, ArrowLeft } from 'lucide-react';
 import Navbar from '@/components/sections/Navbar';
 import Footer from '@/components/sections/Footer';
-import { generateMetadata as generatePostMetadata } from '@/lib/blog-metadata';
+import { generateMetadata as generatePostMetadata, findPublishedPostBySlug } from '@/lib/blog-metadata';
 import { renderTipTapContent } from '@/lib/tiptap-renderer';
-import { prisma } from '@/lib/prisma';
 
 export const revalidate = 60;
 
@@ -30,9 +29,7 @@ export default function BlogPostPage({
 }
 
 async function BlogPostContent({ slug }: { slug: string }) {
-  const post = await prisma.post.findFirst({
-    where: { slug, published: true },
-  });
+  const post = await findPublishedPostBySlug(slug);
 
   if (!post) {
     notFound();

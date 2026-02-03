@@ -1,13 +1,30 @@
 import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import LeadsTable from '@/components/admin/LeadsTable';
+import Pagination from '@/components/admin/Pagination';
 
-export default async function LeadsPage() {
+const LEADS_PER_PAGE = 20;
+
+export default async function LeadsPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   await requireAuth();
+  const params = searchParams ? await searchParams : {};
+  const page = Math.max(1, parseInt(String(params?.page ?? 1), 10) || 1);
+  const skip = (page - 1) * LEADS_PER_PAGE;
 
-  const leads = await prisma.quizSubmission.findMany({
-    orderBy: { createdAt: 'desc' },
-  });
+  const [leads, totalLeads] = await Promise.all([
+    prisma.quizSubmission.findMany({
+      orderBy: { createdAt: 'desc' },
+      skip,
+      take: LEADS_PER_PAGE,
+    }),
+    prisma.quizSubmission.count(),
+  ]);
+
+  const totalPages = Math.max(1, Math.ceil(totalLeads / LEADS_PER_PAGE));
 
   return (
     <div className="min-h-screen bg-bg text-text">
@@ -20,6 +37,15 @@ export default async function LeadsPage() {
         </div>
 
         <LeadsTable leads={leads} />
+        {totalLeads > 0 && (
+          <Pagination
+            basePath="/admin/leads"
+            currentPage={page}
+            totalPages={totalPages}
+            totalItems={totalLeads}
+            limit={LEADS_PER_PAGE}
+          />
+        )}
       </div>
     </div>
   );

@@ -2,17 +2,33 @@ import { requireAuth } from '@/lib/auth';
 import Link from 'next/link';
 import { Plus, Edit, Eye, Users } from 'lucide-react';
 import { prisma } from '@/lib/prisma';
+import DeletePostButton from '@/components/admin/DeletePostButton';
+import Pagination from '@/components/admin/Pagination';
 
-export default async function DashboardPage() {
+const POSTS_PER_PAGE = 10;
+
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const { user } = await requireAuth();
+  const params = searchParams ? await searchParams : {};
+  const page = Math.max(1, parseInt(String(params?.page ?? 1), 10) || 1);
+  const skip = (page - 1) * POSTS_PER_PAGE;
 
-  const [posts, leadsCount] = await Promise.all([
+  const [posts, leadsCount, totalPosts] = await Promise.all([
     prisma.post.findMany({
       where: { authorId: user.id },
       orderBy: { createdAt: 'desc' },
+      skip,
+      take: POSTS_PER_PAGE,
     }),
     prisma.quizSubmission.count(),
+    prisma.post.count({ where: { authorId: user.id } }),
   ]);
+
+  const totalPages = Math.max(1, Math.ceil(totalPosts / POSTS_PER_PAGE));
 
   return (
     <div className="min-h-screen bg-bg text-text">
@@ -100,11 +116,21 @@ export default async function DashboardPage() {
                     >
                       <Edit size={18} />
                     </Link>
+                    <DeletePostButton postId={post.id} postTitle={post.title} />
                   </div>
                 </div>
               </div>
             ))}
           </div>
+        )}
+        {posts.length > 0 && (
+          <Pagination
+            basePath="/admin/dashboard"
+            currentPage={page}
+            totalPages={totalPages}
+            totalItems={totalPosts}
+            limit={POSTS_PER_PAGE}
+          />
         )}
       </div>
     </div>

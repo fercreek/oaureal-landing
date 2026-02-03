@@ -73,3 +73,19 @@ export async function updatePost(
   revalidatePath(`/blog/${existing.slug}`);
   if (data.slug !== existing.slug) revalidatePath(`/blog/${data.slug}`);
 }
+
+export async function deletePost(id: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('No autenticado');
+
+  const existing = await prisma.post.findUnique({ where: { id } });
+  if (!existing || existing.authorId !== user.id) throw new Error('No autorizado');
+
+  await prisma.post.delete({ where: { id } });
+  revalidatePath('/admin/dashboard');
+  revalidatePath('/blog');
+  if (existing.slug) revalidatePath(`/blog/${existing.slug}`);
+}

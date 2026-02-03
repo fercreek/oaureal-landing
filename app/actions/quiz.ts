@@ -1,6 +1,8 @@
 'use server';
 
+import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 import {
   calcularPerfilOndas,
   calcularIndicadoresDinamicos,
@@ -37,4 +39,11 @@ export async function submitQuiz(
     },
   });
   return { ok: true, archetype, indicadores };
+}
+
+export async function deleteQuizSubmission(id: string) {
+  await requireAuth();
+  await prisma.quizSubmission.delete({ where: { id } });
+  revalidatePath('/admin/leads');
+  revalidatePath('/admin/dashboard');
 }
