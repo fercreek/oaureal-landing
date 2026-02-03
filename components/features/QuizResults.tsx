@@ -3,9 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Brain, Zap, Target, AlertTriangle, TrendingUp, TrendingDown, Clock } from 'lucide-react';
-import AudioPreview from '@/components/features/AudioPreview';
-import { getAudioByArchetype } from '@/lib/constants';
-import { ARCHETYPES_FULL, getAudioKeyByArchetype, type ArchetypeId, type ArchetypeIndicators } from '@/lib/quiz-logic';
+import { ARCHETYPES_FULL, type ArchetypeId, type ArchetypeIndicators } from '@/lib/quiz-logic';
 
 function createRadarPath(data: { value: number }[]) {
   const center = 100;
@@ -72,7 +70,6 @@ export default function QuizResultsView({
   email: string;
 }) {
   const data = ARCHETYPES_FULL[archetype];
-  const suggestedAudio = getAudioByArchetype(getAudioKeyByArchetype(archetype));
 
   return (
     <motion.div
@@ -319,22 +316,6 @@ export default function QuizResultsView({
             <span>Qué puedes esperar con el uso constante. Mayor calma, enfoque y descanso profundo.</span>
           </li>
         </ul>
-      </div>
-
-      <div className="text-center mb-10">
-        <p className="text-primary tracking-[0.3em] font-subtitle font-bold text-sm mb-2">AUDIO SUGERIDO</p>
-        <h3 className="text-2xl font-title text-text mb-4">Basado en tu diagnóstico</h3>
-        <p className="text-text-muted text-sm max-w-xl mx-auto font-body mb-6">
-          Hemos seleccionado un protocolo de audio específico para tu estado actual. Prueba el preview a continuación.
-        </p>
-        <AudioPreview
-          name={suggestedAudio.name}
-          frequency={suggestedAudio.frequency}
-          duration={suggestedAudio.duration}
-          description={suggestedAudio.description}
-          color={suggestedAudio.color}
-          binauralFreq={suggestedAudio.binauralFreq}
-        />
       </div>
 
       <div className="text-center">

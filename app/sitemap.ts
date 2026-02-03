@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
+import { normalizeSlug } from "@/lib/utils";
 
 const baseUrl = "https://oaureal.com";
 
@@ -10,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   const blogUrls: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
+    url: `${baseUrl}/blog/${normalizeSlug(post.slug)}`,
     lastModified: post.updatedAt,
     changeFrequency: "weekly" as const,
     priority: 0.7,

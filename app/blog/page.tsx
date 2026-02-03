@@ -3,6 +3,7 @@ import { Calendar, ArrowRight } from 'lucide-react';
 import Navbar from '@/components/sections/Navbar';
 import Footer from '@/components/sections/Footer';
 import { prisma } from '@/lib/prisma';
+import { normalizeSlug } from '@/lib/utils';
 
 export const metadata = {
   title: 'OAUREAL LAB | Ciencia y regulación mental',
@@ -44,7 +45,7 @@ export default async function BlogPage({
             {posts.map((post) => (
               <Link
                 key={post.id}
-                href={`/blog/${post.slug}`}
+                href={`/blog/${normalizeSlug(post.slug)}`}
                 className="group block p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-primary/50 transition-all hover:bg-white/10"
               >
                 {post.coverImage && (

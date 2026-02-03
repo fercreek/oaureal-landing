@@ -16,7 +16,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  return generatePostMetadata(slug);
+  let decoded = slug;
+  try {
+    decoded = decodeURIComponent(slug);
+  } catch {
+    decoded = slug;
+  }
+  return generatePostMetadata(decoded);
 }
 
 export default function BlogPostPage({ 
@@ -29,13 +35,24 @@ export default function BlogPostPage({
 }
 
 async function BlogPostContent({ slug }: { slug: string }) {
-  const post = await findPublishedPostBySlug(slug);
+  let decodedSlug = slug;
+  try {
+    decodedSlug = decodeURIComponent(slug);
+  } catch {
+    decodedSlug = slug;
+  }
+  const post = await findPublishedPostBySlug(decodedSlug);
 
   if (!post) {
     notFound();
   }
 
-  const contentStr = typeof post.content === 'string' ? post.content : JSON.stringify(post.content);
+  let contentStr: string;
+  try {
+    contentStr = typeof post.content === 'string' ? post.content : JSON.stringify(post.content);
+  } catch {
+    contentStr = '[]';
+  }
   const contentHtml = renderTipTapContent(contentStr);
 
   return (

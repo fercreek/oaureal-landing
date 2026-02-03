@@ -109,8 +109,8 @@ function renderNode(node: TipTapNode): string {
   }
 
   if (node.type === 'image') {
-    const src = node.attrs?.src ?? '';
-    const alt = node.attrs?.alt ?? '';
+    const src = escapeHtml(node.attrs?.src ?? '');
+    const alt = escapeHtml(node.attrs?.alt ?? '');
     return `<img src="${src}" alt="${alt}" class="rounded-xl my-8" />`;
   }
 
