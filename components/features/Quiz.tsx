@@ -6,7 +6,7 @@ import { Sparkles } from 'lucide-react';
 import { QUIZ_QUESTIONS, QUIZ_MOTIVATION_CARDS } from '@/lib/constants';
 import { submitQuiz } from '@/app/actions/quiz';
 
-export type QuizCompletePayload = { archetype: string; indicadores: Record<string, { value: number; status: string; trend: string }> };
+export type QuizCompletePayload = { archetype: string; indicadores: Record<string, { value: number; status: string; trend: string }>; email: string };
 
 interface QuizProps {
   onComplete: (payload: QuizCompletePayload) => void;
@@ -40,7 +40,7 @@ export default function Quiz({ onComplete }: QuizProps) {
       const result = await submitQuiz(email.trim(), newResponses);
       setSubmitting(false);
       if (result.ok) {
-        onComplete({ archetype: result.archetype, indicadores: result.indicadores });
+        onComplete({ archetype: result.archetype, indicadores: result.indicadores, email: email.trim() });
       } else {
         setSubmitError(result.error);
       }

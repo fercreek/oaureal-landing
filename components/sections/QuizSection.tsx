@@ -13,10 +13,12 @@ interface QuizSectionProps {
 export default function QuizSection({ onResult }: QuizSectionProps) {
   const [result, setResult] = useState<ArchetypeId | null>(null);
   const [indicadores, setIndicadores] = useState<ArchetypeIndicators | null>(null);
+  const [email, setEmail] = useState('');
 
   const handleComplete = (payload: QuizCompletePayload) => {
     setResult(payload.archetype as ArchetypeId);
     setIndicadores(payload.indicadores);
+    setEmail(payload.email);
     onResult?.(payload.archetype);
   };
 
@@ -26,7 +28,7 @@ export default function QuizSection({ onResult }: QuizSectionProps) {
         {!result ? (
           <Quiz onComplete={handleComplete} />
         ) : (
-          <QuizResultsView archetype={result} indicadores={indicadores} />
+          <QuizResultsView archetype={result} indicadores={indicadores} email={email} />
         )}
       </div>
     </section>

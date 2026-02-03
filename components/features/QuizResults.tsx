@@ -65,9 +65,11 @@ const INDICATOR_LABELS: Record<string, string> = {
 export default function QuizResultsView({
   archetype,
   indicadores,
+  email,
 }: {
   archetype: ArchetypeId;
   indicadores: ArchetypeIndicators | null;
+  email: string;
 }) {
   const data = ARCHETYPES_FULL[archetype];
   const suggestedAudio = getAudioByArchetype(getAudioKeyByArchetype(archetype));
@@ -340,9 +342,14 @@ export default function QuizResultsView({
         <p className="text-3xl font-title text-text mb-1">México: $555 MXN</p>
         <p className="text-3xl font-title text-text mb-2">Internacional: $32 USD (PayPal)</p>
         <p className="text-text-secondary text-sm font-body mb-6">Pago único · Sin suscripciones · Acceso inmediato</p>
-        <button className="px-10 py-4 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 transition-all">
+        <a
+          href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '528117879315'}?text=${encodeURIComponent(`Hola, acabo de completar el test en la web de Oaureal.\n\nMi resultado fue: ${data.title}.\nMi correo: ${email}\n\nQuiero mi protocolo personalizado y que me guíen con el proceso de pago. Gracias.`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-10 py-4 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 transition-all"
+        >
           CONSEGUIR MI PLAN COMPLETO
-        </button>
+        </a>
         <p className="text-xs text-text mt-4 font-body">
           Te guiamos en el proceso de pago y te enviamos tu protocolo personalizado directamente a tu correo.
         </p>
