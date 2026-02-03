@@ -437,7 +437,7 @@ export const ARCHETYPES_FULL: Record<ArchetypeId, ArchetypeFull> = {
     warning: 'No es que te falte enfoque. Es un sistema con muchas ideas activas al mismo tiempo. La energía se dispersa antes de tomar forma.',
     fortalezas: 'Eres creativo, intuitivo y lleno de ideas. Ves posibilidades donde otros no.',
     pasando: 'Tu mente va más rápido que tu capacidad de ejecutar. Eso genera frustración y ansiedad.',
-    pasandoNote: 'Este protocolo te da la tracción necesaria para que tu talento finalmente avance.',
+    pasandoNote: 'El protocolo binaural esta diseñado para favorecer estados de enfoque más estables y funcionales.',
     tip: 'Elige una sola tarea importante al día. Solo una. Terminar una, vale más que empezar diez.',
   },
   performer: {

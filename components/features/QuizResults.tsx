@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Brain, Zap, Target, AlertTriangle, TrendingUp, TrendingDown, Clock } from 'lucide-react';
 import AudioPreview from '@/components/features/AudioPreview';
@@ -78,11 +79,8 @@ export default function QuizResultsView({
       className="max-w-6xl mx-auto"
     >
       <div className="text-center mb-12">
-        <div
-          className="inline-block p-10 rounded-full mb-6 relative"
-          style={{ backgroundColor: data.aura, boxShadow: `0 0 60px ${data.aura}` }}
-        >
-          <Brain size={80} color="white" />
+        <div className="inline-block p-4 rounded-full mb-6 relative">
+          <Image src="/logo-icon.png" alt="" width={112} height={112} className="object-contain" />
         </div>
         <p className="text-primary tracking-[0.3em] font-subtitle font-bold text-sm mb-2">RESULTADO OBTENIDO</p>
         <h2 className="text-4xl md:text-5xl font-title mb-2 italic text-text">{data.title}</h2>
@@ -339,13 +337,14 @@ export default function QuizResultsView({
 
       <div className="text-center">
         <p className="text-text-muted font-body text-sm mb-2">Inversión</p>
-        <p className="text-3xl font-title text-text mb-2">$555 MXN</p>
+        <p className="text-3xl font-title text-text mb-1">México: $555 MXN</p>
+        <p className="text-3xl font-title text-text mb-2">Internacional: $32 USD (PayPal)</p>
         <p className="text-text-secondary text-sm font-body mb-6">Pago único · Sin suscripciones · Acceso inmediato</p>
         <button className="px-10 py-4 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 transition-all">
           CONSEGUIR MI PLAN COMPLETO
         </button>
-        <p className="text-xs text-text-secondary mt-4 font-body">
-          Accede a todos los protocolos de audio y personaliza tu entrenamiento
+        <p className="text-xs text-text mt-4 font-body">
+          Te guiamos en el proceso de pago y te enviamos tu protocolo personalizado directamente a tu correo.
         </p>
       </div>
     </motion.div>
