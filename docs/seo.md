@@ -2,19 +2,22 @@
 
 Pasos para que el sitio sea indexado y aparezca en Google.
 
-## 1. Verificar la propiedad en Google Search Console
+## 1. Verificar la propiedad en Google Search Console (DNS TXT)
+
+Verificación por registro **TXT en DNS**: no requiere cambios en el código ni redespliegue.
 
 1. Entra en [Google Search Console](https://search.google.com/search-console).
-2. Añade la propiedad (prefijo de URL, p. ej. `https://oaureal.com`).
-3. Elige el método **Etiqueta HTML** (meta tag).
-4. Copia el valor del atributo `content` de la meta `google-site-verification`.
-5. En el proyecto, define la variable de entorno:
-   - **Nombre**: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
-   - **Valor**: el código que te dio Google (solo el valor de `content`, sin comillas).
-6. Vuelve a desplegar para que la meta etiqueta esté en el sitio.
+2. Añade la propiedad como **Dominio** (p. ej. `oaureal.com`) para verificar todas las URLs del dominio.
+3. Elige el método **Registro DNS**.
+4. Google te mostrará un registro TXT. Ejemplo:
+   - **Nombre / Host**: `@` o el subdominio que indique Google (a veces deja el campo vacío o `@`).
+   - **Valor / Contenido**: algo como `google-site-verification=XXXXXXXXXXXXXXXX`.
+5. En el panel de tu proveedor DNS (donde gestionas oaureal.com — Vercel, Cloudflare, GoDaddy, etc.):
+   - Crea un registro de tipo **TXT**.
+   - En el nombre usa el que te dio Google (normalmente `@` para la raíz del dominio).
+   - En el valor pega exactamente la cadena `google-site-verification=...` que te dio Google.
+6. Guarda los cambios y espera a que se propague el DNS (puede tardar unos minutos u horas).
 7. En Search Console, haz clic en **Comprobar**.
-
-La meta solo se incluye en el HTML si `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` está definida (por ejemplo en Vercel → Settings → Environment Variables).
 
 ## 2. Enviar el sitemap
 

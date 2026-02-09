@@ -103,11 +103,6 @@ export const metadata: Metadata = {
     shortcut: "/logo-icon.png",
     apple: "/logo-icon.png",
   },
-  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
-    verification: {
-      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-    },
-  }),
 };
 
 const jsonLd = {
