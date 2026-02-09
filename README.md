@@ -22,7 +22,7 @@ El proyecto usa:
 - **Prisma**: ORM para la base de datos. Gestiona el modelo `Post`, las migraciones en `prisma/migrations/` y el cliente en `lib/prisma.ts`. Usa `DATABASE_URL` (pooler) en runtime y `DIRECT_URL` (conexión directa) para migraciones.
 - **Vercel**: Plataforma de deploy. El build ejecuta `prisma migrate deploy` y luego `next build`. Las variables de entorno se configuran en el dashboard de Vercel.
 
-Para una guía paso a paso de despliegue, ver [DEPLOYMENT.md](DEPLOYMENT.md).
+Para una guía paso a paso de despliegue, ver [DEPLOYMENT.md](DEPLOYMENT.md). Para verificación en Google Search Console, envío del sitemap e indexación, ver [docs/seo.md](docs/seo.md).
 
 ---
 

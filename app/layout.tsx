@@ -103,6 +103,11 @@ export const metadata: Metadata = {
     shortcut: "/logo-icon.png",
     apple: "/logo-icon.png",
   },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    },
+  }),
 };
 
 const jsonLd = {
@@ -135,6 +140,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <link rel="sitemap" type="application/xml" href="https://oaureal.com/sitemap.xml" />
+      </head>
       <body
         className={`antialiased bg-bg ${roboto.variable} ${cormorant.variable} ${exo.variable} ${libreBaskerville.variable}`}
       >

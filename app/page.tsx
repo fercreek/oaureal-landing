@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import Preloader from '@/components/ui/Preloader';
 import Navbar from '@/components/sections/Navbar';
 import Hero from '@/components/sections/Hero';
@@ -13,7 +14,6 @@ import Testimonials from '@/components/sections/Testimonials';
 import QuizSection from '@/components/sections/QuizSection';
 import Pricing from '@/components/sections/Pricing';
 import FAQ from '@/components/sections/FAQ';
-// import Investment from '@/components/sections/Investment';
 import Footer from '@/components/sections/Footer';
 import StickyCTA from '@/components/sections/StickyCTA';
 import ColorPicker from '@/components/ui/ColorPicker';
@@ -21,10 +21,6 @@ import ColorPicker from '@/components/ui/ColorPicker';
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [quizResult, setQuizResult] = useState<string | null>(null);
-
-  if (loading) {
-    return <Preloader onComplete={() => setLoading(false)} />;
-  }
 
   return (
     <div className="min-h-screen bg-bg text-text font-body">
@@ -40,9 +36,13 @@ export default function Home() {
       <Testimonials />
       <Pricing />
       <FAQ />
-      {/* <Investment /> */}
       <Footer />
       <StickyCTA show={!quizResult} />
+      <AnimatePresence mode="wait">
+        {loading && (
+          <Preloader key="preloader" onComplete={() => setLoading(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
