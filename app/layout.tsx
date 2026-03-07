@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import { Roboto, Cormorant_Garamond, Exo_2, Libre_Baskerville } from "next/font/google";
 import { GoogleAnalytics } from "@/components/ui/GoogleAnalytics";
 import "./globals.css";

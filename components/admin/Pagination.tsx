@@ -29,7 +29,7 @@ export default function Pagination({
   const pageNumbers: number[] = [];
   const showPages = 5;
   let from = Math.max(1, currentPage - Math.floor(showPages / 2));
-  let to = Math.min(totalPages, from + showPages - 1);
+  const to = Math.min(totalPages, from + showPages - 1);
   if (to - from + 1 < showPages) from = Math.max(1, to - showPages + 1);
   for (let i = from; i <= to; i++) pageNumbers.push(i);
 
