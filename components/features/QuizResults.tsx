@@ -1,9 +1,70 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Brain, Zap, Target, AlertTriangle, TrendingUp, TrendingDown, Clock } from 'lucide-react';
 import { ARCHETYPES_FULL, type ArchetypeId, type ArchetypeIndicators } from '@/lib/quiz-logic';
+
+function getSocialProofCount(): number {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const day = now.getDate();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  // Seed determinístico por mes para que la secuencia sea consistente
+  const seed = year * 100 + month;
+  const rng = (n: number) => {
+    const x = Math.sin(seed + n) * 10000;
+    return x - Math.floor(x);
+  };
+  // Distribuir 80 unidades (de 20 a 100) en los días del mes con variación aleatoria
+  let total = 20;
+  for (let d = 1; d < day; d++) {
+    const remaining = daysInMonth - d;
+    const needed = 100 - total;
+    const maxStep = Math.min(needed, Math.ceil(needed / Math.max(remaining, 1)) + 3);
+    const step = Math.round(rng(d) * maxStep);
+    total = Math.min(100, total + step);
+  }
+  return total;
+}
+
+function SocialProofCounter() {
+  const [count, setCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCount(getSocialProofCount());
+  }, []);
+
+  if (count === null) return null;
+
+  return (
+    <div className="flex justify-center mb-4">
+      <div
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-subtitle text-sm font-bold"
+        style={{
+          color: '#78e8f8',
+          border: '1px solid rgba(120,232,248,0.35)',
+          background: 'rgba(120,232,248,0.06)',
+          textShadow: '0 0 10px rgba(120,232,248,0.7)',
+          boxShadow: '0 0 14px rgba(120,232,248,0.15)',
+          fontFamily: 'monospace',
+          letterSpacing: '0.03em',
+        }}
+      >
+        <motion.span
+          animate={{ opacity: [1, 0.4, 1] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ color: '#78e8f8', fontSize: '8px' }}
+        >
+          ◉
+        </motion.span>
+        {count} personas han activado su protocolo este mes.
+      </div>
+    </div>
+  );
+}
 
 function createRadarPath(data: { value: number }[]) {
   const center = 100;
@@ -60,6 +121,17 @@ const INDICATOR_LABELS: Record<string, string> = {
   armonia: 'Armonía',
 };
 
+const STRIPE_LINKS: Record<ArchetypeId, string> = {
+  exhausto:   'https://buy.stripe.com/6oU7sE1gd7zKgMg5ko43S09',
+  insomne:    'https://buy.stripe.com/3cI6oAgb76vG0Ni00443S07',
+  ansioso:    'https://buy.stripe.com/4gMeV6gb7g6g7bG28c43S08',
+  protector:  'https://buy.stripe.com/6oU7sE1gd7zKgMg5ko43S09',
+  disperso:   'https://buy.stripe.com/4gMeV6gb7g6g7bG28c43S08',
+  performer:  'https://buy.stripe.com/cNi00c6Ax2fqdA4fZ243S0a',
+  quemado:    'https://buy.stripe.com/3cI6oAgb76vG0Ni00443S07',
+  armonia:    'https://buy.stripe.com/6oU7sE1gd7zKgMg5ko43S09',
+};
+
 export default function QuizResultsView({
   archetype,
   indicadores,
@@ -70,6 +142,7 @@ export default function QuizResultsView({
   email: string;
 }) {
   const data = ARCHETYPES_FULL[archetype];
+  const stripeLink = STRIPE_LINKS[archetype];
 
   return (
     <motion.div
@@ -90,7 +163,8 @@ export default function QuizResultsView({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+        {/* Recomendación Binaural */}
+        <div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col">
           <div className="flex items-center gap-2 mb-4">
             <Zap className="w-5 h-5 text-primary" />
             <h3 className="font-title text-lg text-text">Tu Recomendación Binaural</h3>
@@ -99,7 +173,7 @@ export default function QuizResultsView({
           <p className="text-text-muted font-body text-sm leading-relaxed mb-4">
             {data.binauralRecommendation.description}
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-6">
             {data.binauralRecommendation.waves.map((wave) => (
               <span
                 key={wave}
@@ -109,8 +183,48 @@ export default function QuizResultsView({
               </span>
             ))}
           </div>
+
+          {/* ── Leyenda parpadeante ── */}
+          <motion.p
+            animate={{ opacity: [1, 0.55, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              color: '#f59e0b',
+              textShadow: '0 0 8px rgba(245,158,11,0.55)',
+            }}
+            className="text-xs font-subtitle font-bold mb-3"
+          >
+            ⭐ Usuarios con este perfil suelen comenzar con esta sesión.
+          </motion.p>
+
+          {/* ── Botón Stripe ── */}
+          <a
+            href={stripeLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block w-full text-center px-6 py-3 rounded-xl font-subtitle font-bold text-sm transition-all"
+            style={{
+              background: '#f59e0b',
+              color: '#000',
+              boxShadow: '0 0 18px rgba(245,158,11,0.5)',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+                '0 0 28px rgba(245,158,11,0.75)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+                '0 0 18px rgba(245,158,11,0.5)';
+            }}
+          >
+            Descarga este audio · $7 USD
+          </a>
+          <p className="text-xs text-text-muted font-body text-center mt-2">
+            Este audio forma parte de tu protocolo completo de 5 audios personalizados.
+          </p>
         </div>
 
+        {/* Mapa de Estado */}
         <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="w-5 h-5 text-primary" />
@@ -288,13 +402,54 @@ export default function QuizResultsView({
         <p className="text-text-muted font-body text-sm leading-relaxed">{data.tip}</p>
       </div>
 
-      <div className="p-6 rounded-2xl bg-white/5 border border-white/10 mb-8">
-        <h3 className="font-title text-lg text-text mb-4">Tu protocolo binaural personalizado Oaureal</h3>
-        <p className="text-text-muted font-body text-sm leading-relaxed mb-4">
+      {/* ── Bloque protocolo completo ── */}
+      <div
+        className="p-6 rounded-2xl mb-8"
+        style={{ background: 'rgba(245,158,11,0.04)', border: '1px solid rgba(245,158,11,0.18)' }}
+      >
+        <h3 className="font-title text-lg text-text mb-1">Tu protocolo binaural personalizado Oaureal</h3>
+        <p className="text-text-muted font-body text-sm leading-relaxed mb-5">
           Diseñado según la combinación específica de ondas que tu sistema necesita priorizar ahora.
         </p>
+
+        {/* Lo que este protocolo busca facilitar */}
+        <h4
+          className="font-subtitle text-sm font-bold mb-3"
+          style={{ color: '#f59e0b' }}
+        >
+          Lo que este protocolo busca facilitar en tu sistema según tu resultado
+        </h4>
+        <ul className="space-y-2 text-sm font-body mb-4">
+          {[
+            'Reducir la sobrecarga mental progresivamente',
+            'Recuperar claridad sin perder rendimiento',
+            'Entrar en estados de calma funcional cuando lo necesites',
+            'Dormir y recuperarte con mayor profundidad',
+            'Regular tu energía mental durante el día',
+          ].map((item, i) => (
+            <li
+              key={i}
+              className="flex gap-2"
+              style={{
+                color: '#f59e0b',
+                textShadow: '0 0 6px rgba(245,158,11,0.35)',
+              }}
+            >
+              <span className="mt-0.5 shrink-0">✦</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p
+          className="text-sm mb-6"
+          style={{ color: 'rgba(245,158,11,0.7)', fontFamily: 'monospace' }}
+        >
+          Para acompañar este proceso, diseñamos tu protocolo binaural personalizado.
+        </p>
+
+        {/* ¿Qué incluye? */}
         <h4 className="font-subtitle text-primary text-sm mb-3">¿Qué incluye?</h4>
-        <ul className="space-y-3 text-sm font-body text-text-muted">
+        <ul className="space-y-3 text-sm font-body text-text-muted mb-6">
           <li className="flex gap-3">
             <span className="text-primary">✔</span>
             <span>Pack de audios binaurales personalizados. Frecuencias ajustadas a tu perfil.</span>
@@ -311,29 +466,95 @@ export default function QuizResultsView({
             <span className="text-primary">✔</span>
             <span>Plantilla de seguimiento imprimible. Registro de hábitos y emociones.</span>
           </li>
-          <li className="flex gap-3">
-            <span className="text-primary">✔</span>
-            <span>Qué puedes esperar con el uso constante. Mayor calma, enfoque y descanso profundo.</span>
-          </li>
         </ul>
-      </div>
 
-      <div className="text-center">
-        <p className="text-text-muted font-body text-sm mb-2">Inversión</p>
-        <p className="text-3xl font-title text-text mb-1">México: $555 MXN</p>
-        <p className="text-3xl font-title text-text mb-2">Internacional: $32 USD (PayPal)</p>
-        <p className="text-text-secondary text-sm font-body mb-6">Pago único · Sin suscripciones · Acceso inmediato</p>
+        {/* Pills de resultados */}
+        <h4 className="font-subtitle text-primary text-sm mb-3">Resultados</h4>
+        <div className="flex flex-wrap gap-2 mb-6">
+          {['Mayor calma', 'Enfoque más estable', 'Descanso más profundo'].map((r) => (
+            <span
+              key={r}
+              className="px-4 py-1.5 rounded-full text-xs font-subtitle font-bold"
+              style={{
+                color: '#78e8f8',
+                border: '1px solid rgba(120,232,248,0.4)',
+                background: 'rgba(120,232,248,0.08)',
+                textShadow: '0 0 8px rgba(120,232,248,0.6)',
+                boxShadow: '0 0 10px rgba(120,232,248,0.15)',
+              }}
+            >
+              {r}
+            </span>
+          ))}
+        </div>
+
+        {/* Precio */}
+        <div className="text-center mb-5">
+          <p className="text-text-muted font-body text-sm mb-1">Inversión</p>
+          <p className="text-3xl font-title text-text">$32 USD</p>
+          <p className="text-text-secondary text-sm font-body mt-1">Pago único · Sin suscripciones</p>
+        </div>
+
+        {/* Badge "Entrega hoy" */}
+        <div className="flex justify-center mb-3">
+          <motion.span
+            animate={{ opacity: [1, 0.45, 1] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-subtitle font-bold"
+            style={{
+              background: 'rgba(239,68,68,0.15)',
+              border: '1px solid rgba(239,68,68,0.5)',
+              color: '#f87171',
+              textShadow: '0 0 8px rgba(239,68,68,0.7)',
+              boxShadow: '0 0 12px rgba(239,68,68,0.25)',
+            }}
+          >
+            ● Entrega hoy
+          </motion.span>
+        </div>
+
+        {/* Contador social proof */}
+        <SocialProofCounter />
+
+        {/* Botón WhatsApp ámbar */}
         <a
           href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '528117879315'}?text=${encodeURIComponent(`Hola, acabo de completar el test en la web de Oaureal.\n\nMi resultado fue: ${data.title}.\nMi correo: ${email}\n\nQuiero mi protocolo personalizado y que me guíen con el proceso de pago. Gracias.`)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block px-10 py-4 bg-primary text-bg font-subtitle font-bold rounded-xl shadow-[0_0_20px_var(--color-primary)] hover:opacity-90 transition-all"
+          className="block w-full text-center px-10 py-5 rounded-xl font-subtitle font-bold text-lg transition-all"
+          style={{
+            background: '#f59e0b',
+            color: '#000',
+            boxShadow: '0 0 28px rgba(245,158,11,0.6), 0 0 60px rgba(245,158,11,0.2)',
+            letterSpacing: '0.05em',
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+              '0 0 40px rgba(245,158,11,0.85), 0 0 80px rgba(245,158,11,0.3)';
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+              '0 0 28px rgba(245,158,11,0.6), 0 0 60px rgba(245,158,11,0.2)';
+          }}
         >
-          CONSEGUIR MI PLAN COMPLETO
+          ACTIVAR AHORA →
         </a>
-        <p className="text-xs text-text mt-4 font-body">
-          Te guiamos en el proceso de pago y te enviamos tu protocolo personalizado directamente a tu correo.
-        </p>
+
+        {/* Textos post-botón en ámbar */}
+        <div className="mt-5 space-y-2 text-center">
+          <p
+            className="text-sm font-subtitle font-bold"
+            style={{ color: '#f59e0b', textShadow: '0 0 8px rgba(245,158,11,0.5)' }}
+          >
+            Tu protocolo está listo. Solo falta activarlo. Tu sistema nervioso está en el estado ideal para empezar hoy.
+          </p>
+          <p
+            className="text-sm font-body"
+            style={{ color: '#fbbf24' }}
+          >
+            Escríbenos por WhatsApp y te guiamos en el pago. Te enviamos tu protocolo ese mismo día.
+          </p>
+        </div>
       </div>
     </motion.div>
   );
