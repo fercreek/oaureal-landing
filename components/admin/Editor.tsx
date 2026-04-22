@@ -44,6 +44,25 @@ function parseContent(content: string): object | undefined {
   }
 }
 
+const ALLOWED_IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'] as const;
+const MIME_EXTENSION_MAP: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+  'image/avif': 'avif',
+};
+const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024;
+
+function isSafeHttpUrl(raw: string): boolean {
+  try {
+    const parsed = new URL(raw, window.location.origin);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'mailto:' || parsed.protocol === 'tel:';
+  } catch {
+    return false;
+  }
+}
+
 export default function Editor({ content, onChange, placeholder = 'Escribe tu artículo aquí...' }: EditorProps) {
   const [uploading, setUploading] = useState(false);
   const supabase = createClient();
@@ -63,8 +82,11 @@ export default function Editor({ content, onChange, placeholder = 'Escribe tu ar
       }),
       Link.configure({
         openOnClick: false,
+        protocols: ['http', 'https', 'mailto', 'tel'],
         HTMLAttributes: {
           class: 'text-primary underline',
+          rel: 'noopener noreferrer nofollow',
+          target: '_blank',
         },
       }),
       Placeholder.configure({
@@ -96,20 +118,33 @@ export default function Editor({ content, onChange, placeholder = 'Escribe tu ar
   const handleImageUpload = async () => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = 'image/*';
+    input.accept = ALLOWED_IMAGE_MIME_TYPES.join(',');
     input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (!file || !editor) return;
 
+      if (!ALLOWED_IMAGE_MIME_TYPES.includes(file.type as typeof ALLOWED_IMAGE_MIME_TYPES[number])) {
+        alert('Formato no permitido. Usa JPG, PNG, WebP, GIF o AVIF.');
+        return;
+      }
+      if (file.size > MAX_IMAGE_SIZE_BYTES) {
+        alert('La imagen supera el tamaño máximo de 5 MB.');
+        return;
+      }
+
       setUploading(true);
       try {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${Math.random()}.${fileExt}`;
+        const ext = MIME_EXTENSION_MAP[file.type];
+        const randomName = crypto.randomUUID();
+        const fileName = `${randomName}.${ext}`;
         const filePath = `blog-images/${fileName}`;
 
         const { error: uploadError } = await supabase.storage
           .from('blog-images')
-          .upload(filePath, file);
+          .upload(filePath, file, {
+            contentType: file.type,
+            upsert: false,
+          });
 
         if (uploadError) throw uploadError;
 
@@ -238,7 +273,12 @@ export default function Editor({ content, onChange, placeholder = 'Escribe tu ar
           type="button"
           onClick={() => {
             const url = window.prompt('URL del enlace:');
-            if (url) editor.chain().focus().setLink({ href: url }).run();
+            if (!url) return;
+            if (!isSafeHttpUrl(url)) {
+              alert('URL no válida. Solo se permiten enlaces http(s), mailto: o tel:.');
+              return;
+            }
+            editor.chain().focus().setLink({ href: url }).run();
           }}
           className={`p-2 rounded-lg transition-colors ${
             editor.isActive('link') ? 'bg-primary text-bg' : 'text-text-muted hover:text-text hover:bg-white/10'

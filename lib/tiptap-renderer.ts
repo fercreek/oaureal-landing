@@ -22,6 +22,21 @@ function escapeHtml(s: string): string {
     .replace(/'/g, '&#39;');
 }
 
+const ALLOWED_LINK_PROTOCOLS = ['http:', 'https:', 'mailto:', 'tel:'];
+const ALLOWED_IMAGE_PROTOCOLS = ['http:', 'https:'];
+
+function sanitizeUrl(raw: string, allowed: string[], fallback: string): string {
+  const trimmed = raw.trim();
+  if (trimmed.startsWith('/') || trimmed.startsWith('#')) return trimmed;
+  try {
+    const parsed = new URL(trimmed);
+    if (!allowed.includes(parsed.protocol)) return fallback;
+    return parsed.toString();
+  } catch {
+    return fallback;
+  }
+}
+
 export function renderTipTapContent(content: string): string {
   try {
     const json = typeof content === 'string' ? JSON.parse(content) : content;
@@ -69,7 +84,8 @@ function renderNode(node: TipTapNode): string {
         } else if (mark.type === 'code') {
           text = `<code class="bg-white/10 px-2 py-1 rounded text-[#a5f0fa]">${text}</code>`;
         } else if (mark.type === 'link') {
-          text = `<a href="${escapeHtml(mark.attrs?.href ?? '#')}" target="_blank" rel="noopener noreferrer" class="text-[#a5f0fa] underline">${text}</a>`;
+          const safeHref = sanitizeUrl(mark.attrs?.href ?? '#', ALLOWED_LINK_PROTOCOLS, '#');
+          text = `<a href="${escapeHtml(safeHref)}" target="_blank" rel="noopener noreferrer nofollow" class="text-[#a5f0fa] underline">${text}</a>`;
         }
       });
     }
@@ -109,9 +125,11 @@ function renderNode(node: TipTapNode): string {
   }
 
   if (node.type === 'image') {
-    const src = escapeHtml(node.attrs?.src ?? '');
+    const rawSrc = node.attrs?.src ?? '';
+    const safeSrc = sanitizeUrl(rawSrc, ALLOWED_IMAGE_PROTOCOLS, '');
+    if (!safeSrc) return '';
     const alt = escapeHtml(node.attrs?.alt ?? '');
-    return `<img src="${src}" alt="${alt}" class="rounded-xl my-8" />`;
+    return `<img src="${escapeHtml(safeSrc)}" alt="${alt}" class="rounded-xl my-8" />`;
   }
 
   if (node.type === 'hardBreak') {
