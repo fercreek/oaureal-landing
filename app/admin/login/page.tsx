@@ -5,11 +5,19 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Brain } from 'lucide-react';
 
+function getInitialError(): string | null {
+  if (typeof window === 'undefined') return null;
+  const params = new URLSearchParams(window.location.search);
+  return params.get('error') === 'unauthorized'
+    ? 'No tienes permisos para acceder al panel.'
+    : null;
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(getInitialError);
   const router = useRouter();
   const supabase = createClient();
 
@@ -30,7 +38,7 @@ export default function LoginPage() {
     });
 
     if (error) {
-      setError(error.message);
+      setError('Email o contraseña incorrectos.');
       setLoading(false);
     } else {
       router.push('/admin/dashboard');

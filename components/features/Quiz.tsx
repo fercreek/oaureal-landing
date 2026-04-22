@@ -12,10 +12,13 @@ interface QuizProps {
   onComplete: (payload: QuizCompletePayload) => void;
 }
 
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 export default function Quiz({ onComplete }: QuizProps) {
   const [step, setStep] = useState(0);
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState('');
   const [started, setStarted] = useState(false);
   const [showMotivation, setShowMotivation] = useState(false);
   const [currentMotivation, setCurrentMotivation] = useState<typeof QUIZ_MOTIVATION_CARDS[0] | null>(null);
@@ -37,7 +40,7 @@ export default function Quiz({ onComplete }: QuizProps) {
       setStep(step + 1);
     } else {
       setSubmitting(true);
-      const result = await submitQuiz(email.trim(), newResponses);
+      const result = await submitQuiz(email.trim(), newResponses, website);
       setSubmitting(false);
       if (result.ok) {
         onComplete({ archetype: result.archetype, indicadores: result.indicadores, email: email.trim() });
@@ -75,15 +78,26 @@ export default function Quiz({ onComplete }: QuizProps) {
         <p className="text-text font-bold text-center mb-8">
           No es un diagnóstico. Es una guía clara para entender tu estado actual.
         </p>
-        <input 
-          type="email" 
+        <input
+          type="email"
           placeholder="tu@email.com"
+          maxLength={254}
           className="w-full p-4 bg-bg border border-white/20 rounded-xl mb-4 text-text-muted outline-none focus:border-primary transition-colors font-body"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <button 
-          disabled={!email.includes('@')}
+        <input
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          className="absolute left-[-9999px] top-[-9999px] opacity-0 pointer-events-none"
+          style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}
+        />
+        <button
+          disabled={!EMAIL_REGEX.test(email.trim())}
           onClick={() => setStarted(true)}
           className="w-full py-4 bg-primary/60 text-bg font-subtitle font-bold rounded-xl hover:bg-primary/80 disabled:opacity-30 transition-all"
         >

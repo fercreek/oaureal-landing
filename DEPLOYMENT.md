@@ -110,7 +110,14 @@
    DIRECT_URL="postgresql://postgres:[YOUR-PASSWORD]@db.xxxxx.supabase.co:5432/postgres"
    NEXT_PUBLIC_SUPABASE_URL="https://xxxxx.supabase.co"
    NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIs..."
+   ADMIN_EMAILS="tu-email@dominio.com"
    ```
+
+   🔒 **`ADMIN_EMAILS` (requerido en producción)**: lista separada por comas de los emails
+   autorizados a entrar al panel `/admin`. Sin esta variable, **cualquier usuario** con una
+   cuenta Supabase en el proyecto puede acceder al panel. Debe configurarse también en
+   Vercel (Project Settings → Environment Variables). Ejemplo:
+   `ADMIN_EMAILS="admin@oaureal.com,editor@oaureal.com"`.
 
    ⚠️ **IMPORTANTE**:
    - `xxxxx`: project reference de Supabase (ej. `bwurpiislnbvpehdpapv`). Lo ves en la URL del proyecto.
