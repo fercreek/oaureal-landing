@@ -40,6 +40,7 @@ export default function Quiz({ onComplete }: QuizProps) {
       const result = await submitQuiz(email.trim(), newResponses);
       setSubmitting(false);
       if (result.ok) {
+        window.gtag?.('event', 'test_completed');
         onComplete({ archetype: result.archetype, indicadores: result.indicadores, email: email.trim() });
       } else {
         setSubmitError(result.error);
@@ -84,7 +85,10 @@ export default function Quiz({ onComplete }: QuizProps) {
         />
         <button 
           disabled={!email.includes('@')}
-          onClick={() => setStarted(true)}
+          onClick={() => {
+            setStarted(true);
+            window.gtag?.('event', 'test_started');
+          }}
           className="w-full py-4 bg-primary/60 text-bg font-subtitle font-bold rounded-xl hover:bg-primary/80 disabled:opacity-30 transition-all"
         >
           INICIA

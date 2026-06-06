@@ -323,6 +323,7 @@ function ProtocolCTA({ stripeLink }: { stripeLink: string }) {
                 boxShadow: '0 0 50px rgba(255,179,0,0.75), 0 0 100px rgba(255,179,0,0.35)',
                 y: -2,
               }}
+              onClick={() => window.gtag?.('event', 'checkout_initiated')}
               className="block w-full font-subtitle font-bold uppercase"
               style={{
                 display: 'inline-block',
