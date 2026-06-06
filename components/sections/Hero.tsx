@@ -29,10 +29,10 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.2 }}
         >
           <h1 className="text-5xl md:text-8xl font-palatino leading-tight mb-6 text-white">
-            Sintoniza tu ritmo interno
+            Entiende desde qué estado está operando tu mente.
           </h1>
           <p className="text-lg md:text-xl font-palatino text-text-muted mb-10 max-w-2xl mx-auto">
-            Reduce el ruido mental y crea condiciones para que tu sistema nervioso empiece a entrenarse en estados de calma, enfoque o descanso profundo mediante técnicas y audios binaurales personalizados.
+            Tu sistema nervioso tiene un perfil. El test lo revela en 3 minutos — y el protocolo acompaña tu regulación desde ahí.
           </p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <Button as="a" href="#quiz">
