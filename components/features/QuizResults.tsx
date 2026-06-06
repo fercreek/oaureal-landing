@@ -194,94 +194,6 @@ function ProgressBar({ color, label, subLabel, duration, onComplete, trigger }: 
   );
 }
 
-// ─── Audio CTA block (after binaural recommendation) ─────────────────────────
-function AudioCTA({ stripeLink }: { stripeLink: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [phase, setPhase] = useState<'loading' | 'ready'>('loading');
-
-  const handleComplete = useCallback(() => {
-    setPhase('ready');
-  }, []);
-
-  return (
-    <div ref={ref} style={{ marginTop: 18, paddingTop: 18, borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-      <AnimatePresence mode="wait">
-        {phase === 'loading' && (
-          <motion.div
-            key="loading"
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
-          >
-            <ProgressBar
-              color="cyan"
-              label="⚡ Creando tu audio..."
-              subLabel="Estamos generando este audio en unos segundos..."
-              duration={3400}
-              trigger={isInView}
-              onComplete={handleComplete}
-            />
-          </motion.div>
-        )}
-
-        {phase === 'ready' && (
-          <motion.div
-            key="ready"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55 }}
-            style={{ textAlign: 'center' }}
-          >
-            {/* Blinking star label */}
-            <motion.p
-              animate={{ opacity: [1, 1, 0, 0, 1] }}
-              transition={{ duration: 1, repeat: Infinity, ease: 'linear', times: [0, 0.49, 0.5, 0.99, 1] }}
-              style={{
-                fontFamily: 'monospace',
-                fontSize: 12,
-                color: '#ffb300',
-                textAlign: 'center',
-                marginBottom: 10,
-              }}
-            >
-              ⭐ Usuarios con este perfil suelen comenzar con esta sesión.
-            </motion.p>
-
-            {/* Download button */}
-            <motion.a
-              href={stripeLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{
-                boxShadow: '0 0 32px rgba(255,179,0,0.75), 0 0 60px rgba(255,179,0,0.3)',
-                y: -2,
-              }}
-              style={{
-                display: 'inline-block',
-                background: '#ffb300',
-                color: '#000',
-                fontWeight: 800,
-                fontSize: 15,
-                padding: '14px 32px',
-                borderRadius: 10,
-                border: 'none',
-                cursor: 'pointer',
-                textDecoration: 'none',
-                boxShadow: '0 0 20px rgba(255,179,0,0.5), 0 0 40px rgba(255,179,0,0.2)',
-              }}
-            >
-              Descarga este audio · $7 USD
-            </motion.a>
-            <p style={{ marginTop: 10, fontFamily: 'monospace', fontSize: 11, color: '#6b7280', lineHeight: 1.6 }}>
-              Este audio forma parte de tu protocolo completo de 5 audios personalizados.
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
 // ─── Typewriter hook ──────────────────────────────────────────────────────────
 function useTypewriter(text: string, speed: number, active: boolean, onDone?: () => void) {
   const [displayed, setDisplayed] = useState('');
@@ -356,7 +268,7 @@ function TypewriterLine({
 }
 
 // ─── Protocol CTA block (full purchase section) ───────────────────────────────
-function ProtocolCTA({ whatsappHref }: { whatsappHref: string }) {
+function ProtocolCTA({ stripeLink }: { stripeLink: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.25 });
   const [phase, setPhase] = useState<'loading' | 'ready'>('loading');
@@ -404,7 +316,7 @@ function ProtocolCTA({ whatsappHref }: { whatsappHref: string }) {
             style={{ textAlign: 'center', marginBottom: 18 }}
           >
             <motion.a
-              href={whatsappHref}
+              href={stripeLink}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{
@@ -429,7 +341,7 @@ function ProtocolCTA({ whatsappHref }: { whatsappHref: string }) {
                   '0 0 28px rgba(255,179,0,0.5), 0 0 60px rgba(255,179,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)',
               }}
             >
-              ACTIVAR AHORA →
+              ADQUIRIR MI PROTOCOLO · $32 USD →
             </motion.a>
           </motion.div>
         )}
@@ -443,7 +355,7 @@ function ProtocolCTA({ whatsappHref }: { whatsappHref: string }) {
           onDone={handleLine1Done}
         />
         <TypewriterLine
-          text="Escríbenos por WhatsApp y te guiamos en el pago. Te enviamos tu protocolo ese mismo día."
+          text="Pago seguro vía Stripe. Acceso inmediato tras confirmar tu compra."
           active={line2Active}
         />
       </div>
@@ -504,16 +416,24 @@ const INDICATOR_LABELS: Record<string, string> = {
   armonia: 'Armonía',
 };
 
-// ─── Stripe links ─────────────────────────────────────────────────────────────
-const STRIPE_LINKS: Record<ArchetypeId, string> = {
-  exhausto:  'https://buy.stripe.com/6oU7sE1gd7zKgMg5ko43S09',
-  insomne:   'https://buy.stripe.com/3cI6oAgb76vG0Ni00443S07',
-  ansioso:   'https://buy.stripe.com/4gMeV6gb7g6g7bG28c43S08',
-  protector: 'https://buy.stripe.com/6oU7sE1gd7zKgMg5ko43S09',
-  disperso:  'https://buy.stripe.com/4gMeV6gb7g6g7bG28c43S08',
-  performer: 'https://buy.stripe.com/cNi00c6Ax2fqdA4fZ243S0a',
-  quemado:   'https://buy.stripe.com/3cI6oAgb76vG0Ni00443S07',
-  armonia:   'https://buy.stripe.com/6oU7sE1gd7zKgMg5ko43S09',
+// ─── Stripe links · Protocolo completo $32 ───────────────────────────────────
+// 1. El que no ha podido parar  → exhausto
+// 2. El que no logra descansar  → insomne
+// 3. La mente inquieta          → ansioso
+// 4. El protector interno       → protector
+// 5. La mente abierta           → disperso
+// 6. El de alto ritmo           → performer
+// 7. El sistema sobrecargado    → quemado
+// 8. El buscador de armonía     → armonia
+const STRIPE_LINKS_FULL: Record<ArchetypeId, string> = {
+  exhausto:  'https://buy.stripe.com/4gMaEQgb76vGfIc8wA43S0d',
+  insomne:   'https://buy.stripe.com/8x27sE8IF9HS2VqaEI43S0e',
+  ansioso:   'https://buy.stripe.com/4gM9AMaQNdY8fIccMQ43S0f',
+  protector: 'https://buy.stripe.com/fZueV6aQN8DO1RmdQU43S0k',
+  disperso:  'https://buy.stripe.com/14AdR22kh1bmanS3cg43S0g',
+  performer: 'https://buy.stripe.com/fZu3co0c99HS1Rm7sw43S0h',
+  quemado:   'https://buy.stripe.com/cNifZa7EB2fq9jOdQU43S0i',
+  armonia:   'https://buy.stripe.com/6oUbIU6Ax7zKdA414843S0j',
 };
 
 // ─── Animated indicator bar ───────────────────────────────────────────────────
@@ -672,7 +592,7 @@ export default function QuizResultsView({
   email: string;
 }) {
   const data = ARCHETYPES_FULL[archetype];
-  const stripeLink = STRIPE_LINKS[archetype];
+  const stripeLinkFull = STRIPE_LINKS_FULL[archetype];
   const whatsappHref = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '528117879315'}?text=${encodeURIComponent(
     `Hola, acabo de completar el test en la web de Oaureal.\n\nMi resultado fue: ${data.title}.\nMi correo: ${email}\n\nQuiero mi protocolo personalizado y que me guíen con el proceso de pago. Gracias.`
   )}`;
@@ -735,7 +655,7 @@ export default function QuizResultsView({
 
         {/* Recomendación Binaural */}
         <RevealBlock delay={0.1}>
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col h-full">
+          <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
             <div className="flex items-center gap-2 mb-4">
               <Zap className="w-5 h-5 text-primary" />
               <h3 className="font-title text-lg text-text">Tu Recomendación Binaural</h3>
@@ -754,9 +674,6 @@ export default function QuizResultsView({
                 </span>
               ))}
             </div>
-
-            {/* Audio CTA: leyenda parpadeante + barra de progreso + botón */}
-            <AudioCTA stripeLink={stripeLink} />
           </div>
         </RevealBlock>
 
@@ -1069,7 +986,7 @@ export default function QuizResultsView({
           <SocialProofCounter />
 
           {/* Protocol CTA — progress bar → ACTIVAR AHORA → typewriter */}
-          <ProtocolCTA whatsappHref={whatsappHref} />
+          <ProtocolCTA stripeLink={stripeLinkFull} />
         </div>
       </RevealBlock>
     </motion.div>
