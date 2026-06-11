@@ -8,11 +8,16 @@ export default function Hero() {
   return (
     <header className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 w-full h-full scale-[1.35] md:scale-[1.25] origin-center">
+        <div className="absolute inset-0 w-full h-full origin-center">
           <img
             src="/portada.png"
             alt="Header"
-            className="absolute inset-0 w-full h-full object-cover object-center min-h-full min-w-full"
+            className="hidden md:block absolute inset-0 w-full h-full object-cover object-center"
+          />
+          <img
+            src="/portada-mobile.png"
+            alt="Header"
+            className="block md:hidden absolute inset-0 w-full h-full object-contain object-center"
           />
         </div>
         <div className="absolute inset-0 bg-black/60 z-5" />
