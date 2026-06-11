@@ -342,7 +342,7 @@ function ProtocolCTA({ stripeLink }: { stripeLink: string }) {
                   '0 0 28px rgba(255,179,0,0.5), 0 0 60px rgba(255,179,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)',
               }}
             >
-              ADQUIRIR MI PROTOCOLO · $32 USD →
+              ADQUIRIR MI PROTOCOLO · $19 USD →
             </motion.a>
           </motion.div>
         )}
@@ -417,7 +417,7 @@ const INDICATOR_LABELS: Record<string, string> = {
   armonia: 'Armonía',
 };
 
-// ─── Stripe links · Protocolo completo $32 ───────────────────────────────────
+// ─── Stripe links · Protocolo completo $19 ───────────────────────────────────
 // 1. El que no ha podido parar  → exhausto
 // 2. El que no logra descansar  → insomne
 // 3. La mente inquieta          → ansioso
@@ -427,14 +427,14 @@ const INDICATOR_LABELS: Record<string, string> = {
 // 7. El sistema sobrecargado    → quemado
 // 8. El buscador de armonía     → armonia
 const STRIPE_LINKS_FULL: Record<ArchetypeId, string> = {
-  exhausto:  'https://buy.stripe.com/4gMaEQgb76vGfIc8wA43S0d',
-  insomne:   'https://buy.stripe.com/8x27sE8IF9HS2VqaEI43S0e',
-  ansioso:   'https://buy.stripe.com/4gM9AMaQNdY8fIccMQ43S0f',
-  protector: 'https://buy.stripe.com/fZueV6aQN8DO1RmdQU43S0k',
-  disperso:  'https://buy.stripe.com/14AdR22kh1bmanS3cg43S0g',
-  performer: 'https://buy.stripe.com/fZu3co0c99HS1Rm7sw43S0h',
-  quemado:   'https://buy.stripe.com/cNifZa7EB2fq9jOdQU43S0i',
-  armonia:   'https://buy.stripe.com/6oUbIU6Ax7zKdA414843S0j',
+  exhausto:  'https://buy.stripe.com/aFa5kw6Ax6vGeE8eUY43S0m',
+  insomne:   'https://buy.stripe.com/dRm14g4spaLW53y9AE43S0n',
+  ansioso:   'https://buy.stripe.com/8x200c2kh7zKgMgdQU43S0o',
+  protector: 'https://buy.stripe.com/4gM6oA0c9f2c0Ni7sw43S0l',
+  disperso:  'https://buy.stripe.com/cNieV68IF7zK3Zu4gk43S0p',
+  performer: 'https://buy.stripe.com/7sY28k5wt2fq2VqaEI43S0q',
+  quemado:   'https://buy.stripe.com/00w5kw4sp6vG3Zu6os43S0r',
+  armonia:   'https://buy.stripe.com/bJe5kwf736vGfIc9AE43S0s',
 };
 
 // ─── Animated indicator bar ───────────────────────────────────────────────────
@@ -955,7 +955,7 @@ export default function QuizResultsView({
               style={{ fontSize: '2.6rem', fontWeight: 800, lineHeight: 1.1 }}
               className="text-text"
             >
-              $32 USD
+              $19 USD
             </motion.p>
             <p style={{ fontFamily: 'monospace', fontSize: 11, color: '#6b7280', marginTop: 4 }}>
               Pago único · Sin suscripciones
