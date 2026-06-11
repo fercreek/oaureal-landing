@@ -9,12 +9,9 @@ export default function Hero() {
     <header className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 w-full h-full scale-[1.35] md:scale-[1.25] origin-center">
-          <video
-            src="/video/portada.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
+          <img
+            src="/portada.png"
+            alt="Header"
             className="absolute inset-0 w-full h-full object-cover object-center min-h-full min-w-full"
           />
         </div>
