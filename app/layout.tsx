@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { Roboto, Cormorant_Garamond, Exo_2, Libre_Baskerville } from "next/font/google";
 import { GoogleAnalytics } from "@/components/ui/GoogleAnalytics";
+import { FAQ_ITEMS } from "@/lib/constants";
 import "./globals.css";
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -33,7 +34,7 @@ const libreBaskerville = Libre_Baskerville({
 
 const siteTitle = "Oaureal – Sonidos para dormir, calma y enfoque mental";
 const siteDescription =
-  "Frecuencias binaurales personalizadas para reducir estrés, mejorar la concentración y dormir mejor. Entrena tu cerebro para la calma y claridad.";
+  "Audio binaural personalizado para regular tu sistema nervioso: dormir mejor, calmar la sobreestimulación y mejorar el enfoque.";
 
 export const metadata: Metadata = {
   title: {
@@ -46,6 +47,9 @@ export const metadata: Metadata = {
     "sonidos binaurales",
     "brainwave entrainment",
     "regulación sistema nervioso",
+    "neuro wellness",
+    "sistema nervioso autónomo",
+    "audio binaural personalizado",
     "meditación activa",
     "frecuencias cerebrales",
     "bienestar mental",
@@ -124,8 +128,27 @@ const jsonLd = {
       "@id": "https://oaureal.com/#organization",
       name: "Oaureal Labs",
       url: "https://oaureal.com",
+      sameAs: [
+        "https://www.instagram.com/oaureal",
+        "https://www.tiktok.com/@oaureal",
+        "https://youtube.com/@oaureal",
+        "https://www.facebook.com/share/1AQSQWk4gq/",
+      ],
     },
   ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
 };
 
 export default function RootLayout({
@@ -144,6 +167,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
         {GA_MEASUREMENT_ID && (
           <>
