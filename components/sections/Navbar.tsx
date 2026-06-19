@@ -54,6 +54,7 @@ export default function Navbar() {
           >
             TEST
           </a>
+          <Link href="/sobre-oaureal" className="hover:text-primary transition-colors">NOSOTROS</Link>
           <Link href="/blog" className="hover:text-primary transition-colors">BLOG</Link>
         </div>
         <button className="px-5 py-2 rounded-full border border-primary/30 text-primary text-xs font-subtitle font-bold hover:bg-primary/10 transition-all">

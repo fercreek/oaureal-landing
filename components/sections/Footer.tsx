@@ -97,6 +97,7 @@ export default function Footer() {
           <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between gap-6 text-[10px] text-text-secondary tracking-[0.2em] uppercase font-subtitle">
             <span>© 2026 OAUREAL LABS. TODOS LOS DERECHOS RESERVADOS.</span>
             <div className="flex gap-4">
+              <Link href="/sobre-oaureal" className="hover:text-text">Sobre Oaureal</Link>
               <Link href="/blog" className="hover:text-text">Blog</Link>
               <Link href="/aviso-legal" className="hover:text-text">Aviso Legal</Link>
               <a href="#" className="hover:text-text">Privacidad</a>
