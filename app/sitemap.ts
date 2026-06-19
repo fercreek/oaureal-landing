@@ -31,6 +31,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/sobre-oaureal`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/aviso-legal`,
       lastModified: new Date(),
       changeFrequency: "yearly",
