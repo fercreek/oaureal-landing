@@ -342,7 +342,7 @@ function ProtocolCTA({ stripeLink }: { stripeLink: string }) {
                   '0 0 28px rgba(255,179,0,0.5), 0 0 60px rgba(255,179,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)',
               }}
             >
-              ADQUIRIR MI PROTOCOLO · $19 USD →
+              ACTIVAR MI PROTOCOLO · $19 USD →
             </motion.a>
           </motion.div>
         )}
@@ -843,9 +843,12 @@ export default function QuizResultsView({
           className="p-6 rounded-2xl mb-8"
           style={{ background: 'rgba(245,158,11,0.04)', border: '1px solid rgba(245,158,11,0.18)' }}
         >
-          <h3 className="font-title text-lg text-text mb-1">Tu protocolo binaural personalizado Oaureal</h3>
+          <h3 className="font-title text-lg text-text mb-1">Tu Siguiente Paso</h3>
+          <p className="text-text-muted font-body text-sm leading-relaxed mb-5">
+            Lleva tu resultado a una práctica personalizada
+          </p>
 
-          {/* Nuevo bloque: Lo que facilita — card con borde amber */}
+          {/* TU SIGUIENTE PASO — reutiliza las 3 prioridades ya personalizadas del arquetipo */}
           <div
             style={{
               marginBottom: 20,
@@ -856,16 +859,10 @@ export default function QuizResultsView({
             }}
           >
             <p style={{ fontSize: 14, fontWeight: 700, fontStyle: 'italic', color: '#f59e0b', marginBottom: 12 }}>
-              Lo que este protocolo busca facilitar en tu sistema según tu resultado
+              Tu evaluación identificó tres áreas prioritarias
             </p>
             <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 16px 0' }}>
-              {[
-                'Reducir la sobrecarga mental progresivamente',
-                'Recuperar claridad sin perder rendimiento',
-                'Entrar en estados de calma funcional cuando lo necesites',
-                'Dormir y recuperarte con mayor profundidad',
-                'Regular tu energía mental durante el día',
-              ].map((item, i) => (
+              {data.protocol.map((item, i) => (
                 <motion.li
                   key={i}
                   initial={{ opacity: 0, x: -10 }}
@@ -874,28 +871,22 @@ export default function QuizResultsView({
                   transition={{ delay: i * 0.08, duration: 0.4 }}
                   style={{ fontFamily: 'monospace', fontSize: 12, color: '#f59e0b', marginBottom: 8 }}
                 >
-                  — {item}
+                  {item.icon} {item.goal}
                 </motion.li>
               ))}
             </ul>
             <GlowPulseTextAmber>
-              Para acompañar este proceso, diseñamos tu protocolo binaural personalizado.
+              Tu protocolo binaural fue diseñado para acompañar estas tres áreas mediante una secuencia adaptada a tu perfil.
             </GlowPulseTextAmber>
           </div>
 
-          {/* Texto que se conserva */}
-          <p className="text-text-muted font-body text-sm leading-relaxed mb-5">
-            Diseñado según la combinación específica de ondas que tu sistema necesita priorizar ahora.
-          </p>
-
-          {/* ¿Qué incluye? */}
-          <h4 className="font-subtitle text-primary text-sm mb-3">¿Qué incluye?</h4>
-          <ul className="space-y-3 text-sm font-body text-text-muted mb-6">
+          {/* ¿Qué vas a recibir? */}
+          <h4 className="font-subtitle text-primary text-sm mb-3">¿Qué vas a recibir?</h4>
+          <ul className="space-y-3 text-sm font-body text-text-muted mb-3">
             {[
-              'Pack de audios binaurales personalizados. Frecuencias ajustadas a tu perfil.',
-              'Audios en formato WAV (alta fidelidad). Sin compresión. Señal limpia y precisa.',
-              'Guía de uso en PDF. Rutinas sugeridas, técnicas de respiración y prácticas de regulación.',
-              'Plantilla de seguimiento imprimible. Registro de hábitos y emociones.',
+              { icon: '🎧', text: 'Tu secuencia binaural personalizada. Sesiones construidas a partir de las ondas que tu perfil necesita.' },
+              { icon: '📖', text: 'Guía de práctica. Cuándo usar cada sesión y cómo integrarla a tu rutina.' },
+              { icon: '📓', text: 'Plantilla de seguimiento imprimible. Registro de hábitos y emociones.' },
             ].map((item, i) => (
               <motion.li
                 key={i}
@@ -905,41 +896,76 @@ export default function QuizResultsView({
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <span className="text-primary">✔</span>
-                <span>{item}</span>
+                <span className="text-primary">{item.icon}</span>
+                <span>{item.text}</span>
               </motion.li>
             ))}
           </ul>
+          <p style={{ fontSize: 11, color: '#6b7280', marginBottom: 20 }}>
+            Tus sesiones se entregan en formato WAV de alta fidelidad, sin compresión.
+          </p>
 
-          {/* Resultados — pills */}
+          {/* BONUS DE ACTIVACIÓN — reutiliza el reto/quest ya personalizado del arquetipo */}
+          <div
+            style={{
+              marginBottom: 20,
+              padding: '16px 20px',
+              borderRadius: 12,
+              background: 'rgba(245,158,11,0.06)',
+              border: '1px dashed rgba(245,158,11,0.4)',
+            }}
+          >
+            <p style={{ fontFamily: 'monospace', fontSize: 11, letterSpacing: 1, color: '#f59e0b', textTransform: 'uppercase', marginBottom: 6 }}>
+              Bonus de activación
+            </p>
+            <p className="font-title text-text text-sm mb-2">15 días de {data.quest.title}</p>
+            <p className="text-text-muted font-body text-xs leading-relaxed">
+              Durante tus primeros 15 días: {data.quest.mission}. Esto te ayuda a observar tu evolución antes y después de escuchar tu protocolo.
+            </p>
+          </div>
+
+          {/* LO QUE VAS A PRACTICAR — varía por arquetipo */}
           <div style={{ marginTop: 16, marginBottom: 8 }}>
             <p style={{ fontFamily: 'monospace', fontSize: 12, color: '#6b7280', marginBottom: 10 }}>
-              Resultados que muchas personas comienzan a notar con el uso constante:
+              Lo que vas a practicar
             </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {['Mayor calma', 'Enfoque más estable', 'Descanso más profundo'].map((r, i) => (
-                <motion.span
-                  key={r}
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+            <div className="space-y-3">
+              {data.oferta.practica.map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: i * 0.1, duration: 0.4 }}
                   style={{
-                    fontFamily: 'monospace',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    color: '#f59e0b',
-                    border: '1px solid rgba(245,158,11,0.4)',
-                    background: 'rgba(245,158,11,0.08)',
-                    borderRadius: 20,
-                    padding: '5px 14px',
-                    display: 'inline-block',
+                    border: '1px solid rgba(245,158,11,0.25)',
+                    background: 'rgba(245,158,11,0.05)',
+                    borderRadius: 10,
+                    padding: '10px 14px',
                   }}
                 >
-                  {r}
-                </motion.span>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: '#f59e0b', marginBottom: 2 }}>{item.title}</p>
+                  <p className="text-text-muted font-body text-xs leading-relaxed">{item.description}</p>
+                </motion.div>
               ))}
             </div>
+          </div>
+
+          {/* Garantía — Fase 4 */}
+          <div
+            style={{
+              marginTop: 20,
+              marginBottom: 8,
+              padding: '14px 18px',
+              borderRadius: 12,
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.1)',
+            }}
+          >
+            <p style={{ fontSize: 12, fontWeight: 700, color: '#e5e7eb', marginBottom: 4 }}>
+              🛡️ Garantía de 15 días
+            </p>
+            <p className="text-text-muted font-body text-xs leading-relaxed">{data.oferta.garantia}</p>
           </div>
 
           {/* Precio */}
