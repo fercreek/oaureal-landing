@@ -201,6 +201,10 @@ export type ArchetypeFull = ArchetypeDisplay & {
   pasando: string;
   pasandoNote: string;
   tip: string;
+  oferta: {
+    practica: { title: string; description: string }[];
+    garantia: string;
+  };
 };
 
 export const ARCHETYPES_8: Record<ArchetypeId, ArchetypeDisplay> = {
@@ -291,6 +295,14 @@ export const ARCHETYPES_FULL: Record<ArchetypeId, ArchetypeFull> = {
     pasando: 'Tu cuerpo está agotado, pero tu mente no se permite parar. Vives rindiendo desde la reserva.',
     pasandoNote: 'No es falta de voluntad: es falta de recuperación real.',
     tip: 'Durante 7 días, fija una hora no negociable para acostarte, aunque no tengas sueño. El descanso empieza por el horario, no por dormirte rápido.',
+    oferta: {
+      practica: [
+        { title: 'Descanso real', description: 'Permitir que tu cuerpo se apague por completo, sin culpa.' },
+        { title: 'Ritmo sostenible', description: 'Sostener tu energía durante el día sin vivir al límite.' },
+        { title: 'Claridad diaria', description: 'Pensar con la mente despejada, no desde el cansancio acumulado.' },
+      ],
+      garantia: 'Si aplicas tu protocolo durante los primeros 15 días, sosteniendo tu hora de acostarte no negociable, y no notas ninguna mejora en tu recuperación, te devolvemos tu inversión.',
+    },
   },
   insomne: {
     title: 'El que no logra descansar',
@@ -328,6 +340,14 @@ export const ARCHETYPES_FULL: Record<ArchetypeId, ArchetypeFull> = {
     pasando: "Tu sistema nervioso se quedó en alerta. No es que 'no puedas dormir', es que tu cuerpo ya no recuerda cómo entrar en descanso profundo.",
     pasandoNote: 'El protocolo binaural actuará como un puente para cruzar de la alerta al descanso.',
     tip: 'Evita pantallas brillantes 90 minutos antes de dormir. No para relajarte, sino para decirle a tu cerebro: ya no hay estímulos.',
+    oferta: {
+      practica: [
+        { title: 'Descenso nocturno', description: 'Aprender a bajar el ritmo antes de dormir, no de golpe.' },
+        { title: 'Sueño profundo', description: 'Recuperar un descanso que realmente repare tu cuerpo.' },
+        { title: 'Calma diurna', description: 'Evitar que el estrés del día se acumule hasta la noche.' },
+      ],
+      garantia: 'Si aplicas tu protocolo durante los primeros 15 días, sin pantallas 90 minutos antes de dormir, y tu descanso no mejora, te devolvemos tu inversión.',
+    },
   },
   ansioso: {
     title: 'La mente inquieta',
@@ -365,6 +385,14 @@ export const ARCHETYPES_FULL: Record<ArchetypeId, ArchetypeFull> = {
     pasando: 'Tu mente va más rápido que tu capacidad de ejecutar. Eso genera frustración y ansiedad.',
     pasandoNote: "El protocolo binaural está diseñado para favorecer estados de enfoque más estables y funcionales.",
     tip: 'Antes de dormir, escribe en una hoja todo lo que te preocupa, sin orden. Ciérrala y di: mañana continúo. Esto descarga la mente.',
+    oferta: {
+      practica: [
+        { title: 'Silencio mental', description: 'Bajar el volumen de los pensamientos repetitivos.' },
+        { title: 'Calma con enfoque', description: 'Trabajar desde la tranquilidad, no desde la urgencia.' },
+        { title: 'Sueño ininterrumpido', description: 'Sostener el descanso durante toda la noche.' },
+      ],
+      garantia: 'Si aplicas tu protocolo durante los primeros 15 días, incluyendo tu escritura de descarga nocturna, y tu mente no baja el ritmo, te devolvemos tu inversión.',
+    },
   },
   protector: {
     title: 'El protector interno',
@@ -402,6 +430,14 @@ export const ARCHETYPES_FULL: Record<ArchetypeId, ArchetypeFull> = {
     pasando: 'Has tenido que desconectarte de lo que sientes para funcionar. Eso cansa. No porque estés mal, sino porque cargarlo solo pesa.',
     pasandoNote: 'Este protocolo no te exige; te acompaña a soltar el peso de la armadura.',
     tip: 'Durante el día, detente 3 veces y pregúntate: ¿Qué estoy sintiendo ahora mismo? Sin analizar. Solo nombrar.',
+    oferta: {
+      practica: [
+        { title: 'Calma funcional', description: 'Entrar en un estado de menor activación cuando lo necesites.' },
+        { title: 'Presencia', description: 'Crear espacios de atención sin recurrir constantemente al control.' },
+        { title: 'Recuperación', description: 'Incorporar momentos de desaceleración dentro de tu rutina.' },
+      ],
+      garantia: 'Si aplicas tu protocolo durante los primeros 15 días, incluyendo tu Escaneo de Sensor diario, y no notas ningún cambio en tu nivel de control interno, te devolvemos tu inversión.',
+    },
   },
   disperso: {
     title: 'La mente abierta',
@@ -439,6 +475,14 @@ export const ARCHETYPES_FULL: Record<ArchetypeId, ArchetypeFull> = {
     pasando: 'Tu mente va más rápido que tu capacidad de ejecutar. Eso genera frustración y ansiedad.',
     pasandoNote: 'El protocolo binaural esta diseñado para favorecer estados de enfoque más estables y funcionales.',
     tip: 'Elige una sola tarea importante al día. Solo una. Terminar una, vale más que empezar diez.',
+    oferta: {
+      practica: [
+        { title: 'Enfoque sostenido', description: 'Terminar lo que empiezas sin saltar a la siguiente idea.' },
+        { title: 'Orden creativo', description: 'Organizar tus ideas para que no te saturen.' },
+        { title: 'Flujo', description: 'Habitar el presente sin perseguir constantemente la próxima idea.' },
+      ],
+      garantia: 'Si aplicas tu protocolo durante los primeros 15 días, completando una sola tarea importante cada día, y tu enfoque no mejora, te devolvemos tu inversión.',
+    },
   },
   performer: {
     title: 'El de alto ritmo',
@@ -476,6 +520,14 @@ export const ARCHETYPES_FULL: Record<ArchetypeId, ArchetypeFull> = {
     pasando: 'El riesgo no es fallar, es pagar demasiado caro tu rendimiento.',
     pasandoNote: 'Eres un atleta mental de élite. La recuperación estratégica es parte del entrenamiento.',
     tip: 'Agenda pausas como si fueran reuniones importantes. El cerebro rinde más cuando sabe que habrá recuperación.',
+    oferta: {
+      practica: [
+        { title: 'Enfoque máximo', description: 'Sostener bloques de trabajo profundo sin dispersión.' },
+        { title: 'Enfriamiento activo', description: 'Bajar del alto rendimiento a la calma sin colapsar.' },
+        { title: 'Súper-recuperación', description: 'Reparar profundamente para despertar al 100%.' },
+      ],
+      garantia: 'Si aplicas tu protocolo durante los primeros 15 días, integrando tus pausas de desconexión total, y no notas ninguna mejora en tu recuperación, te devolvemos tu inversión.',
+    },
   },
   quemado: {
     title: 'El sistema sobrecargado',
@@ -513,6 +565,14 @@ export const ARCHETYPES_FULL: Record<ArchetypeId, ArchetypeFull> = {
     pasando: 'Tu sistema está pidiendo pausa profunda. No más empuje.',
     pasandoNote: 'La única forma de salir es bajando el volumen de todo lo que te rodea.',
     tip: 'Reduce estímulos: menos noticias, menos redes, menos exigencia por unos días.',
+    oferta: {
+      practica: [
+        { title: 'Reparación profunda', description: 'Dejar que tu cuerpo procese el estrés acumulado.' },
+        { title: 'Descompresión', description: 'Soltar el agotamiento sin la presión de "estar bien".' },
+        { title: 'Reconexión', description: 'Volver a habitar el presente sin que se sienta como amenaza.' },
+      ],
+      garantia: 'Si aplicas tu protocolo durante los primeros 15 días, sosteniendo tu reducción de estímulos, y tu sistema no muestra ninguna señal de descarga, te devolvemos tu inversión.',
+    },
   },
   armonia: {
     title: 'El Buscador de Armonía',
@@ -550,6 +610,14 @@ export const ARCHETYPES_FULL: Record<ArchetypeId, ArchetypeFull> = {
     pasando: 'La vida moderna te sobreestimula. Necesitas refugio interno.',
     pasandoNote: 'Este protocolo construye un santuario interno tan estable que el ruido ya no puede entrar.',
     tip: 'Dedica 10 minutos diarios a no hacer nada. Sin objetivo. Solo estar.',
+    oferta: {
+      practica: [
+        { title: 'Silencio interior', description: 'Soltar la presión de las expectativas externas y volver a tu centro.' },
+        { title: 'Presencia consciente', description: 'Habitar el mundo sin sentirte abrumado por sus estímulos.' },
+        { title: 'Descanso restaurador', description: 'Un sueño que limpia tanto el cuerpo como el campo emocional.' },
+      ],
+      garantia: 'Si aplicas tu protocolo durante los primeros 15 días, sosteniendo tus 10 minutos diarios de no-hacer, y no notas mayor sensación de calma, te devolvemos tu inversión.',
+    },
   },
 };
 
