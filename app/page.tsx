@@ -14,6 +14,7 @@ import Testimonials from '@/components/sections/Testimonials';
 import QuizSection from '@/components/sections/QuizSection';
 import Pricing from '@/components/sections/Pricing';
 import FAQ from '@/components/sections/FAQ';
+import Contact from '@/components/sections/Contact';
 import Footer from '@/components/sections/Footer';
 import StickyCTA from '@/components/sections/StickyCTA';
 import ColorPicker from '@/components/ui/ColorPicker';
@@ -36,6 +37,7 @@ export default function Home() {
       <Testimonials />
       <Pricing />
       <FAQ />
+      <Contact />
       <Footer />
       <StickyCTA show={!quizResult} />
       <AnimatePresence mode="wait">
